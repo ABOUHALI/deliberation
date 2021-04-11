@@ -6,98 +6,119 @@ import java.util.Date;
 public class Etudiant {
 	private int IDJEtudiants ;
 	private String cne;//
-	private String dip;//
-	private String adressePerso;//
-	public Etudiant(int iDJEtudiants, String cne, String dip, String adressePerso, String adresseParent, String ville,
-			String tele, String mail, String bourse) {
+	private String massarEtud; //1
+	private String NomFr;//2
+	private String NomAr;//3
+	private String PrenomFr;//4
+	private String PrenomAr;
+	private String date_naissance;
+	private String lieu_naissance ;
+	private String ville ;
+	private String province ;
+	private String nationality ;
+	private String registration_da ;
+	private String sexe ;
+	public Etudiant(int iDJEtudiants, String cne, String massarEtud, String nomFr, String nomAr, String prenomFr,
+			String prenomAr, String date_naissance, String lieu_naissance, String ville, String province,
+			String nationality, String registration_da, String sexe) {
 		super();
 		IDJEtudiants = iDJEtudiants;
 		this.cne = cne;
-		this.dip = dip;
-		this.adressePerso = adressePerso;
-		this.adresseParent = adresseParent;
+		this.massarEtud = massarEtud;
+		NomFr = nomFr;
+		NomAr = nomAr;
+		PrenomFr = prenomFr;
+		PrenomAr = prenomAr;
+		this.date_naissance = date_naissance;
+		this.lieu_naissance = lieu_naissance;
 		this.ville = ville;
-		this.tele = tele;
-		this.mail = mail;
-		this.bourse = bourse;
+		this.province = province;
+		this.nationality = nationality;
+		this.registration_da = registration_da;
+		this.sexe = sexe;
 	}
-
-	private String adresseParent;//
-	private String ville;//
-	private String tele;//
-	private String mail;//
-
-	private String bourse;//
-
 	public int getIDJEtudiants() {
 		return IDJEtudiants;
 	}
-
 	public void setIDJEtudiants(int iDJEtudiants) {
 		IDJEtudiants = iDJEtudiants;
 	}
-
 	public String getCne() {
 		return cne;
 	}
-
 	public void setCne(String cne) {
 		this.cne = cne;
 	}
-
-	public String getDip() {
-		return dip;
+	public String getMassarEtud() {
+		return massarEtud;
 	}
-
-	public void setDip(String dip) {
-		this.dip = dip;
+	public void setMassarEtud(String massarEtud) {
+		this.massarEtud = massarEtud;
 	}
-
-	public String getAdressePerso() {
-		return adressePerso;
+	public String getNomFr() {
+		return NomFr;
 	}
-
-	public void setAdressePerso(String adressePerso) {
-		this.adressePerso = adressePerso;
+	public void setNomFr(String nomFr) {
+		NomFr = nomFr;
 	}
-
-	public String getAdresseParent() {
-		return adresseParent;
+	public String getNomAr() {
+		return NomAr;
 	}
-
-	public void setAdresseParent(String adresseParent) {
-		this.adresseParent = adresseParent;
+	public void setNomAr(String nomAr) {
+		NomAr = nomAr;
 	}
-
+	public String getPrenomFr() {
+		return PrenomFr;
+	}
+	public void setPrenomFr(String prenomFr) {
+		PrenomFr = prenomFr;
+	}
+	public String getPrenomAr() {
+		return PrenomAr;
+	}
+	public void setPrenomAr(String prenomAr) {
+		PrenomAr = prenomAr;
+	}
+	public String getDate_naissance() {
+		return date_naissance;
+	}
+	public void setDate_naissance(String date_naissance) {
+		this.date_naissance = date_naissance;
+	}
+	public String getLieu_naissance() {
+		return lieu_naissance;
+	}
+	public void setLieu_naissance(String lieu_naissance) {
+		this.lieu_naissance = lieu_naissance;
+	}
 	public String getVille() {
 		return ville;
 	}
-
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
-
-	public String getTele() {
-		return tele;
+	public String getProvince() {
+		return province;
 	}
-
-	public void setTele(String tele) {
-		this.tele = tele;
+	public void setProvince(String province) {
+		this.province = province;
 	}
-
-	public String getMail() {
-		return mail;
+	public String getNationality() {
+		return nationality;
 	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
 	}
-
-	public String getBourse() {
-		return bourse;
+	public String getRegistration_da() {
+		return registration_da;
 	}
-
-	public void setBourse(String bourse) {
-		this.bourse = bourse;
+	public void setRegistration_da(String registration_da) {
+		this.registration_da = registration_da;
+	}
+	public String getSexe() {
+		return sexe;
+	}
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
 	}
 }
