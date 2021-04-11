@@ -8,6 +8,20 @@ public class Etudiant {
 	private String cne;//
 	private String dip;//
 	private String adressePerso;//
+	public Etudiant(int iDJEtudiants, String cne, String dip, String adressePerso, String adresseParent, String ville,
+			String tele, String mail, String bourse) {
+		super();
+		IDJEtudiants = iDJEtudiants;
+		this.cne = cne;
+		this.dip = dip;
+		this.adressePerso = adressePerso;
+		this.adresseParent = adresseParent;
+		this.ville = ville;
+		this.tele = tele;
+		this.mail = mail;
+		this.bourse = bourse;
+	}
+
 	private String adresseParent;//
 	private String ville;//
 	private String tele;//

@@ -3,7 +3,7 @@ package metierEntite;
 import java.util.Date;
 
 public class Inscrip_Administartive {
- private	annee_universitaire anUniv ;
+ private	int id_anUniv ;
  private int id_inscrAdm ;
  private byte[] bac ;
  private String cin ;
@@ -15,11 +15,12 @@ public class Inscrip_Administartive {
  private int Telephone ;
  private String AdresseParents ;
  private boolean bourse ;
-public annee_universitaire getAnUniv() {
-	return anUniv;
+
+public int getId_anUniv() {
+	return id_anUniv;
 }
-public void setAnUniv(annee_universitaire anUniv) {
-	this.anUniv = anUniv;
+public void setId_anUniv(int id_anUniv) {
+	this.id_anUniv = id_anUniv;
 }
 public int getId_inscrAdm() {
 	return id_inscrAdm;
