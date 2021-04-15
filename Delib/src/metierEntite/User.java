@@ -5,7 +5,17 @@ public class User {
 	private String login;
 	private String mdp;
 	private String id_etud ;
-	private String id_prof ;
+	private int id_prof ;
+	private String role;
+	public User(int id, String login, String mdp, String id_etud, int id_prof, String role) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.mdp = mdp;
+		this.id_etud = id_etud;
+		this.id_prof = id_prof;
+		this.role = role;
+	}
 	public int getId() {
 		return id;
 	}
@@ -30,19 +40,17 @@ public class User {
 	public void setId_etud(String id_etud) {
 		this.id_etud = id_etud;
 	}
-	public String getId_prof() {
+	public int getId_prof() {
 		return id_prof;
 	}
-	public void setId_prof(String id_prof) {
+	public void setId_prof(int id_prof) {
 		this.id_prof = id_prof;
 	}
-	public User(int id, String login, String mdp, String id_etud, String id_prof) {
-		super();
-		this.id = id;
-		this.login = login;
-		this.mdp = mdp;
-		this.id_etud = id_etud;
-		this.id_prof = id_prof;
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 }

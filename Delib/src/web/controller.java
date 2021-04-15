@@ -38,7 +38,7 @@ public class controller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		this.getServletContext().getRequestDispatcher("/InscripELetud.jsp").forward(request,response);
+		this.getServletContext().getRequestDispatcher("/foo_bar.jsp").forward(request,response);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class controller extends HttpServlet {
 			insc.addEt(etudiant);
 			String  login = request.getParameter("Login");
 			String  mdp = request.getParameter("mdp");
-			User user = new User(0,login,mdp,null,null);
+			User user = new User(0,login,mdp,null,0,null);
 			insc.addEtUSER(etudiant, user);
 			System.out.println("gg");
 		}
