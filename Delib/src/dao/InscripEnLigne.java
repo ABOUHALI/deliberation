@@ -110,10 +110,11 @@ public class InscripEnLigne implements IInscriptionEnligne  {
 		PreparedStatement ps ;
 		String idEtud = getIdEtdu(etudiant);
 		try {
-			ps=conn.prepareStatement("insert into user(password,username,id_etud) values (?,?,?)");
+			ps=conn.prepareStatement("insert into user(password,username,id_etud,roles) values (?,?,?)");
 			ps.setString(2, user.getLogin());
 			ps.setString(1, user.getMdp());
 			ps.setString(3, idEtud);
+			ps.setString(4, "etudiant");
 			ps.executeUpdate();
 			ps.close();
 			conn.close();

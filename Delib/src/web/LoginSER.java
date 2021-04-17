@@ -37,7 +37,7 @@ public class LoginSER extends HttpServlet {
 
 	}
 
-	/**
+	/*
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -48,7 +48,8 @@ public class LoginSER extends HttpServlet {
 		String password = request.getParameter("password");
 		User user = new User(0, username, password, null, 0,null);
 		if (ld.validation(user)) {
-			System.out.println("connexion");
+			String role = ld.Role(user);
+			System.out.println(role);
 		}
 	}
 

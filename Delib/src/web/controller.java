@@ -2,7 +2,6 @@ package web;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,8 +36,9 @@ public class controller extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		this.getServletContext().getRequestDispatcher("/foo_bar.jsp").forward(request,response);
+		User  user =  (User)request.getSession().getAttribute("user");
+		System.out.println(user.getLogin());
+		this.getServletContext().getRequestDispatcher("/InscripELetud.jsp").forward(request,response);
 	}
 
 	/**

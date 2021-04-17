@@ -40,13 +40,13 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="login" placeholder="Login">
+						<input class="input100" type="text" name="username" placeholder="Login">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
 
 					<div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" name="mdp" placeholder="Mot de passe">
+						<input class="input100" type="password" name="password" placeholder="Mot de passe">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
