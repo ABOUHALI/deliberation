@@ -16,6 +16,12 @@ public class Etudiant {
 	private Date dateN;//10
 	//private String et;//11
 	private String villeBac;//12
+	public Etudiant(String massarEtud, String nomFr, String prenomFr) {
+		super();
+		this.massarEtud = massarEtud;
+		NomFr = nomFr;
+		PrenomFr = prenomFr;
+	}
 	private String lieuN_ar;//13
 	private String lieuN_fr;//14
 	private String villeNaissance;

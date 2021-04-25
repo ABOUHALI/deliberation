@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import metierEntite.Etudiant;
 import metierEntite.Filiere;
@@ -17,7 +19,7 @@ public class InscriptionADministrative {
 		Date dau = (Date) au.getAnne_acad();
 		int idAU = 0;
 		try {
-			ps = conn.prepareStatement("select id_annee_acad from anneuniversitaire where anne_acad=?");
+			ps = conn.prepareStatement("select id_anne_acad from anneuniversitaire where anne_acad=?");
 			ps.setDate(1, dau);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -58,10 +60,10 @@ public class InscriptionADministrative {
 		int idFiliere = getIdFil(f.getFiliere());
 		int idAU = getIDAnneAcad(au);
 		String massarETud = ie.getIdEtdu(etud);
-		Date date_pre_inscription = (Date) iad.getDate_pre_inscription();
-		Date date_valid = (Date) iad.getDate_valid_inscrip();
+		Date date_pre_inscription =  iad.getDate_pre_inscription();
+		Date date_valid =  iad.getDate_valid_inscrip();
 		try {
-			ps = conn.prepareStatement("insert into inscripadministrative(fid_anne_acad,acte_naissance,bac,CIN,CNE,date_pre_inscription,date_valid_inscription,AdressPerson,Ville,Telephone,AdreseParents,BOURSE) values(?,?,?,?,?,?,?,?,?,?,?,?)");
+			ps = conn.prepareStatement("insert into inscripadministrative(fid_anne_acad,acte_naisss,bac,CIN,CNE,date_pre_inscription,date_valid_inscription,AdressPerson,Ville,Telephone,AdresseParents,BOURSE) values(?,?,?,?,?,?,?,?,?,?,?,?)");
 			ps.setInt(1, idAU);
 			ps.setBlob(2,iad.getActe_de_naissance());
 			ps.setBlob(3, iad.getBac());
@@ -69,14 +71,52 @@ public class InscriptionADministrative {
 			ps.setString(5, massarETud);
 			ps.setDate(6, date_pre_inscription);
 			ps.setDate(7, date_valid);
-			ps.setDate(8,date_valid);
-			ps.setString(9, iad.getAdressPerson());
-			ps.setString(10, iad.getVille());
-			ps.setInt(11, iad.getTelephone());
 			
+			ps.setString(8, iad.getAdressPerson());
+			ps.setString(9, iad.getVille());
+			ps.setInt(10, iad.getTelephone());
+			ps.setString(11, iad.getAdresseParents());
+			ps.setBoolean(12, iad.isBourse());
+			
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		
+	}
+	public void addAnneUniversitaire(annee_universitaire au) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("insert into anneuniversitaire(anne_acad,libelle_annuniv) values(?,?)");
+			ps.setDate(1,  au.getAnne_acad());
+			ps.setString(2, au.getLibelle_anuniv());
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();		}
+	}
+	public List<Etudiant> jointureEtIA() {
+		List<Etudiant> etud = new ArrayList<Etudiant>();
+		Connection conn= SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("Select ia.cne, et.NomFr,et.PrenomFr FROM inscripadministrative ia, etudiant et where ia.cne=et.massarEtud");
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				Etudiant etu = new Etudiant(rs.getString("cne"), rs.getString("NomFr"), rs.getString("PrenomFr"));
+				etud.add(etu);
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return etud;
 	}
 }

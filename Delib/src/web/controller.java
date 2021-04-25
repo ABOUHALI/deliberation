@@ -45,7 +45,7 @@ public class controller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.getServletContext().getRequestDispatcher("/Ajout.jsp").forward(request, response);
 
-		/*String path = request.getServletPath();
+		String path = request.getServletPath();
 		if(path.equals("/supp_etab")) {
 			System.out.println("get supp");
 			int id =Integer.parseInt(request.getParameter("id"));
@@ -53,7 +53,7 @@ public class controller extends HttpServlet {
 			System.out.println("supprimer");
 			this.getServletContext().getRequestDispatcher("/Liste-Etablissement").forward(request, response);
 		}else {
-		doPost(request, response);}*/
+		doPost(request, response);}
 		}
 
 	/**

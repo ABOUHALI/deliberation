@@ -1,7 +1,8 @@
 package metierEntite;
 
 import java.io.InputStream;
-import java.util.Date;
+import java.sql.Date;
+
 
 public class Inscrip_Administartive {
  private	int id_anUniv ;
