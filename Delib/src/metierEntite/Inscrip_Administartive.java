@@ -1,12 +1,13 @@
 package metierEntite;
 
+import java.io.InputStream;
 import java.util.Date;
 
 public class Inscrip_Administartive {
  private	int id_anUniv ;
  private int id_inscrAdm ;
- private byte[] bac ;
- private String cin ;
+ private InputStream bac ;
+ private InputStream cin ;
  private String cne ;
  private  Date date_pre_inscription ;
  private Date date_valid_inscrip  ;
@@ -15,7 +16,7 @@ public class Inscrip_Administartive {
  private int Telephone ;
  private String AdresseParents ;
  private boolean bourse ;
-
+ private InputStream acte_de_naissance;
 public int getId_anUniv() {
 	return id_anUniv;
 }
@@ -28,16 +29,16 @@ public int getId_inscrAdm() {
 public void setId_inscrAdm(int id_inscrAdm) {
 	this.id_inscrAdm = id_inscrAdm;
 }
-public byte[] getBac() {
+public InputStream getBac() {
 	return bac;
 }
-public void setBac(byte[] bac) {
+public void setBac(InputStream bac) {
 	this.bac = bac;
 }
-public String getCin() {
+public InputStream getCin() {
 	return cin;
 }
-public void setCin(String cin) {
+public void setCin(InputStream cin) {
 	this.cin = cin;
 }
 public String getCne() {
@@ -88,5 +89,29 @@ public boolean isBourse() {
 public void setBourse(boolean bourse) {
 	this.bourse = bourse;
 }
- 
+public InputStream getActe_de_naissance() {
+	return acte_de_naissance;
+}
+public void setActe_de_naissance(InputStream acte_de_naissance) {
+	this.acte_de_naissance = acte_de_naissance;
+}
+public Inscrip_Administartive(int id_anUniv, int id_inscrAdm, InputStream bac, InputStream cin, String cne,
+		Date date_pre_inscription, Date date_valid_inscrip, String adressPerson, String ville, int telephone,
+		String adresseParents, boolean bourse, InputStream acte_de_naissance) {
+	super();
+	this.id_anUniv = id_anUniv;
+	this.id_inscrAdm = id_inscrAdm;
+	this.bac = bac;
+	this.cin = cin;
+	this.cne = cne;
+	this.date_pre_inscription = date_pre_inscription;
+	this.date_valid_inscrip = date_valid_inscrip;
+	AdressPerson = adressPerson;
+	this.ville = ville;
+	Telephone = telephone;
+	AdresseParents = adresseParents;
+	this.bourse = bourse;
+	this.acte_de_naissance = acte_de_naissance;
+}
+
 }

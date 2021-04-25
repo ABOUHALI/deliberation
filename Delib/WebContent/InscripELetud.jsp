@@ -42,8 +42,7 @@
 				<div class="card-heading"></div>
 				<div class="card-body">
 					<h2 class="title">Inscription en ligne</h2>
-					<form action="InscriptionEnLigne" method="POST"
-						enctype="multipart/form-data">
+					<form action="InscriptionEnLigne" method="POST">
 						<!--       <div class="input-group">
 	                            <input class="input--style-2" type="text" placeholder="Nom" name="name">
 	                        </div>
@@ -81,15 +80,15 @@
 							<div class="col-2">
 								<div class="input-group">
 									<input class="input--style-2" type="text"
-										placeholder="الاسم الشخصي"  name="PrenomAr">
+										placeholder="الاسم الشخصي" " name="PrenomAr">
 								</div>
 							</div>
 						</div>
-						<div class="input--style-2 js-datepicker" >
+						<!-- class="input--style-2 js-datepicker" -->
 						<div class="row row-space">
 							<div class="col-2">
 								<div class="input-group">
-									<input type="date" placeholder="Date de naissance" name="dateN">
+									<input type="text" placeholder="Date de naissance" name="dateN">
 									<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
 								</div>
 							</div>
@@ -108,7 +107,7 @@
 						</div>
 						<div class="input-group">
 							<div class="rs-select2 js-select-simple select--no-search">
-								<select name="lieu_naissance">
+								<select name="lieuN_fr">
 									<option disabled="disabled" selected="selected">Lieu
 										de naissance</option>
 									<option value="Afghanistan">Afghanistan</option>
@@ -405,7 +404,6 @@
 								<select name="lieuN_ar">
 									<option disabled="disabled" selected="selected">مكان
 										الولادة</option>
-
 									<option value="لصين">لصين</option>
 									<option value=" الهند">الهند</option>
 									<option value=" الولايات المتحدة">الولايات المتحدة</option>
@@ -682,15 +680,14 @@
 										(أستراليا)</option>
 									<option value=" جزر بيتكيرن (المملكة المتحدة)">جزر
 										بيتكيرن (المملكة المتحدة)</option>
-
-
 								</select>
 								<div class="select-dropdown"></div>
 							</div>
 						</div>
+
 						<div class="input-group">
 							<div class="rs-select2 js-select-simple select--no-search">
-								<select name="ville">
+								<select name="villeNaissance">
 									<option disabled="disabled" selected="selected">Ville
 										de naissance</option>
 									<option value=" AL HAJEB">AL HAJEB</option>
@@ -749,7 +746,7 @@
 									<option value=" TETOUAN ">TETOUAN</option>
 									<option value="TIZNIT">TIZNIT</option>
 
-									<option value="TIZNIT">autres...</option>
+									<option value="TIZNIT">autres</option>
 								</select>
 								<div class="select-dropdown"></div>
 							</div>
@@ -909,6 +906,15 @@
 								<div class="select-dropdown"></div>
 							</div>
 						</div>
+
+
+
+
+
+
+
+
+
 						<div class="row row-space">
 							<div class="col-2">
 								<div class="input-group">
@@ -1083,6 +1089,35 @@
 
 						</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 						<div class="row row-space">
 							<div class="col-2">
 								<div class="input-group">
@@ -1098,6 +1133,17 @@
 								</div>
 							</div>
 						</div>
+
+
+
+
+
+
+
+
+
+
+
 						<div class="input-group">
 							<div class="rs-select2 js-select-simple select--no-search">
 								<select name="sBac">
@@ -1119,6 +1165,13 @@
 								<div class="select-dropdown"></div>
 							</div>
 						</div>
+
+
+
+
+
+
+
 						<div class="input-group">
 							<div class="rs-select2 js-select-simple select--no-search">
 								<select name="mt">
@@ -1134,6 +1187,9 @@
 								<div class="select-dropdown"></div>
 							</div>
 						</div>
+
+
+
 						<div class="row row-space">
 							<div class="col-2">
 								<div class="input-group">
@@ -1212,6 +1268,12 @@
 
 
 						</div>
+
+
+
+
+
+
 						<div class="input-group">
 							<div class="rs-select2 js-select-simple select--no-search">
 								<select name="acad">
@@ -1240,6 +1302,11 @@
 								<div class="select-dropdown"></div>
 							</div>
 						</div>
+
+
+
+
+
 
 						<div class="input-group">
 							<div class="rs-select2 js-select-simple select--no-search">
@@ -1363,28 +1430,27 @@
 									</div>
 								</div>
 							</div>
-							<div class="row row-space">
+
+
+						</div>
+
+						<div class="row row-space">
 							<div class="col-2">
 								<div class="input-group">
-									<input class="input--style-2" type="text" placeholder="Login"
-										name="Login">
+									<input class="input--style-2" type="text" placeholder="cin"
+										name="login">
 
 								</div>
 							</div>
 							<div class="col-2">
 								<div class="input-group">
-									<input class="input--style-2" type="text" placeholder="Password"
-										name="Password">
+									<input class="input--style-2" type="text"
+										placeholder="Code massar" name="massarEtud">
 								</div>
 							</div>
 						</div>
 
-
-						</div>
-
-<!--  PHOOOOOOOOOOOOOOOOOOOTOOOOOOOOOOOOOO -->
-
-					 	  <div class="input-group">
+				<!--  		<div class="input-group">
 
 							<p class="input--style-2">Photo</p>
 
@@ -1393,7 +1459,49 @@
 								<input type="file" id="avatar" name="photo"
 									accept=".png, .jpg, .jpeg" placeholder="photo">
 							</div>
-						</div> 
+						</div>-->
+						<div class="row row-space">
+							<div class="col-2">
+								<div class="input-group">
+									<input class="input--style-2" type="text" placeholder="login"
+										name="login">
+
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="input-group">
+									<input class="input--style-2" type="text"
+										placeholder="Password" name="password">
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 						<div class="p-t-30">
 							<button class="login100-form-btn" type="submit">S'inscrire</button>
 						</div>

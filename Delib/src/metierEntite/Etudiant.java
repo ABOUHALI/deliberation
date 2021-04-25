@@ -14,7 +14,6 @@ public class Etudiant {
 	private String cin;//8
 	private String date1in;//9
 	private Date dateN;//10
-	
 	//private String et;//11
 	private String villeBac;//12
 	private String lieuN_ar;//13
@@ -29,6 +28,9 @@ public class Etudiant {
 	private String region;//21
 	//private FileInputStream photo;//22
 	private String etatPhy;//23
+	public Etudiant() {
+		super();
+	}
 	private String GroupSocio;//24
 	private InputStream photo;
 	public Etudiant(String massarEtud, String nomFr, String nomAr, String prenomFr, String prenomAr, String acad,
@@ -204,6 +206,15 @@ public class Etudiant {
 	}
 	public void setPhoto(InputStream photo) {
 		this.photo = photo;
+	}
+	@Override
+	public String toString() {
+		return "Etudiant [massarEtud=" + massarEtud + ", NomFr=" + NomFr + ", NomAr=" + NomAr + ", PrenomFr=" + PrenomFr
+				+ ", PrenomAr=" + PrenomAr + ", acad=" + acad + ", an_Bac=" + an_Bac + ", cin=" + cin + ", date1in="
+				+ date1in + ", dateN=" + dateN + ", villeBac=" + villeBac + ", lieuN_ar=" + lieuN_ar + ", lieuN_fr="
+				+ lieuN_fr + ", villeNaissance=" + villeNaissance + ", lycee=" + lycee + ", mt=" + mt + ", nationalite="
+				+ nationalite + ", province=" + province + ", sBac=" + sBac + ", sexe=" + sexe + ", region=" + region
+				+ ", etatPhy=" + etatPhy + ", GroupSocio=" + GroupSocio + ", photo=" + photo + "]";
 	}
 	
 }
