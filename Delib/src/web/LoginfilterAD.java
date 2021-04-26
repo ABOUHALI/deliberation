@@ -17,12 +17,12 @@ import javax.servlet.http.HttpSession;
  * Servlet Filter implementation class loginfilter
  */
 @WebFilter("/*")
-public class loginfilter implements Filter {
+public class LoginfilterAD implements Filter {
 
     /**
      * Default constructor. 
      */
-    public loginfilter() {
+    public LoginfilterAD() {
         // TODO Auto-generated constructor stub
     }
 
@@ -42,19 +42,18 @@ public class loginfilter implements Filter {
 		HttpServletResponse rep =(HttpServletResponse)response ;
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpSession session = req.getSession();
-		/*ENDK AKHEY SERHANI ANSIFTU HNA FILER KY7BS CSS LHQCH KHASU REQUETE UKHRA GHQ DIALU*/
 		String chemin = req.getRequestURI().substring(req.getContextPath().length());
-		if(chemin.startsWith("/login")) {
+		if(chemin.startsWith("/login")||chemin.equals("index.html")) {
 			chain.doFilter(req, rep);
 		}
-		if(session.getAttribute("user")==null) {
-			req.getRequestDispatcher("/Login").forward(req, rep);
+		if(session.getAttribute("user-admin")==null) {
+			req.getRequestDispatcher("/Login-ADMIN").forward(req, rep);
 		}else {
 			chain.doFilter(req, rep);
 		}
 		
+	
 	}
-
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */

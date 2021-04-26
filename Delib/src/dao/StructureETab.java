@@ -12,7 +12,28 @@ import metierEntite.Filiere;
 import metierEntite.Module;
 import metierEntite.Semestre;
 
-public class StructureETab {
+public class StructureETab implements IStructureEtab{
+	public Etablissement getEtablissement(int id) {
+		Etablissement res =new Etablissement();
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select * from etablissement where id_etab=?");
+			ps.setInt(1, id);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				res.setIDEtablissement(id);
+				res.setEtablissement(rs.getString("nom_etab"));
+				res.setDescription(rs.getString("description_etab"));
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return res;
+	}
 	public void deleteEtabById(int id) {
 		Connection cnn = SingletonConnection.getConnection();
 		PreparedStatement ps;
@@ -156,4 +177,23 @@ public class StructureETab {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Filiere> listFiliere() {
+		List<Filiere> filiere = new ArrayList<Filiere>();
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement("select * from filiere");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Filiere fil = new Filiere(rs.getInt("id_filiere"),rs.getString("nom_filier"),rs.getInt("fid_etab"));
+				filiere.add(fil);
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return filiere;
+	}
+
 }

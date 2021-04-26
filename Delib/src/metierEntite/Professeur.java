@@ -5,7 +5,15 @@ public class Professeur {
 	private String nom;
 	private String prenom;
 	private String email;
-	public Professeur(int id, String nom, String prenom, String email, int etablissement, String role, int filiere) {
+	private int etablissement;
+	private String role;
+	private int filiere;
+	private String grade ;
+	public int getId() {
+		return id;
+	}
+	public Professeur(int id, String nom, String prenom, String email, int etablissement, String role, int filiere,
+			String grade) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -14,9 +22,7 @@ public class Professeur {
 		this.etablissement = etablissement;
 		this.role = role;
 		this.filiere = filiere;
-	}
-	public int getId() {
-		return id;
+		this.grade = grade;
 	}
 	public void setId(int id) {
 		this.id = id;
@@ -57,7 +63,10 @@ public class Professeur {
 	public void setFiliere(int filiere) {
 		this.filiere = filiere;
 	}
-	private int etablissement;
-	private String role;
-	private int filiere;
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 }

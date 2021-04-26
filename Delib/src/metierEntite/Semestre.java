@@ -3,6 +3,7 @@ package metierEntite;
 public class Semestre {
 	  private int IDSemestre;
 	  private  String LabelleSemestre;
+	
 	   private int IDEtape;
 	public Semestre(int iDSemestre, String labelleSemestre, int iDEtape) {
 		super();

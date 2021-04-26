@@ -30,7 +30,7 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	<form class="login100-form validate-form" action="Login" method="post" >
+	<form class="login100-form validate-form" action="Login-ADMIN" method="post" >
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
@@ -39,7 +39,7 @@
 						Authentification
 					</span>
 
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<div class="wrap-input100 validate-input" data-validate = "required">
 						<input class="input100" type="text" name="username" placeholder="Login">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
@@ -52,7 +52,7 @@
 					</div>
 
 					<div class="container-login100-form-btn m-t-20">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" type="submit">
 							S'authentifier
 						</button>
 					</div>

@@ -3,6 +3,9 @@ package metierEntite;
 public class Etablissement {
 	private int IDEtablissement;
 	private String etablissement;
+	public Etablissement() {
+		super();
+	}
 	private String description;
 	public int getIDEtablissement() {
 		return IDEtablissement;
@@ -21,6 +24,11 @@ public class Etablissement {
 		IDEtablissement = iDEtablissement;
 		this.etablissement = etablissement;
 		this.description = description;
+	}
+	@Override
+	public String toString() {
+		return "Etablissement [IDEtablissement=" + IDEtablissement + ", etablissement=" + etablissement
+				+ ", description=" + description + "]";
 	}
 	public String getDescription() {
 		return description;
