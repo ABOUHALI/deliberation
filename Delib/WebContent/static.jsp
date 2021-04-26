@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!doctype html>
 <html lang="en">
 
@@ -6,9 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Pagination - Basic and dynamic pagination for use in your next awesome application.</title>
+    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <meta name="description" content="Basic and dynamic pagination for use in your next awesome application.">
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
     <!--
     =========================================================
@@ -20,7 +22,7 @@
     =========================================================
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
-<link href="main.css" rel="stylesheet"></head>
+<link href="./main.css" rel="stylesheet"></head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
@@ -62,33 +64,36 @@
                         </div>
                         <button class="close"></button>
                     </div>
-                    <ul class="header-menu nav">
-                        <li class="nav-item">
-                            <a href="components-pagination.html" class="nav-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-  										<path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-								</svg>
-                                Accueil
-                            </a>
-                        </li>
-                        <li class="btn-group nav-item">
-                            <a href="javascript:void(0);" class="nav-link">
-                                <i class="nav-link-icon fa fa-edit"></i>
-                                Projects
-                            </a>
-                        </li>
-                        <li class="dropdown nav-item">
-                            <a href="javascript:void(0);" class="nav-link">
-                                <i class="bi bi-chat-square"></i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
-  					        			<path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-								</svg>
-                                
-                                Contact
-                            </a>
-                        </li>
-                    </ul>        </div>
-               <!-- suppresion de la zone d'admin -->
+                     </div>
+                <div class="app-header-right">
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left">
+                                    <div class="btn-group">
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                            <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
+                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                        </a>
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                            <button type="button" tabindex="0" class="dropdown-item">User Account</button>
+                                            <button type="button" tabindex="0" class="dropdown-item">Settings</button>
+                                            <button type="button" tabindex="0" class="dropdown-item"><a href="logout.jsp">Actions</a></button>
+                                           
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="widget-content-left  ml-3 header-user-info">
+                                    <div class="widget-heading">
+                                        Bekri Ali
+                                    </div>
+                                   
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>        </div>
             </div>
         </div>        <div class="ui-theme-settings">
             <button type="button" id="TooltipDemo" class="btn-open-options btn btn-warning">
@@ -402,82 +407,89 @@
                     </div>    <div class="scrollbar-sidebar">
                         <div class="app-sidebar__inner">
                             <ul class="vertical-nav-menu">
-                               
-                              
-                                <li class="app-sidebar__heading">Forms</li>
+                                <li class="app-sidebar__heading">Dashboards</li>
                                 <li>
-                                    <a href="#">
+                                    <a href="index.html" class="mm-active">
                                         <i class="metismenu-icon pe-7s-rocket"></i>
-                                        Tableau de Bord
+                                        Dashboard Admin
                                     </a>
                                 </li>
-                           
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
+                                <li class="app-sidebar__heading">Structure Etablissement </li>
+                                <li>
                                     
                                
-                                <li class="app-sidebar__heading">Forms</li>
-                                <li>
-                                
-                                    <a href="index.html">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
-                                        ESpace Administrateur
-                                  
-                                    </a>
-                  
-                                </li>
-                                <li
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                     class="mm-active"
-                                    
-                                    
-                                >
-                                     </li>
                                
-                                <li>
-                                
-                                    <a href="index2.html">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
-                                        ESpace Enseignant
-                                  
-                                    </a>
-                  
-                                </li>
-                                <li
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                                         class="mm-show"
-                                        
-                                        
-                                    >
-                                         <a href="index3.html">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
-                                        Espace Etudiants
-                                 
-                                    </a>
                                    
-                                
-                                
-                                
-                                
+                                      <a href="ListeEtab.jsp">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Etablissement
+                                       
+                                    </a>
+                                    
+                                     <a href="ListeFiliere.jsp">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Filiere
+                                       
+                                    </a>
+                                    
+                                      <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Professeur
+                                       
+                                    </a>
+                                    
+                                      <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Etudiant
+                                        
+                                    </a>
+                                    
+                                     <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Module
+                                       
+                                    </a>
+                                    
+                                     <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Inscription
+                                       
+                                    </a>
+                                    
+                                     <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Etape
+                                       
+                                    </a>
+                                     </li>
+                                    
+                                    
+                                  
                                
+                                <li>
+                                  
+                                
+                                   
+                                <li  >
+                                    <a href="tables-regular.html">
+                                        <i class="metismenu-icon pe-7s-display2"></i>
+                                        Tables
+                                    </a>
+                                </li>
                                
+                                <li class="app-sidebar__heading"></li>
+                               
+                                 <li>
+                                    <a href="logout.jsp">
+                                        <i class="metismenu-icon pe-7s-pendrive">
+                                        </i>Se déconnecter
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>    
     </div>
 <script type="text/javascript" src="./assets/scripts/main.js"></script></body>
 </html>

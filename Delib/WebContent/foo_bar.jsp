@@ -34,9 +34,7 @@
    
 </head>
 <body class="hold-transition sidebar-mini pace-primary">
-<% if(session.getAttribute("admin")==null){ 
-        response.sendRedirect("Login.jsp");} 
-   	 %>
+
 <div class="wrapper">
 
   <!-- Navbar -->
