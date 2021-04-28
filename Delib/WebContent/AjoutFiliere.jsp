@@ -345,6 +345,7 @@ table.table .avatar {
 								<td><c:out value="${f.getIDFiliere()}" /></td>
 								<td><c:out value="${ f.getFiliere()}" /></td>
 								<td><a href="get-etab?id=<c:out  value='${f.getIDetab()}'/>"><c:out value="${ f.getIDetab()}" /></a></td>
+
 								<td><a href="#editEmployeeModal" class="edit"
 									data-toggle="modal"><i class="material-icons"
 										data-toggle="tooltip" title="Edit">&#xE254;</i></a> <a
@@ -395,14 +396,13 @@ table.table .avatar {
 									<div class="form-select-list">
 										<select class="form-control custom-select-value"
 											name="etablissement">
-											
-											
-												<c:forEach items="${etablissements}" var="e"
-													varStatus="loop">
-                                                    <option> ${e.getEtablissement()}  </option>
-                                                                         
-                                                 </c:forEach>
-											
+
+
+											<c:forEach items="${etablissements}" var="e" varStatus="loop">
+												<option>${e.getEtablissement()}</option>
+
+											</c:forEach>
+
 
 										</select>
 									</div>
@@ -417,10 +417,10 @@ table.table .avatar {
 								class="btn btn-success" value="Add">
 						</div>
 				</form>
-				</div>
 			</div>
 		</div>
-	
+	</div>
+
 	<!-- Edit Modal HTML -->
 	<div id="editEmployeeModal" class="modal fade">
 		<div class="modal-dialog">

@@ -20,6 +20,7 @@ import dao.InscripEnLigne;
 import dao.InscriptionADministrative;
 import dao.StructureETab;
 import metierEntite.Etablissement;
+import metierEntite.Etape;
 import metierEntite.Etudiant;
 import metierEntite.Filiere;
 import metierEntite.Inscrip_Administartive;
@@ -29,8 +30,8 @@ import metierEntite.annee_universitaire;
 /**
  * Servlet implementation class controller
  */
-@WebServlet(name = "cs", urlPatterns = { "/home", "*.do", "/Liste-Etablissement", "/ajouter-filiere", "/get-etab",
-		"/inscrireADMS" })
+@WebServlet(name = "cs", urlPatterns = { "/home", "*.do", "/Liste-Etablissement", "/ajouter-filiere", "/get-etab","/Ajout-Etape",
+		"/inscrireADMS" ,"/get-filiere"})
 public class controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	InputStream inputStream = null;
@@ -39,6 +40,8 @@ public class controller extends HttpServlet {
 	StructureETab se = new StructureETab();
 	List<Etablissement> listEtab = se.listETab();
 	List<Etudiant> listEtu = insc.listEt();
+	List<Etape>listEtape=se.listEtape();
+	List<Filiere>listFil=se.listFiliere();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -125,6 +128,7 @@ public class controller extends HttpServlet {
 
 		} else if (path.equals("/Ajout.do")) {
 			System.out.println("ajot etab");
+			request.setAttribute("etablissement", listEtab);
 			String nometab = request.getParameter("etablissement");
 			String desc = request.getParameter("desc_etab");
 			Etablissement etab = new Etablissement(0, nometab, desc);
@@ -141,19 +145,15 @@ public class controller extends HttpServlet {
 		} else if (path.equals("/Liste-Etablissement")) {
 			System.out.println("liste etab");
 			request.setAttribute("etablissement", listEtab);
-
+			
 			this.getServletContext().getRequestDispatcher("/ListeEtab.jsp").forward(request, response);
 
 		} else if (path.equals("/ajouter-filiere")) {
-
 			request.setAttribute("etablissements", listEtab);
 			List<Filiere> lisf = se.listFiliere();
 			request.setAttribute("filiere", lisf);
-
-			for (int i = 0; i < lisf.size(); i++) {
-				System.out.println(lisf.get(i).getFiliere());
-			}
 			System.out.println("coco");
+			
 			this.getServletContext().getRequestDispatcher("/ListeFiliere.jsp").forward(request, response);
 			return;
 
@@ -165,6 +165,8 @@ public class controller extends HttpServlet {
 			se.addFiliere(f, etab);
 
 			this.getServletContext().getRequestDispatcher("/ajouter-filiere").forward(request, response);
+			
+			
 		} else if (path.equals("/get-etab")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			Etablissement res = se.getEtablissement(id);
@@ -227,7 +229,35 @@ public class controller extends HttpServlet {
 					new Date(4,26,2021), adressePerso, ville, tele, adresseParent, borsa, null);
 			ia.addAdmini(iad, new Filiere(0,fil,0), etudiant, au);
 			
+		}else if(path.equals("/Ajout-Etape")) {
+			listEtape = se.listEtape();
+			request.setAttribute("etape", listEtape);
+			request.setAttribute("filieres", listFil);
+			System.out.println("ajout etape");
+			this.getServletContext().getRequestDispatcher("/ListeEtape.jsp").forward(request, response);
+
+		}else if(path.equals("/AjoutEtape.do")) {
+			String libele=request.getParameter("libelle");
+			boolean dip=request.getParameter("diplomante") != null ;
+			String filiere=request.getParameter("filieres");
+			Filiere f=new Filiere(0, filiere, 0);
+			Etape e=new Etape(0,libele,dip,se.getIdFiliere(f));
+			se.addEtape(e);
+			
+			this.getServletContext().getRequestDispatcher("/Ajout-Etape").forward(request, response);
+
+		}else if (path.equals("/get-filiere")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			String filiere=request.getParameter("filieres");
+			Filiere f=new Filiere(0, filiere, 0);
+			int res=se.getIdFiliere(f);
+			request.setAttribute("f", res);
+			
+			this.getServletContext().getRequestDispatcher("/ProfilFiliere.jsp").forward(request, response);
+
 		}
+			
+		
 
 	}
 

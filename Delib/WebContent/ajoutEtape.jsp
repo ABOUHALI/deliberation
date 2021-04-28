@@ -345,7 +345,7 @@ table.table .avatar {
 								<td><c:out value="${ et.getIDEtape()}" /></td>
 								<td><c:out value="${ et. getLabelleEtape()}" /></td>
 								<td><c:out value="${ et. isDiplomante()}" /></td>
-								<td><c:out value="${ et. getIDFiliere()}" /></td>
+								<td><a href="get-filiere?id=<c:out  value='${et.getIDFiliere()}'/>"><c:out value="${ et.getIDFiliere()}" /></a></td>
 								<td><a href="#editEmployeeModal" class="edit"
 									data-toggle="modal"><i class="material-icons"
 										data-toggle="tooltip" title="Edit">&#xE254;</i></a> <a
@@ -354,7 +354,7 @@ table.table .avatar {
 
 								</td>
 							</tr>
-
+<!-- ayman 7way -->
 						</c:forEach>
 
 					</tr>
@@ -416,7 +416,7 @@ table.table .avatar {
 								<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 									<div class="form-select-list">
 										<select class="form-control custom-select-value"
-											name="filiere">
+											name="filieres">
 											<option></option>
 											<c:forEach items="${filieres}" var="e" varStatus="loop">
 												<option>${e.getFiliere()}</option>
