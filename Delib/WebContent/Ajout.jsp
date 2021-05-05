@@ -1,267 +1,260 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<!-- Style -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assets/css/fresh-bootstrap-table.css" rel="stylesheet" />
-
-  <!-- Fonts and icons -->
-  <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
-  <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
-     
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<script type="text/javascript">
+$(document).ready(function(){
+	// Activate tooltip
+	$('[data-toggle="tooltip"]').tooltip();
+	
+	// Select/Deselect checkboxes
+	var checkbox = $('table tbody input[type="checkbox"]');
+	$("#selectAll").click(function(){
+		if(this.checked){
+			checkbox.each(function(){
+				this.checked = true;                        
+			});
+		} else{
+			checkbox.each(function(){
+				this.checked = false;                        
+			});
+		} 
+	});
+	checkbox.click(function(){
+		if(!this.checked){
+			$("#selectAll").prop("checked", false);
+		}
+	});
+});
+</script>
 </head>
 <body>
-<div class="fresh-table full-color-orange">
-  <!--
-    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
-    Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
-  -->
-
-  <div class="toolbar">
-    <button id="alertBtn" class="btn btn-default">Alert</button>
-  </div>
-
-  <table id="fresh-table" class="table">
-    <thead>
-      <th data-field="id">ID</th>
-      <th data-field="name">Name</th>
-      <th data-field="salary">Salary</th>
-      <th data-field="country">Country</th>
-      <th data-field="city">City</th>
-      <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Dakota Rice</td>
-        <td>$36,738</td>
-        <td>Niger</td>
-        <td>Oud-Turnhout</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Minerva Hooper</td>
-        <td>$23,789</td>
-        <td>Curaçao</td>
-        <td>Sinaai-Waas</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Sage Rodriguez</td>
-        <td>$56,142</td>
-        <td>Netherlands</td>
-        <td>Baileux</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>Philip Chaney</td>
-        <td>$38,735</td>
-        <td>Korea, South</td>
-        <td>Overland Park</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Doris Greene</td>
-        <td>$63,542</td>
-        <td>Malawi</td>
-        <td>Feldkirchen in Kärnten</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td>Mason Porter</td>
-        <td>$78,615</td>
-        <td>Chile</td>
-        <td>Gloucester</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>7</td>
-        <td>Alden Chen</td>
-        <td>$63,929</td>
-        <td>Finland</td>
-        <td>Gary</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>8</td>
-        <td>Colton Hodges</td>
-        <td>$93,961</td>
-        <td>Nicaragua</td>
-        <td>Delft</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>9</td>
-        <td>Illana Nelson</td>
-        <td>$56,142</td>
-        <td>Heard Island</td>
-        <td>Montone</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>10</td>
-        <td>Nicole Lane</td>
-        <td>$93,148</td>
-        <td>Cayman Islands</td>
-        <td>Cottbus</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>11</td>
-        <td>Chaim Saunders</td>
-        <td>$5,502</td>
-        <td>Romania</td>
-        <td>New Quay</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>12</td>
-        <td>Josiah Simon</td>
-        <td>$50,265</td>
-        <td>Christmas Island</td>
-        <td>Sint-Jans-Molenbeek</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>13</td>
-        <td>Ila Poole</td>
-        <td>$67,413</td>
-        <td>Montenegro</td>
-        <td>Pontevedra</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>14</td>
-        <td>Shana Mejia</td>
-        <td>$58,566</td>
-        <td>Afghanistan</td>
-        <td>Ballarat</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>15</td>
-        <td>Lana Ryan</td>
-        <td>$64,151</td>
-        <td>Martinique</td>
-        <td>Portobuffolè</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>16</td>
-        <td>Daquan Bender</td>
-        <td>$91,906</td>
-        <td>Sao Tome and Principe</td>
-        <td>Walhain-Saint-Paul</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>17</td>
-        <td>Connor Wagner</td>
-        <td>$86,537</td>
-        <td>Germany</td>
-        <td>Solihull</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>18</td>
-        <td>Boris Horton</td>
-        <td>$35,094</td>
-        <td>Laos</td>
-        <td>Saint-Mard</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>19</td>
-        <td>Winifred Ryan</td>
-        <td>$64,436</td>
-        <td>Ireland</td>
-        <td>Ronciglione</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-      
-<!-- Javascript -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://unpkg.com/bootstrap-table/dist/bootstrap-table.min.js"></script>
-
-<script type="text/javascript">
-  var $table = $('#fresh-table')
-  var $alertBtn = $('#alertBtn')
-
-  window.operateEvents = {
-    'click .like': function (e, value, row, index) {
-      alert('You click like icon, row: ' + JSON.stringify(row))
-      console.log(value, row, index)
-    },
-    'click .edit': function (e, value, row, index) {
-      alert('You click edit icon, row: ' + JSON.stringify(row))
-      console.log(value, row, index)
-    },
-    'click .remove': function (e, value, row, index) {
-      $table.bootstrapTable('remove', {
-        field: 'id',
-        values: [row.id]
-      })
-    }
-  }
-
-  function operateFormatter(value, row, index) {
-    return [
-      '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
-        '<i class="fa fa-heart"></i>',
-      '</a>',
-      '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
-        '<i class="fa fa-edit"></i>',
-      '</a>',
-      '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
-        '<i class="fa fa-remove"></i>',
-      '</a>'
-    ].join('')
-  }
-
-  $(function () {
-    $table.bootstrapTable({
-      classes: 'table table-hover table-striped',
-      toolbar: '.toolbar',
-
-      search: true,
-      showRefresh: true,
-      showToggle: true,
-      showColumns: true,
-      pagination: true,
-      striped: true,
-      sortable: true,
-      pageSize: 8,
-      pageList: [8, 10, 25, 50, 100],
-
-      formatShowingRows: function (pageFrom, pageTo, totalRows) {
-        return ''
-      },
-      formatRecordsPerPage: function (pageNumber) {
-        return pageNumber + ' rows visible'
-      }
-    })
-
-    $alertBtn.click(function () {
-      alert('You pressed on Alert')
-    })
-  })
-
-</script>
-
-
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+						<h2>Manage <b>Employees</b></h2>
+					</div>
+					<div class="col-sm-6">
+						<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+						<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
+					</div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+						<th>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="selectAll">
+								<label for="selectAll"></label>
+							</span>
+						</th>
+                        <th>Name</th>
+                        <th>Email</th>
+						<th>Address</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+						<td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox1" name="options[]" value="1">
+								<label for="checkbox1"></label>
+							</span>
+						</td>
+                        <td>Thomas Hardy</td>
+                        <td>thomashardy@mail.com</td>
+						<td>89 Chiaroscuro Rd, Portland, USA</td>
+                        <td>(171) 555-2222</td>
+                        <td>
+                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
+						<td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox2" name="options[]" value="1">
+								<label for="checkbox2"></label>
+							</span>
+						</td>
+                        <td>Dominique Perrier</td>
+                        <td>dominiqueperrier@mail.com</td>
+						<td>Obere Str. 57, Berlin, Germany</td>
+                        <td>(313) 555-5735</td>
+                        <td>
+                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+                    </tr>
+					<tr>
+						<td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox3" name="options[]" value="1">
+								<label for="checkbox3"></label>
+							</span>
+						</td>
+                        <td>Maria Anders</td>
+                        <td>mariaanders@mail.com</td>
+						<td>25, rue Lauriston, Paris, France</td>
+                        <td>(503) 555-9931</td>
+                        <td>
+                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
+						<td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox4" name="options[]" value="1">
+								<label for="checkbox4"></label>
+							</span>
+						</td>
+                        <td>Fran Wilson</td>
+                        <td>franwilson@mail.com</td>
+						<td>C/ Araquil, 67, Madrid, Spain</td>
+                        <td>(204) 619-5731</td>
+                        <td>
+                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+                    </tr>					
+					<tr>
+						<td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox5" name="options[]" value="1">
+								<label for="checkbox5"></label>
+							</span>
+						</td>
+                        <td>Martin Blank</td>
+                        <td>martinblank@mail.com</td>
+						<td>Via Monte Bianco 34, Turin, Italy</td>
+                        <td>(480) 631-2097</td>
+                        <td>
+                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>
+                    </tr> 
+                </tbody>
+            </table>
+			<div class="clearfix">
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#">Previous</a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+	<!-- Edit Modal HTML -->
+	<div id="addEmployeeModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Add Employee</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						<div class="form-group">
+							<label>Name</label>
+							<input type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Email</label>
+							<input type="email" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Address</label>
+							<textarea class="form-control" required></textarea>
+						</div>
+						<div class="form-group">
+							<label>Phone</label>
+							<input type="text" class="form-control" required>
+						</div>					
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-success" value="Add">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Edit Modal HTML -->
+	<div id="editEmployeeModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Edit Employee</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						<div class="form-group">
+							<label>Name</label>
+							<input type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Email</label>
+							<input type="email" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Address</label>
+							<textarea class="form-control" required></textarea>
+						</div>
+						<div class="form-group">
+							<label>Phone</label>
+							<input type="text" class="form-control" required>
+						</div>					
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-info" value="Save">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Delete Modal HTML -->
+	<div id="deleteEmployeeModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Delete Employee</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						<p>Are you sure you want to delete these Records?</p>
+						<p class="text-warning"><small>This action cannot be undone.</small></p>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-danger" value="Delete">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
-</html>
+</html>                                		                            				                            

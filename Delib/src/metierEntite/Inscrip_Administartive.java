@@ -9,15 +9,17 @@ public class Inscrip_Administartive {
  private int id_inscrAdm ;
  private InputStream bac ;
  private InputStream cin ;
- private String cne ;
+ private InputStream cne ;
  private  Date date_pre_inscription ;
  private Date date_valid_inscrip  ;
  private String AdressPerson ;
- private String ville ;
+
  private int Telephone ;
  private String AdresseParents ;
  private boolean bourse ;
  private InputStream acte_de_naissance;
+ private InputStream photo;
+ private InputStream rel_note ;
 public int getId_anUniv() {
 	return id_anUniv;
 }
@@ -42,10 +44,10 @@ public InputStream getCin() {
 public void setCin(InputStream cin) {
 	this.cin = cin;
 }
-public String getCne() {
+public InputStream getCne() {
 	return cne;
 }
-public void setCne(String cne) {
+public void setCne(InputStream cne) {
 	this.cne = cne;
 }
 public Date getDate_pre_inscription() {
@@ -66,12 +68,7 @@ public String getAdressPerson() {
 public void setAdressPerson(String adressPerson) {
 	AdressPerson = adressPerson;
 }
-public String getVille() {
-	return ville;
-}
-public void setVille(String ville) {
-	this.ville = ville;
-}
+
 public int getTelephone() {
 	return Telephone;
 }
@@ -96,9 +93,21 @@ public InputStream getActe_de_naissance() {
 public void setActe_de_naissance(InputStream acte_de_naissance) {
 	this.acte_de_naissance = acte_de_naissance;
 }
-public Inscrip_Administartive(int id_anUniv, int id_inscrAdm, InputStream bac, InputStream cin, String cne,
-		Date date_pre_inscription, Date date_valid_inscrip, String adressPerson, String ville, int telephone,
-		String adresseParents, boolean bourse, InputStream acte_de_naissance) {
+public InputStream getPhoto() {
+	return photo;
+}
+public void setPhoto(InputStream photo) {
+	this.photo = photo;
+}
+public InputStream getRel_note() {
+	return rel_note;
+}
+public void setRel_note(InputStream rel_note) {
+	this.rel_note = rel_note;
+}
+public Inscrip_Administartive(int id_anUniv, int id_inscrAdm, InputStream bac, InputStream cin, InputStream cne,
+		Date date_pre_inscription, Date date_valid_inscrip, String adressPerson, int telephone, String adresseParents,
+		boolean bourse, InputStream acte_de_naissance, InputStream photo, InputStream rel_note) {
 	super();
 	this.id_anUniv = id_anUniv;
 	this.id_inscrAdm = id_inscrAdm;
@@ -108,11 +117,12 @@ public Inscrip_Administartive(int id_anUniv, int id_inscrAdm, InputStream bac, I
 	this.date_pre_inscription = date_pre_inscription;
 	this.date_valid_inscrip = date_valid_inscrip;
 	AdressPerson = adressPerson;
-	this.ville = ville;
 	Telephone = telephone;
 	AdresseParents = adresseParents;
 	this.bourse = bourse;
 	this.acte_de_naissance = acte_de_naissance;
+	this.photo = photo;
+	this.rel_note = rel_note;
 }
-
+ 
 }

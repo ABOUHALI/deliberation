@@ -18,7 +18,7 @@
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>
-							Liste <b>Filiere</b>
+							Profil <b>Etablissement</b>
 						</h2>
 					</div>
 					<div class="col-sm-6">

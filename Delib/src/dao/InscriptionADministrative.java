@@ -53,31 +53,29 @@ public class InscriptionADministrative {
 		return idfil;
 	}
 
-	public void addAdmini(Inscrip_Administartive iad, Filiere f, Etudiant etud,annee_universitaire au) {
+	public void addIA(Inscrip_Administartive iad, int idau) {
 		Connection conn = SingletonConnection.getConnection();
 		InscripEnLigne ie = new InscripEnLigne();
 		PreparedStatement ps;
-		int idFiliere = getIdFil(f.getFiliere());
-		int idAU = getIDAnneAcad(au);
-		String massarETud = ie.getIdEtdu(etud);
-		Date date_pre_inscription =  iad.getDate_pre_inscription();
-		Date date_valid =  iad.getDate_valid_inscrip();
+		
+		Date date_pre_inscription = iad.getDate_pre_inscription();
+		Date date_valid = iad.getDate_valid_inscrip();
 		try {
-			ps = conn.prepareStatement("insert into inscripadministrative(fid_anne_acad,acte_naisss,bac,CIN,CNE,date_pre_inscription,date_valid_inscription,AdressPerson,Ville,Telephone,AdresseParents,BOURSE) values(?,?,?,?,?,?,?,?,?,?,?,?)");
-			ps.setInt(1, idAU);
-			ps.setBlob(2,iad.getActe_de_naissance());
+			ps = conn.prepareStatement(
+					"insert into inscripadministrative(fid_anne_acad,acte_naisss,bac,CIN,CNE,date_pre_inscription,date_valid_inscription,AdressPerson,Telephone,AdresseParents,BOURSE,photo,Rel_Note) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			ps.setInt(1, idau);
+			ps.setBlob(2, iad.getActe_de_naissance());
 			ps.setBlob(3, iad.getBac());
-			ps.setBlob(4,iad.getCin());
-			ps.setString(5, massarETud);
+			ps.setBlob(4, iad.getCin());
+			ps.setBlob(5, iad.getCne());
 			ps.setDate(6, date_pre_inscription);
 			ps.setDate(7, date_valid);
-			
 			ps.setString(8, iad.getAdressPerson());
-			ps.setString(9, iad.getVille());
-			ps.setInt(10, iad.getTelephone());
-			ps.setString(11, iad.getAdresseParents());
-			ps.setBoolean(12, iad.isBourse());
-			
+			ps.setInt(9, iad.getTelephone());
+			ps.setString(10, iad.getAdresseParents());
+			ps.setBoolean(11, iad.isBourse());
+			ps.setBlob(12, iad.getPhoto());
+			ps.setBlob(13, iad.getRel_note());
 			ps.executeUpdate();
 			ps.close();
 			conn.close();
@@ -85,33 +83,55 @@ public class InscriptionADministrative {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
+
+	}
+	public void addIA_FIL_ET(Inscrip_Administartive ia , String massar , int idFil ) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("insert into inscadmin_etud_filier(id_etud,id_ia,id_fil) values(?,?,?)");
+			ps.setString(1, massar);
+			ps.setInt(2, ia.getId_inscrAdm());
+			ps.setInt(3, idFil);
+			ps.executeUpdate();
+			ps.close();
+			
+			} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
 	}
 	public void addAnneUniversitaire(annee_universitaire au) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("insert into anneuniversitaire(anne_acad,libelle_annuniv) values(?,?)");
-			ps.setDate(1,  au.getAnne_acad());
+			ps = conn.prepareStatement("insert into anneuniversitaire(anne_acad,libelle_annuniv) values(?,?)");
+			ps.setDate(1, au.getAnne_acad());
 			ps.setString(2, au.getLibelle_anuniv());
 			ps.executeUpdate();
 			ps.close();
 			conn.close();
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();		}
+			e.printStackTrace();
+		}
 	}
+	
+	
+	
+	
 	public List<Etudiant> jointureEtIA() {
 		List<Etudiant> etud = new ArrayList<Etudiant>();
-		Connection conn= SingletonConnection.getConnection();
+		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("Select ia.cne, et.NomFr,et.PrenomFr FROM inscripadministrative ia, etudiant et where ia.cne=et.massarEtud");
-			ResultSet rs =ps.executeQuery();
-			while(rs.next()) {
+			ps = conn.prepareStatement(
+					"Select ia.cne, et.NomFr,et.PrenomFr FROM inscripadministrative ia, etudiant et where ia.cne=et.massarEtud");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
 				Etudiant etu = new Etudiant(rs.getString("cne"), rs.getString("NomFr"), rs.getString("PrenomFr"));
 				etud.add(etu);
-				
+
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

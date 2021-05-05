@@ -37,7 +37,7 @@
 									</p>
 								</div>
 			      	</div>
-							<form action="/LoginETUDIANT" class="signin-form" method="post">
+							<form action="LoginETUDIANT" class="signin-form" method="post">
 			      		<div class="form-group mb-3">
 			      			<label class="label" for="name">Username</label>
 			      			<input type="text" class="form-control" placeholder="Username" name="username"required>

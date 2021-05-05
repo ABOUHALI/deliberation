@@ -42,7 +42,7 @@
 				<div class="card-heading"></div>
 				<div class="card-body">
 					<h2 class="title">Inscription en ligne</h2>
-					<form action="InscriptionEnLigne" method="POST">
+					<form action="InscriptionEnLigne.php" method="POST" enctype="multipart/form-data">
 						<!--       <div class="input-group">
 	                            <input class="input--style-2" type="text" placeholder="Nom" name="name">
 	                        </div>
@@ -80,7 +80,7 @@
 							<div class="col-2">
 								<div class="input-group">
 									<input class="input--style-2" type="text"
-										placeholder="الاسم الشخصي" " name="PrenomAr">
+										placeholder="الاسم الشخصي"  name="PrenomAr">
 								</div>
 							</div>
 						</div>
@@ -88,8 +88,8 @@
 						<div class="row row-space">
 							<div class="col-2">
 								<div class="input-group">
-									<input type="text" placeholder="Date de naissance" name="dateN">
-									<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+									<input type="date"    placeholder="Date de naissance" name="dateN">
+									
 								</div>
 							</div>
 							<div class="col-2">
@@ -1434,23 +1434,9 @@
 
 						</div>
 
-						<div class="row row-space">
-							<div class="col-2">
-								<div class="input-group">
-									<input class="input--style-2" type="text" placeholder="cin"
-										name="login">
+						
 
-								</div>
-							</div>
-							<div class="col-2">
-								<div class="input-group">
-									<input class="input--style-2" type="text"
-										placeholder="Code massar" name="massarEtud">
-								</div>
-							</div>
-						</div>
-
-				<!--  		<div class="input-group">
+				 		<div class="input-group">
 
 							<p class="input--style-2">Photo</p>
 
@@ -1459,7 +1445,7 @@
 								<input type="file" id="avatar" name="photo"
 									accept=".png, .jpg, .jpeg" placeholder="photo">
 							</div>
-						</div>-->
+						</div>
 						<div class="row row-space">
 							<div class="col-2">
 								<div class="input-group">

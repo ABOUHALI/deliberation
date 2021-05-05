@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class loginfilter
  */
-@WebFilter("/*")
+/*@WebFilter("/*")*/
 public class LoginfilterAD implements Filter {
 
     /**
@@ -39,7 +39,7 @@ public class LoginfilterAD implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
-		HttpServletResponse rep =(HttpServletResponse)response ;
+	/*	HttpServletResponse rep =(HttpServletResponse)response ;
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpSession session = req.getSession();
 		String chemin = req.getRequestURI().substring(req.getContextPath().length());
@@ -51,7 +51,7 @@ public class LoginfilterAD implements Filter {
 		}else {
 			chain.doFilter(req, rep);
 		}
-		
+		*/
 	
 	}
 	/**
