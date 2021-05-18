@@ -72,7 +72,7 @@
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
+                                            <img width="42" class="rounded-circle" src="assetss/images/avatars/1.jpg" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
@@ -80,13 +80,17 @@
                                             <button type="button" tabindex="0" class="dropdown-item">Settings</button>
                                             <button type="button" tabindex="0" class="dropdown-item">Actions</button>
                                            
-                                            
+                                           
                                         </div>
                                     </div>
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        Bekri Ali
+                                        <%
+                                        
+                                        out.println(session.getAttribute("user-admin"));
+                                       
+                                        %>
                                     </div>
                                    
                                 </div>
@@ -410,69 +414,69 @@
                                 <li class="app-sidebar__heading">Dashboards</li>
                                 <li>
                                     <a href="index.html" class="mm-active">
-                                        <i class="metismenu-icon pe-7s-rocket"></i>
+                                     
                                         Dashboard Admin
                                     </a>
                                 </li>
                                 <li class="app-sidebar__heading">UI Components</li>
                                 <li>
-                                    
+                                   
                                
                                
-                                  
+                                 
                                       <a href="Liste-Etablissement">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                       
                                         Etablissement
                                        
                                     </a>
-                                    
+                                   
                                      <a href="ajouter-filiere">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
-                                        Filiere
+                                 
+                                        Filieres
                                        
-                           s         </a>
-                                    
+                                    </a>
+                                   
                                       <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                   
                                         Professeur
                                        
                                     </a>
-                                    
+                                   
                                       <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                   
                                         Etudiant
-                                        
+                                       
                                     </a>
-                                    
+                                   
                                      <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                     
                                         Module
                                        
                                     </a>
-                                    
+                                   
                                      <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                     
                                         Inscription
                                        
                                     </a>
-                                    
-                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                   
+                                     <a href="Ajout-Etape">
+                                 
                                         Etape
                                        
                                     </a>
                                      </li>
-                                    
-                                    
-                                  
+                                   
+                                   
+                                 
                                
                                 <li>
-                                  
-                                
+                                 
+                               
                                    
                                 <li  >
                                     <a href="tables-regular.html">
-                                        <i class="metismenu-icon pe-7s-display2"></i>
+                                     
                                         Tables
                                     </a>
                                 </li>
@@ -481,11 +485,11 @@
                                
                                  <li>
                                     <a href="logout.jsp">
-                                        <i class="metismenu-icon pe-7s-pendrive">
+                                     
                                         </i>Se déconnecter
                                     </a>
                                 </li>
-                                
+                               
                             </ul>
                         </div>
                     </div>
@@ -661,7 +665,7 @@
                                                                 <div class="widget-content p-0">
                                                                     <div class="widget-content-wrapper">
                                                                         <div class="widget-content-left mr-3">
-                                                                            <img width="42" class="rounded-circle" src="assets/images/avatars/5.jpg" alt="">
+                                                                            <img width="42" class="rounded-circle" src="assetss/images/avatars/5.jpg" alt="">
                                                                         </div>
                                                                         <div class="widget-content-left">
                                                                             <div class="widget-heading">Ruben Tillman</div>
@@ -683,7 +687,7 @@
                                                                 <div class="widget-content p-0">
                                                                     <div class="widget-content-wrapper">
                                                                         <div class="widget-content-left mr-3">
-                                                                            <img width="42" class="rounded-circle" src="assets/images/avatars/4.jpg" alt="">
+                                                                            <img width="42" class="rounded-circle" src="assetss/images/avatars/4.jpg" alt="">
                                                                         </div>
                                                                         <div class="widget-content-left">
                                                                             <div class="widget-heading">Vinnie Wagstaff</div>
@@ -705,7 +709,7 @@
                                                                 <div class="widget-content p-0">
                                                                     <div class="widget-content-wrapper">
                                                                         <div class="widget-content-left mr-3">
-                                                                            <img width="42" class="rounded-circle" src="assets/images/avatars/3.jpg" alt="">
+                                                                            <img width="42" class="rounded-circle" src="assetss/images/avatars/3.jpg" alt="">
                                                                         </div>
                                                                         <div class="widget-content-left">
                                                                             <div class="widget-heading">Ella-Rose Henry</div>
@@ -727,7 +731,7 @@
                                                                 <div class="widget-content p-0">
                                                                     <div class="widget-content-wrapper">
                                                                         <div class="widget-content-left mr-3">
-                                                                            <img width="42" class="rounded-circle" src="assets/images/avatars/2.jpg" alt="">
+                                                                            <img width="42" class="rounded-circle" src="assetss/images/avatars/2.jpg" alt="">
                                                                         </div>
                                                                         <div class="widget-content-left">
                                                                             <div class="widget-heading">Ruben Tillman</div>
@@ -967,7 +971,7 @@
                                                         <div class="widget-content-wrapper">
                                                             <div class="widget-content-left mr-3">
                                                                 <div class="widget-content-left">
-                                                                    <img width="40" class="rounded-circle" src="assets/images/avatars/4.jpg" alt="">
+                                                                    <img width="40" class="rounded-circle" src="assetss/images/avatars/4.jpg" alt="">
                                                                 </div>
                                                             </div>
                                                             <div class="widget-content-left flex2">
@@ -992,7 +996,7 @@
                                                         <div class="widget-content-wrapper">
                                                             <div class="widget-content-left mr-3">
                                                                 <div class="widget-content-left">
-                                                                    <img width="40" class="rounded-circle" src="assets/images/avatars/3.jpg" alt="">
+                                                                    <img width="40" class="rounded-circle" src="assetss/images/avatars/3.jpg" alt="">
                                                                 </div>
                                                             </div>
                                                             <div class="widget-content-left flex2">
@@ -1017,7 +1021,7 @@
                                                         <div class="widget-content-wrapper">
                                                             <div class="widget-content-left mr-3">
                                                                 <div class="widget-content-left">
-                                                                    <img width="40" class="rounded-circle" src="assets/images/avatars/2.jpg" alt="">
+                                                                    <img width="40" class="rounded-circle" src="assetss/images/avatars/2.jpg" alt="">
                                                                 </div>
                                                             </div>
                                                             <div class="widget-content-left flex2">
@@ -1042,7 +1046,7 @@
                                                         <div class="widget-content-wrapper">
                                                             <div class="widget-content-left mr-3">
                                                                 <div class="widget-content-left">
-                                                                    <img width="40" class="rounded-circle" src="assets/images/avatars/1.jpg" alt=""></div>
+                                                                    <img width="40" class="rounded-circle" src="assetss/images/avatars/1.jpg" alt=""></div>
                                                             </div>
                                                             <div class="widget-content-left flex2">
                                                                 <div class="widget-heading">Vinnie Wagstaff</div>
@@ -1149,7 +1153,7 @@
                                             </div>
                                             <div class="widget-content-left fsize-1">
                                                 <div class="text-muted opacity-6">Totals Target</div>
-                                                
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -1197,5 +1201,5 @@
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
-<script type="text/javascript" src="./assets/scripts/main.js"></script></body>
+<script type="text/javascript" src="./assetss/scripts/main.js"></script></body>
 </html>

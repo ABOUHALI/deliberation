@@ -26,6 +26,18 @@
 			<div class="form-row">
 				<div class="col-md-6">
 					<div class="position-relative form-group">
+						<label for="Nom Etudiant" class="">CNE</label> <input
+							type="text"
+							
+							 name="cne" />
+
+
+					</div>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-md-6">
+					<div class="position-relative form-group">
 						<label for="Nom Etudiant" class="">Adresse Parents</label> <input
 							type="text" name="adresse" />
 

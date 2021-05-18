@@ -21,11 +21,7 @@
 							Profil <b>Etablissement</b>
 						</h2>
 					</div>
-					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success"
-							data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter
-								Filiere</span></a>
-					</div>
+					
 				</div>
 			</div>
 			<table class="table table-striped table-hover">

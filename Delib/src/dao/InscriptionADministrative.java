@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import metierEntite.EtudFil;
 import metierEntite.Etudiant;
 import metierEntite.Filiere;
 import metierEntite.Inscrip_Administartive;
@@ -55,11 +56,9 @@ public class InscriptionADministrative {
 
 	public void addIA(Inscrip_Administartive iad, int idau) {
 		Connection conn = SingletonConnection.getConnection();
-		InscripEnLigne ie = new InscripEnLigne();
+		
 		PreparedStatement ps;
 		
-		Date date_pre_inscription = iad.getDate_pre_inscription();
-		Date date_valid = iad.getDate_valid_inscrip();
 		try {
 			ps = conn.prepareStatement(
 					"insert into inscripadministrative(fid_anne_acad,acte_naisss,bac,CIN,CNE,date_pre_inscription,date_valid_inscription,AdressPerson,Telephone,AdresseParents,BOURSE,photo,Rel_Note) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -67,9 +66,9 @@ public class InscriptionADministrative {
 			ps.setBlob(2, iad.getActe_de_naissance());
 			ps.setBlob(3, iad.getBac());
 			ps.setBlob(4, iad.getCin());
-			ps.setBlob(5, iad.getCne());
-			ps.setDate(6, date_pre_inscription);
-			ps.setDate(7, date_valid);
+			ps.setString(5, iad.getCne());
+			ps.setDate(6, iad.getDate_pre_inscription());
+			ps.setDate(7, iad.getDate_valid_inscrip());
 			ps.setString(8, iad.getAdressPerson());
 			ps.setInt(9, iad.getTelephone());
 			ps.setString(10, iad.getAdresseParents());
@@ -85,13 +84,13 @@ public class InscriptionADministrative {
 		}
 
 	}
-	public void addIA_FIL_ET(Inscrip_Administartive ia , String massar , int idFil ) {
+	public void addIA_FIL_ET(int ia , String massar , int idFil ) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
 			ps=conn.prepareStatement("insert into inscadmin_etud_filier(id_etud,id_ia,id_fil) values(?,?,?)");
 			ps.setString(1, massar);
-			ps.setInt(2, ia.getId_inscrAdm());
+			ps.setInt(2, ia);
 			ps.setInt(3, idFil);
 			ps.executeUpdate();
 			ps.close();
@@ -101,6 +100,27 @@ public class InscriptionADministrative {
 			e2.printStackTrace();
 		}
 	}
+	public int IDofADMINSITRATIVE(int telephone,String adresse) {
+		int id=0;
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select id_inscAdm from inscripadministrative where TELEPHONE=? and AdresseParents=?");
+			ps.setInt(1, telephone);
+			ps.setString(2, adresse);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				id=rs.getInt("id_inscAdm");
+			}
+			ps.close();
+			conn.close();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return id;
+				}
 	public void addAnneUniversitaire(annee_universitaire au) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
@@ -118,18 +138,16 @@ public class InscriptionADministrative {
 	}
 	
 	
-	
-	
-	public List<Etudiant> jointureEtIA() {
-		List<Etudiant> etud = new ArrayList<Etudiant>();
+	public List<EtudFil> jointureEtIA() {
+		List<EtudFil> etud = new ArrayList<EtudFil>();
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement(
-					"Select ia.cne, et.NomFr,et.PrenomFr FROM inscripadministrative ia, etudiant et where ia.cne=et.massarEtud");
+					"Select ia.cne, et.NomFr,et.PrenomFr ,f.nom_filier ,au.anne_acad FROM inscadmin_etud_filier ief ,inscripadministrative ia, etudiant et ,filiere f,anneuniversitaire au  where ief.id_fil=f.id_filiere and  ia.id_inscAdm=ief.id_ia and ief.id_etud=et.massarEtud");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Etudiant etu = new Etudiant(rs.getString("cne"), rs.getString("NomFr"), rs.getString("PrenomFr"));
+				EtudFil etu = new EtudFil(rs.getString("cne"), rs.getString("NomFr"), rs.getString("prenomFr"), rs.getString("nom_filier"),rs.getDate("anne_acad"));
 				etud.add(etu);
 
 			}
@@ -139,4 +157,5 @@ public class InscriptionADministrative {
 		}
 		return etud;
 	}
+
 }

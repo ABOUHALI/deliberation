@@ -12,8 +12,16 @@ public class Module {
 		return "Module [IDModule=" + IDModule + ", LabelleMod=" + LabelleMod + ", IDSemestre=" + IDSemestre + ", coeff="
 				+ coeff + ", note_valid=" + note_valid + ", nbr_elt=" + nbr_elt + "]";
 	}
+	public Module(int iDModule) {
+		super();
+		IDModule = iDModule;
+	}
 	public int getIDModule() {
 		return IDModule;
+	}
+	public Module(String labelleMod) {
+		super();
+		LabelleMod = labelleMod;
 	}
 	public void setIDModule(int iDModule) {
 		IDModule = iDModule;

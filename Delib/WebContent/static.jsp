@@ -27,7 +27,7 @@
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
-                <div class="logo-src"></div>
+                <div class=""></div>
                 <div class="header__pane ml-auto">
                     <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -72,7 +72,7 @@
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
+                                            <img width="42" class="rounded-circle" src="assetss/images/avatars/1.jpg" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
@@ -80,7 +80,7 @@
                                             <button type="button" tabindex="0" class="dropdown-item">Settings</button>
                                             <button type="button" tabindex="0" class="dropdown-item"><a href="logout.jsp">Actions</a></button>
                                            
-                                            
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -410,69 +410,69 @@
                                 <li class="app-sidebar__heading">Dashboards</li>
                                 <li>
                                     <a href="index.html" class="mm-active">
-                                        <i class="metismenu-icon pe-7s-rocket"></i>
+                                       
                                         Dashboard Admin
                                     </a>
                                 </li>
                                 <li class="app-sidebar__heading">Structure Etablissement </li>
                                 <li>
-                                    
+                                   
                                
                                
                                    
                                       <a href="ListeEtab.jsp">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                     
                                         Etablissement
                                        
                                     </a>
-                                    
+                                   
                                      <a href="ListeFiliere.jsp">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                       
                                         Filiere
                                        
                                     </a>
-                                    
+                                   
                                       <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                       
                                         Professeur
                                        
                                     </a>
-                                    
+                                   
                                       <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                       
                                         Etudiant
-                                        
+                                       
                                     </a>
-                                    
+                                   
                                      <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                       
                                         Module
                                        
                                     </a>
-                                    
+                                   
                                      <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                       
                                         Inscription
                                        
                                     </a>
-                                    
+                                   
                                      <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                       
                                         Etape
                                        
                                     </a>
                                      </li>
-                                    
-                                    
-                                  
+                                   
+                                   
+                                 
                                
                                 <li>
-                                  
-                                
+                                 
+                               
                                    
                                 <li  >
                                     <a href="tables-regular.html">
-                                        <i class="metismenu-icon pe-7s-display2"></i>
+                                       
                                         Tables
                                     </a>
                                 </li>
@@ -481,15 +481,15 @@
                                
                                  <li>
                                     <a href="logout.jsp">
-                                        <i class="metismenu-icon pe-7s-pendrive">
+                                   
                                         </i>Se déconnecter
                                     </a>
                                 </li>
-                                
+                               
                             </ul>
                         </div>
                     </div>
                 </div>    
     </div>
-<script type="text/javascript" src="./assets/scripts/main.js"></script></body>
+<script type="text/javascript" src="./assetss/scripts/main.js"></script></body>
 </html>

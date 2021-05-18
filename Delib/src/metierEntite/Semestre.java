@@ -4,7 +4,15 @@ public class Semestre {
 	  private int IDSemestre;
 	  private  String LabelleSemestre;
 	
-	   private int IDEtape;
+	   @Override
+	public String toString() {
+		return "Semestre [LabelleSemestre=" + LabelleSemestre + "]";
+	}
+	private int IDEtape;
+	public Semestre(String labelleSemestre) {
+		super();
+		LabelleSemestre = labelleSemestre;
+	}
 	public Semestre(int iDSemestre, String labelleSemestre, int iDEtape) {
 		super();
 		IDSemestre = iDSemestre;

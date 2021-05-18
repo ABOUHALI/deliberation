@@ -2,13 +2,17 @@ package dao;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
+import org.apache.poi.ss.formula.SheetIdentifier;
 
-
+import metierEntite.Element;
 import metierEntite.Etablissement;
 import metierEntite.Etape;
+import metierEntite.EtudFil;
 import metierEntite.Etudiant;
 import metierEntite.Filiere;
 import metierEntite.Inscrip_Administartive;
@@ -64,6 +68,49 @@ public class TEST {
 		dao.addIA(iad, 1);
 		dao.addIA_FIL_ET(iad, "test1", 1);
 		System.out.println(1);*/
+		/*InscriptionADministrative ia = new InscriptionADministrative();
+		String anacd = "3921-05-25";
+		
+		java.sql.Date d = java.sql.Date.valueOf(anacd);
+		System.out.println(d);
+		int id_anacad = se.IDanneUniv(d);
+		Inscrip_Administartive iad = new Inscrip_Administartive(id_anacad,16,null,null,null,null,null,"test",777777,"kamilia",true,null,null,null);
+		ia.addIA(iad,id_anacad);
+		int ID=0;
+		System.out.println(iad.getId_inscrAdm());
+		ia.addIA_FIL_ET(ID, "test1", 2);*/
+		/*InscriptionADministrative ia = new InscriptionADministrative();
+		List<EtudFil> etd = ia.jointureEtIA();
+		for (int i = 0; i < etd.size(); i++) {
+			System.out.println(etd.get(i));
+		}*/
+		/*InscripPDAO ipd = new InscripPDAO();
+		List<Element> elts = new ArrayList<Element>();
+		int id = se.getIDElement("java 2");
+		*/
+		//***teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeest*//
+		InscripPDAO ipd = new InscripPDAO();
+		System.out.println(ipd.isEtudiantPEDA("M133462726"));
+		/*for (int i = 0; i < elts.size(); i++) {
+			System.out.println(elts.get(i).getIDElement());
+		}*/
+		
+		/*HashSet<Etudiant> etdts = ipd.getListeEtudiantXXXX(elts);
+		System.out.println("RF"+etdts);*/
+		/*System.out.println(etdts);
+		/*System.out.println(etdts.toString());*/
+		/*HashSet<Etudiant> et = ipd.getListeEtudiantXXXX(elts);
+		System.out.println(et);*/
+		/*InscriptionADministrative ia = new InscriptionADministrative();
+		List<EtudFil> ef = ia.jointureEtIA();
+		System.out.println(ef);*/
+		/*List<metierEntite.Module> m =  se.listModule();
+		System.out.println(m);*/
+		/*for (int i = 0; i < e.size(); i++) {
+			System.out.println(e.get(i).getMassarEtud());
+		}*/
+		
+		
 		}
 	public String heute() {
 		final Date date = new Date();

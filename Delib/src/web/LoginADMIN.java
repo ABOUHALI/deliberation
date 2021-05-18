@@ -58,9 +58,10 @@ public class LoginADMIN extends HttpServlet {
 			String role = ld.Role(user);
 			System.out.println(role);
 			if(role.equals("admin")) {
-				System.out.println("espace administrateur");
 				session.setAttribute("user-admin", user);
-				this.getServletContext().getRequestDispatcher("/static.jsp").forward(request, response);
+				
+				System.out.println(session.getAttribute("user-admin"));
+				this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 
 			}
 			}

@@ -28,4 +28,7 @@ public class Filiere {
 	public void setIDetab(int iDetab) {
 		IDetab = iDetab;
 	}
+	public Filiere() {
+		super();
+	}
 }

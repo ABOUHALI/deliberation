@@ -186,6 +186,26 @@ public class InscripEnLigne implements IInscriptionEnligne {
 		return etudiant;
 	}
 
+	public Etudiant getET3(String massarEtud) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		Etudiant  e=null;
+		try {
+			ps=conn.prepareStatement("select massarEtud , NomFr , PrenomFr from etudiant where massarEtud=?");
+			ps.setString(1, massarEtud);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				e= new Etudiant(rs.getString("massarEtud"), rs.getString("NomFr"), rs.getString("PrenomFr"));
+			
+			}
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}
+		return e;
+	}
+	
+	
 	public void updateEt(Etudiant etudiant) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;

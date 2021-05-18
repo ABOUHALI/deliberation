@@ -5,6 +5,15 @@ public class Element {
 	private String LabelleElement;
 	private int IDModule;
 	private int coeff ;
+	
+	public Element(int iDElement) {
+		super();
+		IDElement = iDElement;
+	}
+	public Element(String labelleElement) {
+		super();
+		LabelleElement = labelleElement;
+	}
 	private int note_validation;
 	
 	public int getIDElement() {

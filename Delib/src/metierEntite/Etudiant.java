@@ -22,6 +22,10 @@ public class Etudiant {
 		NomFr = nomFr;
 		PrenomFr = prenomFr;
 	}
+	public Etudiant(String massarEtud) {
+		super();
+		this.massarEtud = massarEtud;
+	}
 	private String lieuN_ar;//13
 	private String lieuN_fr;//14
 	private String villeNaissance;
@@ -215,12 +219,30 @@ public class Etudiant {
 	}
 	@Override
 	public String toString() {
-		return "Etudiant [massarEtud=" + massarEtud + ", NomFr=" + NomFr + ", NomAr=" + NomAr + ", PrenomFr=" + PrenomFr
-				+ ", PrenomAr=" + PrenomAr + ", acad=" + acad + ", an_Bac=" + an_Bac + ", cin=" + cin + ", date1in="
-				+ date1in + ", dateN=" + dateN + ", villeBac=" + villeBac + ", lieuN_ar=" + lieuN_ar + ", lieuN_fr="
-				+ lieuN_fr + ", villeNaissance=" + villeNaissance + ", lycee=" + lycee + ", mt=" + mt + ", nationalite="
-				+ nationalite + ", province=" + province + ", sBac=" + sBac + ", sexe=" + sexe + ", region=" + region
-				+ ", etatPhy=" + etatPhy + ", GroupSocio=" + GroupSocio + ", photo=" + photo + "]";
+		return "Etudiant [massarEtud=" + massarEtud +  "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((massarEtud == null) ? 0 : massarEtud.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Etudiant other = (Etudiant) obj;
+		if (massarEtud == null) {
+			if (other.massarEtud != null)
+				return false;
+		} else if (!massarEtud.equals(other.massarEtud))
+			return false;
+		return true;
 	}
 	
 }

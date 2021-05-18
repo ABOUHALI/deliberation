@@ -40,4 +40,18 @@ public String Role(User user ) {
 	}
 	return role ;
 }
+public void UpdateUser(String username,String password) {
+	Connection conn=SingletonConnection.getConnection();
+	PreparedStatement ps;
+	
+	try {
+		ps=conn.prepareStatement("update user set password=? where username=?");
+		ps.setString(1, password);
+		ps.setString(2, username);
+		ps.executeUpdate();
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
 }

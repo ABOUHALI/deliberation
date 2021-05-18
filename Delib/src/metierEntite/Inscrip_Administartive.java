@@ -4,16 +4,16 @@ import java.io.InputStream;
 import java.sql.Date;
 
 
+
 public class Inscrip_Administartive {
  private	int id_anUniv ;
  private int id_inscrAdm ;
- private InputStream bac ;
+private InputStream bac ;
  private InputStream cin ;
- private InputStream cne ;
+ private String cne ;
  private  Date date_pre_inscription ;
  private Date date_valid_inscrip  ;
  private String AdressPerson ;
-
  private int Telephone ;
  private String AdresseParents ;
  private boolean bourse ;
@@ -44,10 +44,10 @@ public InputStream getCin() {
 public void setCin(InputStream cin) {
 	this.cin = cin;
 }
-public InputStream getCne() {
+public String getCne() {
 	return cne;
 }
-public void setCne(InputStream cne) {
+public void setCne(String cne) {
 	this.cne = cne;
 }
 public Date getDate_pre_inscription() {
@@ -68,7 +68,6 @@ public String getAdressPerson() {
 public void setAdressPerson(String adressPerson) {
 	AdressPerson = adressPerson;
 }
-
 public int getTelephone() {
 	return Telephone;
 }
@@ -105,7 +104,7 @@ public InputStream getRel_note() {
 public void setRel_note(InputStream rel_note) {
 	this.rel_note = rel_note;
 }
-public Inscrip_Administartive(int id_anUniv, int id_inscrAdm, InputStream bac, InputStream cin, InputStream cne,
+public Inscrip_Administartive(int id_anUniv, int id_inscrAdm, InputStream bac, InputStream cin, String cne,
 		Date date_pre_inscription, Date date_valid_inscrip, String adressPerson, int telephone, String adresseParents,
 		boolean bourse, InputStream acte_de_naissance, InputStream photo, InputStream rel_note) {
 	super();
@@ -124,5 +123,6 @@ public Inscrip_Administartive(int id_anUniv, int id_inscrAdm, InputStream bac, I
 	this.photo = photo;
 	this.rel_note = rel_note;
 }
+
  
 }
