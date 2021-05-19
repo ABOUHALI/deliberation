@@ -435,8 +435,32 @@
                                         Filieres
                                        
                                     </a>
+                                    
+                                    <a href="Ajout-Etape">
+                                 
+                                        Etape
+                                       
+                                    </a>
+                                    
+                                    <a href="ajouter-filiere">
+                                 
+                                        Semestre
+                                       
+                                    </a>
+                                    
+                                    <a href="ajouter-Module">
+                                     
+                                        Module
+                                       
+                                    </a>
+                                    
+                                    <a href="list-element">
+                                 
+                                        Element
+                                       
+                                    </a>
                                    
-                                      <a href="#">
+                                      <a href="ajouter-professeur">
                                    
                                         Professeur
                                        
@@ -448,11 +472,7 @@
                                        
                                     </a>
                                    
-                                     <a href="#">
-                                     
-                                        Module
-                                       
-                                    </a>
+                              
                                    
                                      <a href="#">
                                      
@@ -460,11 +480,7 @@
                                        
                                     </a>
                                    
-                                     <a href="Ajout-Etape">
-                                 
-                                        Etape
-                                       
-                                    </a>
+                                     
                                      </li>
                                    
                                    
@@ -475,18 +491,18 @@
                                
                                    
                                 <li  >
-                                    <a href="tables-regular.html">
+                                    <a href="#">
                                      
-                                        Tables
+                                        Notes
                                     </a>
                                 </li>
                                
                                 <li class="app-sidebar__heading">Forms</li>
                                
                                  <li>
-                                    <a href="logout.jsp">
+                                    <a href="logout">
                                      
-                                        </i>Se déconnecter
+                                        Se déconnecter
                                     </a>
                                 </li>
                                

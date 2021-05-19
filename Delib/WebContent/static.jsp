@@ -86,7 +86,11 @@
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        Bekri Ali
+                                        <%
+                                        
+                                        out.println(session.getAttribute("user-admin"));
+                                       
+                                        %>
                                     </div>
                                    
                                 </div>
@@ -410,57 +414,73 @@
                                 <li class="app-sidebar__heading">Dashboards</li>
                                 <li>
                                     <a href="index.html" class="mm-active">
-                                       
+                                     
                                         Dashboard Admin
                                     </a>
                                 </li>
-                                <li class="app-sidebar__heading">Structure Etablissement </li>
+                                <li class="app-sidebar__heading">UI Components</li>
                                 <li>
                                    
                                
                                
-                                   
-                                      <a href="ListeEtab.jsp">
-                                     
+                                 
+                                      <a href="Liste-Etablissement">
+                                       
                                         Etablissement
                                        
                                     </a>
                                    
-                                     <a href="ListeFiliere.jsp">
+                                     <a href="ajouter-filiere">
+                                 
+                                        Filieres
                                        
-                                        Filiere
+                                    </a>
+                                    
+                                    <a href="Ajout-Etape">
+                                 
+                                        Etape
+                                       
+                                    </a>
+                                    
+                                    <a href="ajouter-filiere">
+                                 
+                                        Semestre
+                                       
+                                    </a>
+                                    
+                                    <a href="ajouter-Module">
+                                     
+                                        Module
+                                       
+                                    </a>
+                                    
+                                    <a href="ajouter-element">
+                                 
+                                        Element
                                        
                                     </a>
                                    
-                                      <a href="#">
-                                       
+                                      <a href="ajouter-professeur">
+                                   
                                         Professeur
                                        
                                     </a>
                                    
                                       <a href="#">
-                                       
+                                   
                                         Etudiant
                                        
                                     </a>
                                    
-                                     <a href="#">
-                                       
-                                        Module
-                                       
-                                    </a>
+                              
                                    
                                      <a href="#">
-                                       
+                                     
                                         Inscription
                                        
                                     </a>
                                    
-                                     <a href="#">
-                                       
-                                        Etape
-                                       
-                                    </a>
+                                     
                                      </li>
                                    
                                    
@@ -471,18 +491,18 @@
                                
                                    
                                 <li  >
-                                    <a href="tables-regular.html">
-                                       
-                                        Tables
+                                    <a href="#">
+                                     
+                                        Notes
                                     </a>
                                 </li>
                                
-                                <li class="app-sidebar__heading"></li>
+                                <li class="app-sidebar__heading">Forms</li>
                                
                                  <li>
-                                    <a href="logout.jsp">
-                                   
-                                        </i>Se déconnecter
+                                    <a href="logout">
+                                     
+                                        Se déconnecter
                                     </a>
                                 </li>
                                
