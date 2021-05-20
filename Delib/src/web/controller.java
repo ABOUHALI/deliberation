@@ -52,7 +52,7 @@ import metierEntite.annee_universitaire;
 		"/Liste-Etablissement", "/ajouter-filiere", "/get-etab", "/ListeEnLigne", "/administrative.php",
 		"/ajouter-Module", "/ajouter-element", "/ajouter-professeur", "/ajouter-professeur.php",
 		"/add-inscriptionEexcel.do", "/add-inscriptionEexcel", "/Liste-IAdministrative", "/pedagogique.php",
-		"/ListePedagogique", "/choix-listp","/modifier-etab","/Ajout-Etape","/get-filiere","/Mdp-oublie","/verifier-code","/Renetialiser-Mdp" })
+		"/ListePedagogique", "/choix-listp","/modifier-etab","/Ajout-Etape","/get-filiere","/Mdp-oublie","/verifier-code","/Renetialiser-Mdp","/ajouter-Semestre" ,"/get-etap"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 
 public class controller extends HttpServlet {
@@ -69,6 +69,7 @@ public class controller extends HttpServlet {
 	List<Filiere> listFil = se.listFiliere();
 	List<Etape> listEtape = se.listEtape();
 	int randomCode;
+	
 	LoginDAO d = new LoginDAO();
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -234,8 +235,9 @@ public class controller extends HttpServlet {
 			Etablissement etab = new Etablissement(0, etablissement, null);
 			Filiere f = new Filiere(0, filiere, 0);
 			se.addFiliere(f, etab);
-
 			this.getServletContext().getRequestDispatcher("/ajouter-filiere").forward(request, response);
+			
+			
 		} else if (path.equals("/ajouter-element")) {
 			int nbr_et = Integer.parseInt(request.getParameter("id"));
 			int idm = Integer.parseInt(request.getParameter("idm"));
@@ -610,6 +612,18 @@ public class controller extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
 			
 			
+		}else if(path.equals("/ajouter-Semestre")) {
+			List<Semestre>lstSemestre=se.listSem();
+			request.setAttribute("semestre", lstSemestre);
+			System.out.println("ajout semestre");
+			this.getServletContext().getRequestDispatcher("/ListeSemestre.jsp").forward(request, response);
+			
+		}
+		else if(path.equals("/get-etap")) { // get IdEtape maison :
+			int id = Integer.parseInt(request.getParameter("id"));
+			Etape p=se.getIdEtape(id);
+			request.setAttribute("s", p);
+			this.getServletContext().getRequestDispatcher("/ProfilEtape.jsp").forward(request, response);
 		}
 	}
 	private static java.sql.Date convert(java.util.Date uDate) {
