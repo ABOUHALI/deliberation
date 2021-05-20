@@ -67,7 +67,7 @@ public class EtudFil {
 	}
 	@Override
 	public String toString() {
-		return "EtudFil [PrenomFr=" + PrenomFr + "]";
+		return "EtudFil [cne=" + cne +  "]";
 	}
 
 	

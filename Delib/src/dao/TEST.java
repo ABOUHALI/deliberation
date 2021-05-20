@@ -26,6 +26,7 @@ public class TEST {
 		// TODO Auto-generated method stub
 		Connection conn = SingletonConnection.getConnection();
 		StructureETab se = new StructureETab();
+		InscriptionADministrative iad = new InscriptionADministrative();
 		java.sql.Date date_sql = new java.sql.Date(4/13/2021);
 		/*Etudiant e = new Etudiant("test1", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm",date_sql , "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", null);
 		InscripEnLigne il = new InscripEnLigne();
@@ -89,8 +90,10 @@ public class TEST {
 		int id = se.getIDElement("java 2");
 		*/
 		//***teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeest*//
-		InscripPDAO ipd = new InscripPDAO();
-		System.out.println(ipd.isEtudiantPEDA("M133462726"));
+		/*InscripPDAO ipd = new InscripPDAO();
+		System.out.println(ipd.isEtudiantPEDA("M133462726"));*/
+		/*List<EtudFil> etud =iad.jointureEtIA();
+		System.out.println(etud);*/
 		/*for (int i = 0; i < elts.size(); i++) {
 			System.out.println(elts.get(i).getIDElement());
 		}*/

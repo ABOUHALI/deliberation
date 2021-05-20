@@ -50,9 +50,9 @@ import metierEntite.annee_universitaire;
  */
 @WebServlet(name = "cs", urlPatterns = { "/InscriptionEnLigne", "/InscriptionEnLigne.php", "/home", "*.do",
 		"/Liste-Etablissement", "/ajouter-filiere", "/get-etab", "/ListeEnLigne", "/administrative.php",
-		"/ajouter-Module", "/ajouter-element", "/ajouter-professeur", "/ajouter-professeur.php",
+		"/ajouter-Module", "/ajouter-element", "/ajouter-professeur", "/ajouter-professeur.php","/logout",
 		"/add-inscriptionEexcel.do", "/add-inscriptionEexcel", "/Liste-IAdministrative", "/pedagogique.php",
-		"/ListePedagogique", "/choix-listp","/modifier-etab","/Ajout-Etape","/get-filiere","/Mdp-oublie","/verifier-code","/Renetialiser-Mdp" })
+		"/ListePedagogique", "/choix-listp","/modifier-etab","/Ajout-Etape","/get-filiere","/Mdp-oublie","/verifier-code","/Renetialiser-Mdp","/list-element" })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 
 public class controller extends HttpServlet {
@@ -93,7 +93,10 @@ public class controller extends HttpServlet {
 		// TODO Auto-generated method stub
 		String path = request.getServletPath();
 		HttpSession session = request.getSession();
-		if (path.equals("/InscriptionEnLigne.php")) {
+		if (path.equals("/home")) {
+			this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+
+		} else if (path.equals("/InscriptionEnLigne.php")) {
 			String massarEtud = request.getParameter("massarEtud");// System.out.println(massarEtud); String
 			String NomFr = request.getParameter("NomFr");// System.out.println(NomFr); String
 			String NomAr = request.getParameter("NomAr");// String PrenomFr =
@@ -138,7 +141,6 @@ public class controller extends HttpServlet {
 			Etudiant etudiant = new Etudiant(massarEtud, NomFr, NomAr, PrenomFr, PrenomAr, acad, an_Bac, cin,
 					date_n + "", date_sql, villeBac, lieuN_ar, lieuN_fr, villeNaissance, lycee, mt, nationalite,
 					province, sBac, sexe, region, etatPhy, GroupSocio, inputStream);
-			System.out.println(etudiant);
 			insc.addEt(etudiant);
 			String login = request.getParameter("login");
 			String mdp = request.getParameter("password");
@@ -164,10 +166,7 @@ public class controller extends HttpServlet {
 
 		}
 
-		if (path.equals("/home")) {
-			this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
-
-		}else if(path.equals("/Ajout-Etape")) {
+		else if(path.equals("/Ajout-Etape")) {
 			listEtape = se.listEtape();
 			request.setAttribute("etape", listEtape);
 			request.setAttribute("filieres", listFil);
@@ -421,11 +420,6 @@ public class controller extends HttpServlet {
 			Part filePart = request.getPart("fichier");
 
 			if (filePart != null) {
-
-				System.out.println(filePart.getName());
-				System.out.println(filePart.getSize());
-				System.out.println(filePart.getContentType());
-
 				inputStream = filePart.getInputStream();
 			}
 
@@ -608,9 +602,16 @@ public class controller extends HttpServlet {
 			String pass =request.getParameter("nouveauMDP");
 			d.UpdateUser(username, pass);
 			this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
-			
-			
-		}
+		}else if(path.equals("/logout")) {
+			HttpSession s = request.getSession();
+			s.invalidate();
+			System.out.println(s.getAttribute("user-admin"));
+			this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+		}else if(path.equals("/list-element")) {
+			List<Element> listElement= se.listElement();
+			request.setAttribute("elements", listElement);
+			this.getServletContext().getRequestDispatcher("/ListeElement.jsp").forward(request, response);
+					}
 	}
 	private static java.sql.Date convert(java.util.Date uDate) {
 		java.sql.Date sDate = new java.sql.Date(uDate.getTime());

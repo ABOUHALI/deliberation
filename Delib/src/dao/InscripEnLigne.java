@@ -16,7 +16,9 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
 
 import metierEntite.Etudiant;
 import metierEntite.User;
@@ -133,70 +135,67 @@ public class InscripEnLigne implements IInscriptionEnligne {
 		}
 		return false;
 	}
-	
+
 	public Etudiant getEt(String massarEtud) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
-		Etudiant etudiant =new Etudiant();
-		
+		Etudiant etudiant = new Etudiant();
+
 		try {
-		       ps = conn.prepareStatement("select * from etudiant where massarEtud = ?");
-		       ps.setString(1, massarEtud);
-		       ResultSet rs = ps.executeQuery();
-		       System.out.print("getEtudiant");
-		       
-		       while(rs.next()) {
-					etudiant.setNomFr(rs.getString("NomFr"));
-					etudiant.setNomAr(rs.getString("NomAr"));	
-					etudiant.setPrenomAr(rs.getString("PrenomAr"));	
-					etudiant.setPrenomFr(rs.getString("PrenomFr"));	
-					etudiant.setAcad(rs.getString("acad"));
-					etudiant.setAn_Bac(rs.getString("an_Bac"));
-					etudiant.setCin(rs.getString("cin"));
-					etudiant.setDate1in(rs.getString("date1in"));
-					etudiant.setDateN(rs.getDate("dateN"));
-					etudiant.setVilleBac(rs.getString("villeBac"));
-					etudiant.setLieuN_ar(rs.getString("lieuN_ar"));
-					etudiant.setLieuN_fr(rs.getString("lieuN_fr"));
-					etudiant.setVilleNaissance(rs.getString("villeNaissance"));
-					etudiant.setLycee(rs.getString("lycee"));
-					etudiant.setMassarEtud(rs.getString("massarEtud"));
-					etudiant.setMt(rs.getString("mt"));
-					etudiant.setNationalite(rs.getString("nationalite"));
-					etudiant.setProvince(rs.getString("province"));
-					etudiant.setsBac(rs.getString("sBac"));
-					etudiant.setSexe(rs.getString("sexe"));
-					etudiant.setRegion(rs.getString("region"));
-					etudiant.setEtatPhy(rs.getString("etatPhy"));
-					etudiant.setGroupSocio(rs.getString("groupSocio"));
-					etudiant.setPhoto(rs.getBinaryStream("photo"));
-				}
-		       ps.close();
-		       conn.close();
-		       
-		       
-		       
-		       
+			ps = conn.prepareStatement("select * from etudiant where massarEtud = ?");
+			ps.setString(1, massarEtud);
+			ResultSet rs = ps.executeQuery();
+			System.out.print("getEtudiant");
+
+			while (rs.next()) {
+				etudiant.setNomFr(rs.getString("NomFr"));
+				etudiant.setNomAr(rs.getString("NomAr"));
+				etudiant.setPrenomAr(rs.getString("PrenomAr"));
+				etudiant.setPrenomFr(rs.getString("PrenomFr"));
+				etudiant.setAcad(rs.getString("acad"));
+				etudiant.setAn_Bac(rs.getString("an_Bac"));
+				etudiant.setCin(rs.getString("cin"));
+				etudiant.setDate1in(rs.getString("date1in"));
+				etudiant.setDateN(rs.getDate("dateN"));
+				etudiant.setVilleBac(rs.getString("villeBac"));
+				etudiant.setLieuN_ar(rs.getString("lieuN_ar"));
+				etudiant.setLieuN_fr(rs.getString("lieuN_fr"));
+				etudiant.setVilleNaissance(rs.getString("villeNaissance"));
+				etudiant.setLycee(rs.getString("lycee"));
+				etudiant.setMassarEtud(rs.getString("massarEtud"));
+				etudiant.setMt(rs.getString("mt"));
+				etudiant.setNationalite(rs.getString("nationalite"));
+				etudiant.setProvince(rs.getString("province"));
+				etudiant.setsBac(rs.getString("sBac"));
+				etudiant.setSexe(rs.getString("sexe"));
+				etudiant.setRegion(rs.getString("region"));
+				etudiant.setEtatPhy(rs.getString("etatPhy"));
+				etudiant.setGroupSocio(rs.getString("groupSocio"));
+				etudiant.setPhoto(rs.getBinaryStream("photo"));
+			}
+			ps.close();
+			conn.close();
+
 		}
-		
+
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return etudiant;
 	}
 
 	public Etudiant getET3(String massarEtud) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
-		Etudiant  e=null;
+		Etudiant e = null;
 		try {
-			ps=conn.prepareStatement("select massarEtud , NomFr , PrenomFr from etudiant where massarEtud=?");
+			ps = conn.prepareStatement("select massarEtud , NomFr , PrenomFr from etudiant where massarEtud=?");
 			ps.setString(1, massarEtud);
-			ResultSet rs =ps.executeQuery();
-			while(rs.next()) {
-				e= new Etudiant(rs.getString("massarEtud"), rs.getString("NomFr"), rs.getString("PrenomFr"));
-			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				e = new Etudiant(rs.getString("massarEtud"), rs.getString("NomFr"), rs.getString("PrenomFr"));
+
 			}
 		} catch (Exception ex) {
 			// TODO: handle exception
@@ -204,8 +203,7 @@ public class InscripEnLigne implements IInscriptionEnligne {
 		}
 		return e;
 	}
-	
-	
+
 	public void updateEt(Etudiant etudiant) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
@@ -250,102 +248,84 @@ public class InscripEnLigne implements IInscriptionEnligne {
 
 	}
 
+	@SuppressWarnings("resource")
 	public void addEtExcel(InputStream file) {
+
+		ArrayList<Etudiant> Etudiants = new ArrayList<Etudiant>();
+		ArrayList<String> values = new ArrayList<String>();
 		
-			
-			
-			ArrayList<Etudiant> Etudiants=new ArrayList<Etudiant>();
-			ArrayList<String> values=new ArrayList<String>();
-			Etudiant e=new Etudiant();
-		System.out.print("iciiiiiiiiiiiii"+file.toString());
-	
-		
-			try
-			{
-				
-				System.out.print("iciiiiiiiiiiiii1");
-			
-				HSSFWorkbook wb=new HSSFWorkbook(file);// preciser que ce document est excel
-				HSSFSheet sheet=wb.getSheetAt(0);
-				Iterator rows=sheet.rowIterator();
-				while(rows.hasNext())
-				{
-					System.out.println("  in  ");
-					values.clear();
-					HSSFRow row=(HSSFRow) rows.next();
-					Iterator cells=row.cellIterator();
-				
-					while(cells.hasNext())
-					{
-						
-						
-						HSSFCell cell= (HSSFCell) cells.next();
-						
-						if(cell.getCellType()==CellType.STRING) 
-							values.add(cell.getStringCellValue()); 
-						else if(cell.getCellType()==CellType.NUMERIC) 
-							{values.add(Integer.toString((int)(cell.getNumericCellValue())));
-							
-							}
-					
-						
-						
+		System.out.print("iciiiiiiiiiiiii" + file.toString());
+
+		try {
+
+			System.out.print("iciiiiiiiiiiiii1");
+
+			HSSFWorkbook wb = new HSSFWorkbook(file);// preciser que ce document est excel
+			HSSFSheet sheet = wb.getSheetAt(0);
+			Iterator<Row> rows = sheet.rowIterator();
+			while (rows.hasNext()) {
+				System.out.println("  in  ");
+				values.clear();
+				HSSFRow row = (HSSFRow) rows.next();
+				Iterator<Cell> cells = row.cellIterator();
+
+				while (cells.hasNext()) {
+
+					HSSFCell cell = (HSSFCell) cells.next();
+
+					if (cell.getCellType() == CellType.STRING)
+						values.add(cell.getStringCellValue());
+					else if (cell.getCellType() == CellType.NUMERIC) {
+						values.add(Integer.toString((int) (cell.getNumericCellValue())));
+
 					}
-					
-						
-						e.setNomFr(values.get(0));
-						e.setPrenomFr(values.get(1));
-						e.setNomAr(values.get(2));
-						e.setPrenomAr(values.get(3));
-						e.setAcad(values.get(4));
-						e.setAn_Bac(values.get(5));
-						e.setCin(values.get(6));
-						e.setDate1in(values.get(7));
-						String date=values.get(8);
-						System.out.println("date="+date);
-						
-						java.sql.Date date_sql = new java.sql.Date(Integer.parseInt(date));
-						e.setDateN(date_sql);
-						System.out.println("dateN="+date_sql);
-						e.setVilleBac(values.get(9));
-						e.setLieuN_ar(values.get(10));
-						e.setLieuN_fr(values.get(11));
-						e.setVilleNaissance(values.get(12));
-						e.setLycee(values.get(13));
-						e.setMassarEtud(values.get(14));
-						System.out.println(values.get(14));
-						e.setMt(values.get(15));
-						e.setNationalite(values.get(16));
-						e.setProvince(values.get(17));
-						e.setsBac(values.get(18));
-						e.setSexe(values.get(19));
-						e.setRegion(values.get(20));
-						e.setEtatPhy(values.get(21));
-						e.setGroupSocio(values.get(22));
-						e.setPhoto(null);
-					
-				
+
+				}
+				Etudiant e = new Etudiant();
+				e.setNomFr(values.get(0));
+				e.setPrenomFr(values.get(1));
+				e.setNomAr(values.get(2));
+				e.setPrenomAr(values.get(3));
+				e.setAcad(values.get(4));
+				e.setAn_Bac(values.get(5));
+				e.setCin(values.get(6));
+				e.setDate1in(values.get(7));
+				String date = values.get(8);
+				System.out.println("date=" + date);
+
+				java.sql.Date date_sql = new java.sql.Date(Integer.parseInt(date));
+				e.setDateN(date_sql);
+				System.out.println("dateN=" + date_sql);
+				e.setVilleBac(values.get(9));
+				e.setLieuN_ar(values.get(10));
+				e.setLieuN_fr(values.get(11));
+				e.setVilleNaissance(values.get(12));
+				e.setLycee(values.get(13));
+				e.setMassarEtud(values.get(14));
+				System.out.println(values.get(14));
+				e.setMt(values.get(15));
+				e.setNationalite(values.get(16));
+				e.setProvince(values.get(17));
+				e.setsBac(values.get(18));
+				e.setSexe(values.get(19));
+				e.setRegion(values.get(20));
+				e.setEtatPhy(values.get(21));
+				e.setGroupSocio(values.get(22));
+				e.setPhoto(null);
+
 				Etudiants.add(e);
-				for (int i=1;i<Etudiants.size();i++)
-				{
-				addEt(Etudiants.get(i));
-				System.out.println("ajout");
+				for (int i = 0; i < Etudiants.size(); i++) {
+					addEt(Etudiants.get(i));
+					System.out.println("ajout");
 				}
-				}
-				
-				
-				System.out.println("size="+Etudiants.size());
-				
-				
 			}
-			
-			catch (IOException ex) {
-				ex.printStackTrace();
-				ex.getMessage();
-			}
-			
-			
-		
+
+		}
+
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 	}
 
 	public void addEtUSER(Etudiant etudiant, User user) {
@@ -368,19 +348,19 @@ public class InscripEnLigne implements IInscriptionEnligne {
 			e.printStackTrace();
 		}
 	}
-	
-	public String getetudBYNP(String nom , String prenom) {
+
+	public String getetudBYNP(String nom, String prenom) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
-		String idetud =null;
+		String idetud = null;
 		try {
-			ps=conn.prepareStatement("select massarEtud from etudiant where NomFr=? and prenomFr=? ");
+			ps = conn.prepareStatement("select massarEtud from etudiant where NomFr=? and prenomFr=? ");
 			ps.setString(1, nom);
 			ps.setString(2, prenom);
-			ResultSet rs =ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				idetud= rs.getString("massarEtud");
-				
+				idetud = rs.getString("massarEtud");
+
 			}
 			ps.close();
 			conn.close();
@@ -388,10 +368,9 @@ public class InscripEnLigne implements IInscriptionEnligne {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return idetud ;
+		return idetud;
 	}
-	
-	
+
 	public String getIdEtdu(Etudiant etudiant) {
 		// TODO Auto-generated method stub
 		Connection conn = SingletonConnection.getConnection();
@@ -415,8 +394,9 @@ public class InscripEnLigne implements IInscriptionEnligne {
 		}
 		return idEtud;
 	}
-	 private static java.sql.Date convert(java.util.Date uDate) {
-	        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-	        return sDate;
-	    }
+
+	private static java.sql.Date convert(java.util.Date uDate) {
+		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+		return sDate;
+	}
 }

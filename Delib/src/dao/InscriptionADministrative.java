@@ -144,10 +144,10 @@ public class InscriptionADministrative {
 		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement(
-					"Select ia.cne, et.NomFr,et.PrenomFr ,f.nom_filier ,au.anne_acad FROM inscadmin_etud_filier ief ,inscripadministrative ia, etudiant et ,filiere f,anneuniversitaire au  where ief.id_fil=f.id_filiere and  ia.id_inscAdm=ief.id_ia and ief.id_etud=et.massarEtud");
+					"Select et.massarEtud, et.NomFr,et.PrenomFr ,f.nom_filier ,au.anne_acad FROM inscadmin_etud_filier ief ,inscripadministrative ia, etudiant et ,filiere f,anneuniversitaire au  where ief.id_fil=f.id_filiere and  ia.id_inscAdm=ief.id_ia and ief.id_etud=et.massarEtud");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				EtudFil etu = new EtudFil(rs.getString("cne"), rs.getString("NomFr"), rs.getString("prenomFr"), rs.getString("nom_filier"),rs.getDate("anne_acad"));
+				EtudFil etu = new EtudFil(rs.getString("massarEtud"), rs.getString("NomFr"), rs.getString("prenomFr"), rs.getString("nom_filier"),rs.getDate("anne_acad"));
 				etud.add(etu);
 
 			}
