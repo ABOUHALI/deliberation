@@ -698,4 +698,27 @@ public class StructureETab implements IStructureEtab {
 		}
 		
 	}
+	
+	public Etape getIdEtape(int id) {
+		Connection conn=SingletonConnection.getConnection();
+		PreparedStatement ps;
+		Etape p=new Etape();
+		try {
+			ps=conn.prepareStatement("select * from etape where id_Etape=?");
+			ps.setInt(1, id);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				p.setIDEtape(rs.getInt("id_Etape"));
+				p.setLabelleEtape(rs.getString("libelle_etape"));
+				p.setDiplomante(rs.getBoolean("diplomante"));
+				p.setIDFiliere(rs.getInt("fid_fil"));
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return p;
+	}
 }

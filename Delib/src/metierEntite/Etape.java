@@ -5,6 +5,10 @@ public class Etape {
    private String LabelleEtape;
    private boolean diplomante;
    private int IDFiliere;
+
+public Etape() {
+	
+}
 public Etape(int iDEtape, String labelleEtape, boolean diplomante, int iDFiliere) {
 	super();
 	IDEtape = iDEtape;
