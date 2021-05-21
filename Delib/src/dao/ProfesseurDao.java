@@ -21,8 +21,9 @@ public void addProf(Professeur p) {
 		ps.setString(2, p.getNom());
 		ps.setString(3, p.getPrenom());
 		ps.setString(4, p.getRole());
-		ps.setInt(5, p.getFiliere());
-		ps.setInt(6, p.getEtablissement());
+		ps.setString(5, p.getGrade());
+		ps.setInt(6, p.getFiliere());
+		ps.setInt(7, p.getEtablissement());
 		ps.executeUpdate();
 		ps.close();
 		conn.close();
@@ -33,7 +34,7 @@ public void addProf(Professeur p) {
 }
 public void addUser(User user , Professeur prof) {
 	Connection conn = SingletonConnection.getConnection();
-	int idprf = getIDProf(prof);
+	int idprf = getIDProf(prof.getNom(),prof.getPrenom());
 	PreparedStatement ps ;
 	try {
 		ps=conn.prepareStatement(" insert into user(password,roles,username,id_prof) values(?,?,?,?)");
@@ -48,17 +49,17 @@ public void addUser(User user , Professeur prof) {
 		e.printStackTrace();
 	}
 }
-public int getIDProf(Professeur prof) {
+public int getIDProf(String nom , String prenom) {
 	Connection conn = SingletonConnection.getConnection();
 	PreparedStatement ps ;
 	int idProf =0;
 	try {
-		ps = conn.prepareStatement("select * from professeru where nom_professeur=? and (prenom_professeur=?)");
-		ps.setString(1, prof.getNom());
-		ps.setString(2, prof.getPrenom());
+		ps = conn.prepareStatement("select id_professeur from professeur where nom_professeur=? and prenom_professeur=?");
+		ps.setString(1, nom);
+		ps.setString(2, prenom);
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) {
-			idProf = rs.getInt("id");
+			idProf = rs.getInt("id_professeur");
 		}
 		ps.close();
 		conn.close();
@@ -88,9 +89,9 @@ public List<Professeur> listProf(){
 public void addPorf_element(Professeur prof ,int idElement) {
 	Connection conn =SingletonConnection.getConnection();
 	PreparedStatement ps;
-	int idProf =getIDProf(prof);
+	int idProf =getIDProf(prof.getNom(),prof.getPrenom());
 	try {
-		ps=conn.prepareStatement("insert into prof_elt(id_prof,id_eles)values(?,?)");
+		ps=conn.prepareStatement("insert into prof_elt(id_prof,id_elts)values(?,?)");
 		ps.setInt(1, idProf);
 		ps.setInt(2, idElement);
 		ps.executeUpdate();
@@ -104,7 +105,7 @@ public void addPorf_element(Professeur prof ,int idElement) {
 public void addProf_module(Professeur prof ,int idModule) {
 	Connection conn =SingletonConnection.getConnection();
 	PreparedStatement ps;
-	int idProf = getIDProf(prof);
+	int idProf = getIDProf(prof.getNom(),prof.getPrenom());
 	try {
 		ps=conn.prepareStatement("insert into prof_module(IDMODULE,idProfesseur)values(?,?)");
 		ps.setInt(1,idModule);
