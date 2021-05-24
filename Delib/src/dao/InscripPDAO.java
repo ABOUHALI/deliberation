@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,17 +10,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFFontFormatting;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+
+import metierEntite.ETUD_NOTE;
 import metierEntite.Element;
 import metierEntite.Etudiant;
 import metierEntite.Inscrip_pedagogique;
 
 public class InscripPDAO {
 	private InscripEnLigne ie = new InscripEnLigne();
-	public void addIP(Inscrip_pedagogique ip ) {
-		Connection conn =SingletonConnection.getConnection();
+
+	public void addIP(Inscrip_pedagogique ip) {
+		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("insert into inscrip_pedago(fid_etdt,fid_elt,anneAcad) values(?,?,?)");
+			ps = conn.prepareStatement("insert into inscrip_pedago(fid_etdt,fid_elt,anneAcad) values(?,?,?)");
 			ps.setString(1, ip.getIdetud());
 			ps.setInt(2, ip.getElt());
 			ps.setDate(3, ip.getAnneacad());
@@ -31,16 +43,17 @@ public class InscripPDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	public List<Inscrip_pedagogique> getIP(){
+
+	public List<Inscrip_pedagogique> getIP() {
 		List<Inscrip_pedagogique> ipd = new ArrayList<Inscrip_pedagogique>();
-		Connection conn =SingletonConnection.getConnection();
+		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select anneAcad, fid_etdt,fid_elt from inscrip-pedago");
-			ResultSet rs =ps.executeQuery();
-			while(rs.next()) {
-				Inscrip_pedagogique ip = new Inscrip_pedagogique(rs.getString("fid_etdt"), rs.getInt("fid_elt"), rs.getDate("anneAcad"));
+			ps = conn.prepareStatement("select anneAcad, fid_etdt,fid_elt from inscrip-pedago");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Inscrip_pedagogique ip = new Inscrip_pedagogique(rs.getString("fid_etdt"), rs.getInt("fid_elt"),
+						rs.getDate("anneAcad"));
 				ipd.add(ip);
 			}
 		} catch (Exception e) {
@@ -50,47 +63,48 @@ public class InscripPDAO {
 		return ipd;
 	}
 
-	public List<Element> getElementDANSSemestre(String semestre){
+	public List<Element> getElementDANSSemestre(String semestre) {
 		List<Element> elts = new ArrayList<Element>();
-		Connection conn  =SingletonConnection.getConnection();
+		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select id_elt from element e , module m , semestre s where e.fid_module=m.id_module and m.fid_semestre=s.id_semestre and s.libelle_semestre=? ");
+			ps = conn.prepareStatement(
+					"select id_elt from element e , module m , semestre s where e.fid_module=m.id_module and m.fid_semestre=s.id_semestre and s.libelle_semestre=? ");
 			ps.setString(1, semestre);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				Element el = new Element(rs.getInt("id_elt"));
 				elts.add(el);
-				}
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return elts ;
+		return elts;
 	}
 
-	public HashSet<Etudiant> getListeEtudiantXXXX(List<Element> elts){
-		List<Etudiant> et =null;
-		HashSet<Etudiant> etudiants =new HashSet<Etudiant>();
-		/*recupere les ids a partir des elements*/
+	public HashSet<Etudiant> getListeEtudiantXXXX(List<Element> elts) {
+		List<Etudiant> et = null;
+		HashSet<Etudiant> etudiants = new HashSet<Etudiant>();
+		/* recupere les ids a partir des elements */
 		for (int i = 0; i < elts.size(); i++) {
-			et =getEtudiantParElement(elts.get(i).getIDElement());
-			
+			et = getEtudiantParElement(elts.get(i).getIDElement());
+
 			etudiants.addAll(et);
-		}	
+		}
 		/* test */
 		return etudiants;
 	}
 
-	public List<Etudiant> getEtudiantParElement(int id){
-		List<Etudiant> etdts =  new ArrayList<Etudiant>();
+	public List<Etudiant> getEtudiantParElement(int id) {
+		List<Etudiant> etdts = new ArrayList<Etudiant>();
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select fid_etdt from inscrip_pedago where fid_elt=? ");
+			ps = conn.prepareStatement("select fid_etdt from inscrip_pedago where fid_elt=? ");
 			ps.setInt(1, id);
-			ResultSet rs= ps.executeQuery();
-			while(rs.next()) {
-				String massar = rs.getString("fid_etdt")  ;
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				String massar = rs.getString("fid_etdt");
 				Etudiant e = ie.getET3(massar);
 				etdts.add(e);
 			}
@@ -101,15 +115,16 @@ public class InscripPDAO {
 		return etdts;
 	}
 
-	public List<Element> getElementDANSModule(String module){
-		List<Element> m = new  ArrayList<Element>();
+	public List<Element> getElementDANSModule(String module) {
+		List<Element> m = new ArrayList<Element>();
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select id_elt from element e ,module m where e.fid_module=m.id_module and m.libelle_module=?");
+			ps = conn.prepareStatement(
+					"select id_elt from element e ,module m where e.fid_module=m.id_module and m.libelle_module=?");
 			ps.setString(1, module);
-			ResultSet rs =ps.executeQuery();
-			while(rs.next()) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
 				Element e = new Element(rs.getInt("id_elt"));
 				m.add(e);
 			}
@@ -117,29 +132,29 @@ public class InscripPDAO {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return m ;
+		return m;
 	}
 
 	public boolean isEtudiantPEDA(String massarEtud) {
 		boolean b = false;
-		List<Etudiant> et = EtudiantInscrisPedag();		
-		for(Etudiant p:et) {
-			b=p.getMassarEtud().equals(massarEtud);
-			if(b) {
-				break ;
+		List<Etudiant> et = EtudiantInscrisPedag();
+		for (Etudiant p : et) {
+			b = p.getMassarEtud().equals(massarEtud);
+			if (b) {
+				break;
 			}
 		}
 		return b;
-		
+
 	}
-	
-	public List<Etudiant> EtudiantInscrisPedag(){
-		List<Etudiant> etud =new ArrayList<Etudiant>();
+
+	public List<Etudiant> EtudiantInscrisPedag() {
+		List<Etudiant> etud = new ArrayList<Etudiant>();
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select distinct fid_etdt from inscrip_pedago ");
-			ResultSet rs =ps.executeQuery();
+			ps = conn.prepareStatement("select distinct fid_etdt from inscrip_pedago ");
+			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Etudiant e = new Etudiant(rs.getString("fid_etdt"));
 				etud.add(e);
@@ -148,8 +163,44 @@ public class InscripPDAO {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return etud ;
+		return etud;
 	}
 
+	public List<ETUD_NOTE> recupererLISTE(InputStream file) {
+		ArrayList<ETUD_NOTE> etudiants = new ArrayList<ETUD_NOTE>();
+		ArrayList<String> values = new ArrayList<String>();
+		try {
+			HSSFWorkbook wb = new HSSFWorkbook(file);
+			HSSFSheet sheet = wb.getSheetAt(0);
+			Iterator<Row> rows = sheet.rowIterator();
+			while (rows.hasNext()) {
+				System.out.println("  in  ");
+				values.clear();
+				HSSFRow row = (HSSFRow) rows.next();
+				Iterator<Cell> cells = row.cellIterator();
+
+				while (cells.hasNext()) {
+
+					HSSFCell cell = (HSSFCell) cells.next();
+
+					if (cell.getCellType() == CellType.STRING)
+						values.add(cell.getStringCellValue());
+					else if (cell.getCellType() == CellType.NUMERIC) {
+						values.add(Integer.toString((int) (cell.getNumericCellValue())));
+
+					}
+
+				}
+				ETUD_NOTE e = new ETUD_NOTE();
+				e.setCNE(values.get(0));
+				e.setNom(values.get(1));
+				e.setPrenom(values.get(2));
+				etudiants.add(e);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return etudiants;
+	}
 
 }

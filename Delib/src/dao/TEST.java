@@ -97,7 +97,8 @@ public class TEST {
 		/*for (int i = 0; i < elts.size(); i++) {
 			System.out.println(elts.get(i).getIDElement());
 		}*/
-		
+		System.out.println(se.listModule());
+
 		/*HashSet<Etudiant> etdts = ipd.getListeEtudiantXXXX(elts);
 		System.out.println("RF"+etdts);*/
 		/*System.out.println(etdts);
@@ -112,9 +113,14 @@ public class TEST {
 		/*for (int i = 0; i < e.size(); i++) {
 			System.out.println(e.get(i).getMassarEtud());
 		}*/
-		
-		
-		}
+		/*int id = se.getIDModule("analyse");
+		List<Element> elts =se.getElementByMODULE(id);
+		Element e = se.INFO_ELEMENT(elts.get(0).getLabelleElement());
+		System.out.println(e);*/
+		//////////////////////////////////////////////////////
+		/*System.out.println(se.getIDElement("java 2"));
+		System.out.println(se.getNoteElement("M133462726", "java 2"));*/
+	}
 	public String heute() {
 		final Date date = new Date();
 		return new SimpleDateFormat("dd-MM-yyyy").format(date);

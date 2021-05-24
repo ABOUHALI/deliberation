@@ -31,6 +31,7 @@ import dao.InscriptionADministrative;
 import dao.LoginDAO;
 import dao.ProfesseurDao;
 import dao.StructureETab;
+import metierEntite.ETUD_NOTE;
 import metierEntite.Element;
 import metierEntite.Etablissement;
 import metierEntite.Etape;
@@ -52,8 +53,8 @@ import metierEntite.annee_universitaire;
 		"/Liste-Etablissement", "/ajouter-filiere", "/get-etab", "/ListeEnLigne", "/administrative.php",
 		"/ajouter-Module", "/ajouter-element", "/ajouter-professeur", "/ajouter-professeur.php","/logout",
 		"/add-inscriptionEexcel.do", "/add-inscriptionEexcel", "/Liste-IAdministrative", "/pedagogique.php",
-		"/ListePedagogique", "/choix-listp","/modifier-etab","/Ajout-Etape","/get-filiere","/Mdp-oublie","/verifier-code","/Renetialiser-Mdp","/list-element","/ajouter-Semestre" ,"/get-etap" })
-
+		"/ListePedagogique", "/choix-listp","/modifier-etab","/Ajout-Etape","/get-filiere","/Mdp-oublie","/verifier-code","/Renetialiser-Mdp","/list-element","/ajouter-Semestre" ,"/get-etap", 
+		"/note-element-excel","/note-element-excel.php"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 
 public class controller extends HttpServlet {
@@ -629,6 +630,25 @@ public class controller extends HttpServlet {
 			Etape p=se.getIdEtape(id);
 			request.setAttribute("s", p);
 			this.getServletContext().getRequestDispatcher("/ProfilEtape.jsp").forward(request, response);
+		}
+		///////////////////////DELIBERATION:
+		else if(path.equals("/note-element-excel")){
+			List<Element> elts = se.listElement();
+			request.setAttribute("elements", elts);
+			this.getServletContext().getRequestDispatcher("/NOTE-EXCEL.jsp").forward(request, response);
+		}else if(path.equals("/note-element-excel.do")){
+			String elt = request.getParameter("element");
+			Part filePart = request.getPart("fichier");
+			if (filePart != null) {
+				inputStream = filePart.getInputStream();
+			}
+			List<ETUD_NOTE> en = ipd.recupererLISTE(inputStream);
+			request.setAttribute("etudiants", en);
+			this.getServletContext().getRequestDispatcher("/editable-table.jsp").forward(request, response);
+			
+			
+		}else if(path.equals("/saveNOTE.do")) {
+			System.out.println(44);
 		}
 	}
 	private static java.sql.Date convert(java.util.Date uDate) {

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -15,8 +16,10 @@ import org.apache.commons.math3.analysis.function.Sin;
 import metierEntite.Element;
 import metierEntite.Etablissement;
 import metierEntite.Etape;
+import metierEntite.Etudiant;
 import metierEntite.Filiere;
 import metierEntite.Module;
+import metierEntite.Note;
 import metierEntite.Semestre;
 import metierEntite.annee_universitaire;
 
@@ -37,6 +40,30 @@ public class StructureETab implements IStructureEtab {
 			// TODO: handle exception
 		}
 		return sem;
+	}
+
+	public Element INFO_ELEMENT(String nom) {
+		Element e = new Element();
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement("select * from element where libelle_elt=?");
+			ps.setString(1, nom);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				e.setIDModule(rs.getInt("fid_module"));
+				e.setIDElement(rs.getInt("id_elt"));
+				e.setCoeff(rs.getInt("coefficient"));
+				e.setLabelleElement(rs.getString("libelle_elt"));
+				e.setNote_validation(rs.getInt("Note_Validation"));
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+		return e;
 	}
 
 	public Etablissement getEtablissement(int id) {
@@ -366,7 +393,7 @@ public class StructureETab implements IStructureEtab {
 		return m;
 	}
 
-	public int getIDETbalissement(String etab) {
+	public int getIDETablissement(String etab) {
 		int idetab = 0;
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
@@ -571,10 +598,11 @@ public class StructureETab implements IStructureEtab {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select libelle_elt from   element e , module m where e.fid_module=m.id_module and m.id_module=?");
+			ps = conn.prepareStatement(
+					"select libelle_elt from   element e , module m where e.fid_module=m.id_module and m.id_module=?");
 			ps.setInt(1, id_module);
-			ResultSet rs =ps.executeQuery();
-			while(rs.next()) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
 				Element e = new Element(rs.getString("libelle_elt"));
 				elt.add(e);
 			}
@@ -585,14 +613,14 @@ public class StructureETab implements IStructureEtab {
 		return elt;
 	}
 
-	public List<String> nomSemestre(){
+	public List<String> nomSemestre() {
 		List<String> noms = new ArrayList<String>();
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select libelle_semestre from semestre ");
+			ps = conn.prepareStatement("select libelle_semestre from semestre ");
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				String nom = rs.getString("libelle_semestre");
 				noms.add(nom);
 			}
@@ -600,16 +628,17 @@ public class StructureETab implements IStructureEtab {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return noms ;
+		return noms;
 	}
-	public List<String> nomModule(){
+
+	public List<String> nomModule() {
 		List<String> nomm = new ArrayList<String>();
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select libelle_module from module");
-			ResultSet rs =ps.executeQuery();
-			while(rs.next()) {
+			ps = conn.prepareStatement("select libelle_module from module");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
 				String nm = rs.getString("libelle_module");
 				nomm.add(nm);
 			}
@@ -620,14 +649,14 @@ public class StructureETab implements IStructureEtab {
 		return nomm;
 	}
 
-	public List<String> nomElement(){
+	public List<String> nomElement() {
 		List<String> nome = new ArrayList<String>();
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps=conn.prepareStatement("select libelle_elt from element");
+			ps = conn.prepareStatement("select libelle_elt from element");
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				String ne = rs.getString("libelle_elt");
 				nome.add(ne);
 			}
@@ -635,16 +664,16 @@ public class StructureETab implements IStructureEtab {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return nome ;
+		return nome;
 	}
-	
+
 	public int getIdFiliere(Filiere f) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		int idfiliere = 0;
 		try {
 			ps = conn.prepareStatement("select * from filiere where nom_filier=?");
-			ps.setString(1,f.getFiliere() );
+			ps.setString(1, f.getFiliere());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				idfiliere = rs.getInt("id_filiere");
@@ -656,16 +685,16 @@ public class StructureETab implements IStructureEtab {
 			e.printStackTrace();
 		}
 		return idfiliere;
-	
-}
-	
+
+	}
+
 	public Filiere getIDFil(int id) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		Filiere f = new Filiere();
 		try {
 			ps = conn.prepareStatement("select * from filiere where id_filiere=?");
-			ps.setInt(1,id );
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				f.setIDFiliere(rs.getInt("id_filiere"));
@@ -679,35 +708,35 @@ public class StructureETab implements IStructureEtab {
 			e.printStackTrace();
 		}
 		return f;
-	
-}
+
+	}
 
 	public void UpdateEtab(Etablissement etablissement) {
-		Connection conn=SingletonConnection.getConnection();
+		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
-		
+
 		try {
-			ps=conn.prepareStatement("update etablissement set nom_etab=?,description_etab=? where id_etab=?");
+			ps = conn.prepareStatement("update etablissement set nom_etab=?,description_etab=? where id_etab=?");
 			ps.setString(1, etablissement.getEtablissement());
 			ps.setString(2, etablissement.getDescription());
 			ps.setInt(3, etablissement.getIDEtablissement());
 			ps.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public Etape getIdEtape(int id) {
-		Connection conn=SingletonConnection.getConnection();
+		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
-		Etape p=new Etape();
+		Etape p = new Etape();
 		try {
-			ps=conn.prepareStatement("select * from etape where id_Etape=?");
+			ps = conn.prepareStatement("select * from etape where id_Etape=?");
 			ps.setInt(1, id);
-			ResultSet rs=ps.executeQuery();
-			while(rs.next()) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
 				p.setIDEtape(rs.getInt("id_Etape"));
 				p.setLabelleEtape(rs.getString("libelle_etape"));
 				p.setDiplomante(rs.getBoolean("diplomante"));
@@ -721,4 +750,110 @@ public class StructureETab implements IStructureEtab {
 		}
 		return p;
 	}
+
+	public int getNoteElement(String massarEtud, String elt) {
+		int moyenne=0,somme=0 ;
+		String etat ;
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+		HashMap<String, Double> sselts = Souselts_Note(massarEtud, elt);
+		List<Double> result = new ArrayList<Double>(sselts.values());
+		for(int i=0;i<3;i++) {
+			somme+=result.get(i);
+		}
+		moyenne=somme/3;
+		if(moyenne>0) {
+			etat ="Valide";
+		}else {
+			etat="Rattrapage";
+		}
+		ps=conn.prepareStatement("update note_elt set NOTE=? ,Etat=? where id_etudiantt=? and id_eltt=? ");
+		ps.setDouble(1, moyenne);
+		ps.setString(2,etat);
+		ps.setString(3, massarEtud);
+		ps.setInt(4, getIDElement(elt));
+		ps.executeUpdate();
+		ps.close();
+		conn.close();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return moyenne;
+	}
+
+	public HashMap<String, Double> Souselts_Note(String massarEtud,String elt){
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		int id_elt = getIDElement(elt);
+		HashMap<String,Double> sselts = new HashMap<String, Double>();
+		try {
+			ps=conn.prepareStatement("Select Note_tp , Note_ExamO, Note_CC from note_elt where id_eltt=? and id_etudiantt=?");
+			ps.setInt(1, id_elt);
+			ps.setString(2, massarEtud);
+			ResultSet rs = ps.executeQuery();
+			String[] se= {"TP","Ordinaire","CC"};
+			String[] nt = {"Note_tp","Note_ExamO","Note_CC"};
+			while(rs.next()) {
+				for (int i = 0; i < nt.length; i++) {
+					sselts.put(se[i], rs.getDouble(nt[i]));
+				}
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return sselts ;
+	}
+
+	@SuppressWarnings("null")
+	public int NotedsModule(String module,String massarEtud ) {
+		int id_module = getIDModule(module);
+		int moyenne=0,somme=0,sc=0;
+		List<Element> elts = getElementByMODULE(id_module);
+		int c[]=new int[elts.size()];
+		int tab[] = new int[elts.size()];
+		for (int i = 0; i < elts.size(); i++) {
+			Element e =INFO_ELEMENT(elts.get(i).getLabelleElement());
+			int m = getNoteElement(massarEtud, e.getLabelleElement());
+			tab[i]=m;
+			c[i]=e.getCoeff();
+			sc +=c[i];
+		}
+		for (int i = 0; i < tab.length; i++) {
+			moyenne+=tab[i]*c[i];
+		}
+		somme=moyenne/sc;
+		return somme ;
+	}
+	
+	public void saveNOTE_ELT(String massarEtud , String element ,int TP,int ORD,int CC) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		int id_elt = getIDElement(element);
+		try {
+			ps =conn.prepareStatement("insert into note_elt(id_etudiantt,id_eltt,Note_tp,Note_ExamO,Note_CC) values(?,?,?,?,?) ");
+			ps.setString(1, massarEtud);
+			ps.setInt(2, id_elt);
+			ps.setInt(3, TP);
+			ps.setInt(4, ORD);
+			ps.setInt(5, CC);
+			ps.executeUpdate();
+			getNoteElement(massarEtud, element);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+				
+	
+	}
+	
+	
+	
+	
+	
 }
