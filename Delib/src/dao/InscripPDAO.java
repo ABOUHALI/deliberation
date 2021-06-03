@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFFontFormatting;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -26,6 +24,7 @@ import metierEntite.Inscrip_pedagogique;
 
 public class InscripPDAO {
 	private InscripEnLigne ie = new InscripEnLigne();
+	public StructureETab se = new StructureETab();
 
 	public void addIP(Inscrip_pedagogique ip) {
 		Connection conn = SingletonConnection.getConnection();
@@ -147,6 +146,24 @@ public class InscripPDAO {
 		return b;
 
 	}
+	public boolean isEtudiantPElt(String massarEtud ,String elt) {
+		boolean b = false ;
+		int id_elt = se.getIDElement(elt);
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select fid_etdt from inscrip_pedago where fid_elt=? and fid_etdt=?");
+			ps.setInt(1, id_elt);
+			ps.setString(2, massarEtud);
+			ResultSet rs =ps.executeQuery();
+			b =rs.next();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return b ;
+		
+	}
 
 	public List<Etudiant> EtudiantInscrisPedag() {
 		List<Etudiant> etud = new ArrayList<Etudiant>();
@@ -166,6 +183,10 @@ public class InscripPDAO {
 		return etud;
 	}
 
+	
+	
+	
+	@SuppressWarnings("resource")
 	public List<ETUD_NOTE> recupererLISTE(InputStream file) {
 		ArrayList<ETUD_NOTE> etudiants = new ArrayList<ETUD_NOTE>();
 		ArrayList<String> values = new ArrayList<String>();
@@ -196,11 +217,155 @@ public class InscripPDAO {
 				e.setNom(values.get(1));
 				e.setPrenom(values.get(2));
 				etudiants.add(e);
+
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return etudiants;
 	}
 
+	public List<ETUD_NOTE> EtudiantNoteV(List<Etudiant> e, String elt) {
+		List<ETUD_NOTE> en = new ArrayList<ETUD_NOTE>();
+		int id_elt = se.getIDElement(elt);
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			for (int i = 0; i < e.size(); i++) {
+				ps = conn.prepareStatement(
+						"select id_etudiantt from note_elt where id_etudiantt=? and NOTE IS NOT NULL and id_eltt=?");
+				ps.setString(1, e.get(i).getMassarEtud());
+				ps.setInt(2, id_elt);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					en.add(new ETUD_NOTE(rs.getString("id_etudiantt")));
+				}
+			}
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+		return en;
+	}
+
+	public Etudiant info_etudiant(String massar) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		Etudiant e = null;
+		try {
+			ps = conn.prepareStatement("select massarEtud , NomFr , PrenomFr from etudiant where massarEtud=? ");
+			ps.setString(1, massar);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				e = new Etudiant(rs.getString("massarEtud"), rs.getString("NomFr"), rs.getString("PrenomFr"));
+			}
+
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}
+		return e;
+	}
+
+	public List<Etudiant> etudiant_Dnote(List<Etudiant> e,String elt) {
+		List<Etudiant> nv = new ArrayList<Etudiant>();
+		int id_elt = se.getIDElement(elt);
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			
+				ps = conn.prepareStatement("select fid_etdt from inscrip_pedago where fid_elt=? ");
+				ps.setInt(1, id_elt);
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()) {
+					Etudiant et = new Etudiant(rs.getString("fid_etdt"));
+					nv.add(et);
+					
+				}
+			
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+		return nv ;
+	}
+
+	public boolean is_note_elt(String massarEtud , String element) {
+		boolean b =false ;
+		int id_elt = se.getIDElement(element);
+		Etudiant e = new Etudiant(massarEtud);
+		List<Etudiant> es = new ArrayList<Etudiant>();
+		es.add(e);
+		List<ETUD_NOTE> lise = EtudiantNoteV(es, element);
+		b=lise.isEmpty();
+		return !b;
+	}
+
+	public List<ETUD_NOTE> recupererLISTE_Note(InputStream file,String elt) {
+		ArrayList<ETUD_NOTE> etudiants = new ArrayList<ETUD_NOTE>();
+		ArrayList<String> values = new ArrayList<String>();
+		try {
+			HSSFWorkbook wb = new HSSFWorkbook(file);
+			HSSFSheet sheet = wb.getSheetAt(0);
+			Iterator<Row> rows = sheet.rowIterator();
+			while (rows.hasNext()) {
+				System.out.println("  in  ");
+				values.clear();
+				HSSFRow row = (HSSFRow) rows.next();
+				Iterator<Cell> cells = row.cellIterator();
+
+				while (cells.hasNext()) {
+
+					HSSFCell cell = (HSSFCell) cells.next();
+
+					if (cell.getCellType() == CellType.STRING)
+						values.add(cell.getStringCellValue());
+					else if (cell.getCellType() == CellType.NUMERIC) {
+						values.add(Integer.toString((int) (cell.getNumericCellValue())));
+
+					}
+
+				}
+				ETUD_NOTE e = new ETUD_NOTE();
+				e.setCNE(values.get(0));
+				e.setNom(values.get(1));
+				e.setPrenom(values.get(2));
+				int tp = Integer.parseInt(values.get(3));
+				int cc = Integer.parseInt(values.get(4));
+				int o =Integer.parseInt(values.get(5));
+				se.saveNOTE_ELT(values.get(0), elt, tp, o, cc);
+				e.setNOTE(se.recuperer_note(values.get(0), elt));
+				etudiants.add(e);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return etudiants;
+	}	
+
+	public List<ETUD_NOTE> getListeEtudiant(String elt ){
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		List<ETUD_NOTE> en = new ArrayList<ETUD_NOTE>();
+		int id_elt = se.getIDElement(elt);
+		try {
+			ps=conn.prepareStatement("select id_etudiantt, NOTE  from note_elt where id_eltt=?");
+			ps.setInt(1, id_elt);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				String massarEtu=rs.getString("id_etudiantt");
+				Etudiant e = info_etudiant(massarEtu);
+				ETUD_NOTE ee = new ETUD_NOTE(e.getMassarEtud(), e.getNomFr(), e.getPrenomFr(), rs.getInt("NOTE"));
+				en.add(ee);
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return en ;
+	}
 }

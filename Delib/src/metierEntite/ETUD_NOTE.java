@@ -1,10 +1,32 @@
 package metierEntite;
 
-public class ETUD_NOTE {
- private String CNE;
- private String nom;
- private String prenom;
- private int NOTE;
+public class ETUD_NOTE extends Etudiant{
+private String CNE;
+private String nom;
+private String prenom;
+private int NOTE;
+private String etat;
+public ETUD_NOTE(String CNE,String nom , String prenom , int NOTE,String etat) {
+	this.CNE=CNE;
+	this.nom=nom;
+	this.prenom=prenom;
+	this.NOTE=NOTE;
+	this.etat=etat;
+																				}
+public ETUD_NOTE(String cNE) {
+	super();
+	CNE = cNE;
+}
+public ETUD_NOTE(String cNE, int nOTE) {
+	super();
+	CNE = cNE;
+	NOTE = nOTE;
+}
+public ETUD_NOTE(String cNE, String nom) {
+	super();
+	CNE = cNE;
+	this.nom = nom;
+}
 public String getCNE() {
 	return CNE;
 }
@@ -44,6 +66,17 @@ public ETUD_NOTE(String cNE, String nom, String prenom) {
 }
 public ETUD_NOTE() {
 	super();
+}
+
+@Override
+public String toString() {
+	return "ETUD_NOTE [CNE=" + CNE + ", nom=" + nom + ", prenom=" + prenom + ", NOTE=" + NOTE + ", etat=" + etat + "]";
+}
+public String getEtat() {
+	return etat;
+}
+public void setEtat(String etat) {
+	this.etat = etat;
 }
  
 }

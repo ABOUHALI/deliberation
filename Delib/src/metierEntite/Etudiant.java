@@ -217,9 +217,10 @@ public class Etudiant {
 	public void setPhoto(InputStream photo) {
 		this.photo = photo;
 	}
+	
 	@Override
 	public String toString() {
-		return "Etudiant [massarEtud=" + massarEtud +  "]";
+		return "Etudiant [massarEtud=" + massarEtud + ", NomFr=" + NomFr + ", PrenomFr=" + PrenomFr + "]";
 	}
 	@Override
 	public int hashCode() {

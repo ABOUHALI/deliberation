@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import org.apache.poi.ss.formula.SheetIdentifier;
 
+import metierEntite.ETUD_NOTE;
 import metierEntite.Element;
 import metierEntite.Etablissement;
 import metierEntite.Etape;
@@ -19,6 +21,7 @@ import metierEntite.Inscrip_Administartive;
 import metierEntite.Semestre;
 import metierEntite.User;
 import metierEntite.annee_universitaire;
+import web.controller;
 
 public class TEST {
 
@@ -27,6 +30,7 @@ public class TEST {
 		Connection conn = SingletonConnection.getConnection();
 		StructureETab se = new StructureETab();
 		InscriptionADministrative iad = new InscriptionADministrative();
+		InscripPDAO ip = new InscripPDAO();
 		java.sql.Date date_sql = new java.sql.Date(4/13/2021);
 		/*Etudiant e = new Etudiant("test1", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm",date_sql , "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", null);
 		InscripEnLigne il = new InscripEnLigne();
@@ -97,9 +101,19 @@ public class TEST {
 		/*for (int i = 0; i < elts.size(); i++) {
 			System.out.println(elts.get(i).getIDElement());
 		}*/
-		System.out.println(se.listModule());
-
-		/*HashSet<Etudiant> etdts = ipd.getListeEtudiantXXXX(elts);
+		/*List<Etudiant> etds = ip.getEtudiantParElement(1);
+		
+		List<ETUD_NOTE> etd = ip.EtudiantNoteV(etds, "java 1");
+		
+		List<ETUD_NOTE> nn = new ArrayList<ETUD_NOTE>();
+		for (int i = 0; i < etd.size(); i++) {
+			Etudiant e = ip.info_etudiant(etd.get(i).getCNE());
+			ETUD_NOTE en = new ETUD_NOTE(e.getMassarEtud(), e.getNomFr(), e.getPrenomFr(), se.getNoteElement(e.getMassarEtud(), "java 1"));
+			nn.add(en);
+		}
+		System.out.println(nn);*/
+		
+		/*HashSet<Etudiant> etdts  = ipd.getListeEtudiantXXXX(elts);
 		System.out.println("RF"+etdts);*/
 		/*System.out.println(etdts);
 		/*System.out.println(etdts.toString());*/
@@ -113,6 +127,27 @@ public class TEST {
 		/*for (int i = 0; i < e.size(); i++) {
 			System.out.println(e.get(i).getMassarEtud());
 		}*/
+		/*int id_module = se.getIDModule("java");
+		System.out.println(id_module);
+		List<Element> elts = ip.getElementDANSModule("java");
+		System.out.println(elts);
+		System.out.println(ip.getListeEtudiantXXXX(elts));*/
+		/*System.out.println(ip.isEtudiantPElt("Z789456","algo 2"));*/
+		System.out.println(ip.getListeEtudiant("java 1"));
+		///////////////EXCEL LISTE/////////////
+		/*controller c = new  controller();
+		List<Etudiant> l = ip.getEtudiantParElement(2);
+		String excelFilePath ="etudiant.xls";
+		try {
+			c.writeExcel(l, excelFilePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+				
 		/*int id = se.getIDModule("analyse");
 		List<Element> elts =se.getElementByMODULE(id);
 		Element e = se.INFO_ELEMENT(elts.get(0).getLabelleElement());

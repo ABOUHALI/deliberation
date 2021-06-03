@@ -54,4 +54,23 @@ public void UpdateUser(String username,String password) {
 		e.printStackTrace();
 	}
 }
+
+public int username_info_prof(String username , String password) {
+	Connection conn = SingletonConnection.getConnection();
+	PreparedStatement ps;
+	int id_prof =0;
+	try {
+		ps=conn.prepareStatement("select id_prof from user where username=? and password=?");
+		ps.setString(1, username);
+		ps.setString(2, password);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			id_prof = rs.getInt("id_prof");
+		}
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	return id_prof;
+}
 }

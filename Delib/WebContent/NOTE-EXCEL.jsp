@@ -20,7 +20,9 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div class="alert-title dropzone-custom-sys">
 								<h2>Ajouter une NOTE</h2>
+								
 								<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+									<c:if test="${not empty message}"><div class="alert alert-danger" role="alert"><c:out value="${message}"/></div></c:if>
 									<div class="form-select-list">
 										<select class="form-control custom-select-value"
 											name="element">
@@ -47,13 +49,13 @@
 				</div>
 			</div>
 			<button type="submit"
-					class="btn btn-primary waves-effect waves-light">IMPORTER</button>
-			</form>
-			
+				class="btn btn-primary waves-effect waves-light">IMPORTER</button>
+		</form>
+
 	</div>
 
-		
-	
-	
+
+
+
 </body>
 </html>

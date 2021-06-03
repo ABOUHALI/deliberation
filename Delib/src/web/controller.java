@@ -1,5 +1,6 @@
 package web;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -25,6 +26,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import dao.InscripEnLigne;
 import dao.InscripPDAO;
 import dao.InscriptionADministrative;
@@ -37,6 +44,7 @@ import metierEntite.Etablissement;
 import metierEntite.Etape;
 import metierEntite.EtudFil;
 import metierEntite.Etudiant;
+import metierEntite.EtudiantExcelExport;
 import metierEntite.Filiere;
 import metierEntite.Inscrip_Administartive;
 import metierEntite.Inscrip_pedagogique;
@@ -49,12 +57,15 @@ import metierEntite.annee_universitaire;
 /**
  * Servlet implementation class controller
  */
-@WebServlet(name = "cs", urlPatterns = { "/InscriptionEnLigne", "/InscriptionEnLigne.php", "/home", "*.do",
+@WebServlet(name = "cs", urlPatterns = { "/home", "/InscriptionEnLigne", "/InscriptionEnLigne.php", "*.do",
 		"/Liste-Etablissement", "/ajouter-filiere", "/get-etab", "/ListeEnLigne", "/administrative.php",
-		"/ajouter-Module", "/ajouter-element", "/ajouter-professeur", "/ajouter-professeur.php","/logout",
+		"/ajouter-Module", "/ajouter-element", "/ajouter-professeur", "/ajouter-professeur.php", "/logout",
 		"/add-inscriptionEexcel.do", "/add-inscriptionEexcel", "/Liste-IAdministrative", "/pedagogique.php",
-		"/ListePedagogique", "/choix-listp","/modifier-etab","/Ajout-Etape","/get-filiere","/Mdp-oublie","/verifier-code","/Renetialiser-Mdp","/list-element","/ajouter-Semestre" ,"/get-etap", 
-		"/note-element-excel","/note-element-excel.php"})
+		"/ListePedagogique", "/choix-listp", "/modifier-etab", "/Ajout-Etape", "/get-filiere", "/Mdp-oublie",
+		"/verifier-code", "/Renetialiser-Mdp", "/list-element", "/ajouter-Semestre", "/get-etap", "/note-element-excel",
+		"/note-element-excel.php", "/saveNOTE.php", "/note-element", "/choix-listp-note", "/choix-listp-note-semestre",
+		"/choix-listp-note-element", "/choix-listp-note-module", "/deliberer", "/Liste-A-Deliberer",
+		"/Liste-A-Deliberer-Element", "/Liste-A-Deliberer-Module", "/Liste-A-Deliberer-Semestre","/etudiant-element","/recuperer-Liste-Elt" })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 
 public class controller extends HttpServlet {
@@ -71,8 +82,9 @@ public class controller extends HttpServlet {
 	List<Filiere> listFil = se.listFiliere();
 	List<Etape> listEtape = se.listEtape();
 	int randomCode;
-	
+
 	LoginDAO d = new LoginDAO();
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -149,17 +161,15 @@ public class controller extends HttpServlet {
 			String mdp = request.getParameter("password");
 			User user = new User(0, login, mdp, null, 0, null);
 			insc.addEtUSER(etudiant, user);
-		}else if(path.equals("/modifier-etab")) {
+		} else if (path.equals("/modifier-etab")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-			String etab=request.getParameter("etab");
-			String desc=request.getParameter("description");
-			Etablissement etablissement=new Etablissement(id,etab,desc);
+			String etab = request.getParameter("etab");
+			String desc = request.getParameter("description");
+			Etablissement etablissement = new Etablissement(id, etab, desc);
 			se.UpdateEtab(etablissement);
 			System.out.println("update");
 			this.getServletContext().getRequestDispatcher("/Liste-Etablissement").forward(request, response);
-			
-			
-			
+
 		}
 
 		else if (path.equals("/InscriptionEnLigne"))
@@ -169,7 +179,7 @@ public class controller extends HttpServlet {
 
 		}
 
-		else if(path.equals("/Ajout-Etape")) {
+		else if (path.equals("/Ajout-Etape")) {
 			listEtape = se.listEtape();
 			request.setAttribute("etape", listEtape);
 			request.setAttribute("filieres", listFil);
@@ -177,8 +187,7 @@ public class controller extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/ListeEtape.jsp").forward(request, response);
 
 		}
-		
-		
+
 		else if (path.equals("/Ajout.do")) {
 			System.out.println("ajot etab");
 			String nometab = request.getParameter("etablissement");
@@ -202,14 +211,14 @@ public class controller extends HttpServlet {
 			request.setAttribute("module", mod);
 			this.getServletContext().getRequestDispatcher("/ListeModule.jsp").forward(request, response);
 
-		}else if (path.equals("/get-filiere")){
+		} else if (path.equals("/get-filiere")) {
 			int id = Integer.parseInt(request.getParameter("id"));
-			Filiere fil=se.getIDFil(id);
+			Filiere fil = se.getIDFil(id);
 			System.out.println(fil);
 			request.setAttribute("f", fil);
 			this.getServletContext().getRequestDispatcher("/ProfilFiliere.jsp").forward(request, response);
-		} 
-		
+		}
+
 		else if (path.equals("/ajouter-module.do")) {
 			String module = request.getParameter("module");
 			int note_val = Integer.parseInt(request.getParameter("note"));
@@ -237,8 +246,7 @@ public class controller extends HttpServlet {
 			Filiere f = new Filiere(0, filiere, 0);
 			se.addFiliere(f, etab);
 			this.getServletContext().getRequestDispatcher("/ajouter-filiere").forward(request, response);
-			
-			
+
 		} else if (path.equals("/ajouter-element")) {
 			int nbr_et = Integer.parseInt(request.getParameter("id"));
 			int idm = Integer.parseInt(request.getParameter("idm"));
@@ -408,7 +416,7 @@ public class controller extends HttpServlet {
 			int idModule = se.getIDModule(module);
 			Professeur prof = new Professeur(0, nom, prenom, email, idEtablissement, role, idFiliere, grade);
 			pd.addProf(prof);
-			int idprof = pd.getIDProf(nom,prenom);
+			int idprof = pd.getIDProf(nom, prenom);
 			User user = new User(0, login, mdp, null, idprof, role);
 			pd.addUser(user, prof);
 			if (idElement != 0) {
@@ -416,6 +424,8 @@ public class controller extends HttpServlet {
 			}
 			if (idModule != 0) {
 				pd.addProf_module(prof, idModule);
+			}if(idFiliere!=0) {
+				pd.addRESP_FIL(prof, idFiliere);
 			}
 		}
 		if (path.equals("/add-inscriptionEexcel")) {
@@ -499,6 +509,7 @@ public class controller extends HttpServlet {
 			int id_elt = se.getIDElement(elt);
 			Inscrip_pedagogique ip = new Inscrip_pedagogique(cne, id_elt, au);
 			ipd.addIP(ip);
+			this.getServletContext().getRequestDispatcher("/choix-listp.do").forward(request, response);
 
 		} else if (path.equals("/choix-listp.do")) {
 			this.getServletContext().getRequestDispatcher("/ChoixPedag.jsp").forward(request, response);
@@ -508,14 +519,14 @@ public class controller extends HttpServlet {
 			String libelle = request.getParameter("Libelle");
 			if (choix.equals("semestre")) {
 				List<String> nms = se.nomSemestre();
-				request.setAttribute("semestres" , nms);
+				request.setAttribute("semestres", nms);
 				this.getServletContext().getRequestDispatcher("/ChoixPedagSems.jsp").forward(request, response);
-			}else if(choix.equals("module")) {
+			} else if (choix.equals("module")) {
 				List<String> nmm = se.nomModule();
 				request.setAttribute("modules", nmm);
 				this.getServletContext().getRequestDispatcher("/ChoixPedagModule.jsp").forward(request, response);
-			}else {
-				List<String> nme =se.nomElement();
+			} else {
+				List<String> nme = se.nomElement();
 				request.setAttribute("elements", nme);
 				this.getServletContext().getRequestDispatcher("/ChoixPedagELT.jsp").forward(request, response);
 
@@ -528,132 +539,369 @@ public class controller extends HttpServlet {
 			request.setAttribute("etudiants", etudiants);
 			this.getServletContext().getRequestDispatcher("/ChoixPedagSems.jsp").forward(request, response);
 
-		}else if(path.equals("/choix-listModule.do")) {
+		} else if (path.equals("/choix-listModule.do")) {
 			String modules = request.getParameter("module");
 			List<Element> elts = ipd.getElementDANSModule(modules);
 			HashSet<Etudiant> etudiants = ipd.getListeEtudiantXXXX(elts);
 			request.setAttribute("modules", modules);
 			request.setAttribute("etudiants", etudiants);
 			this.getServletContext().getRequestDispatcher("/ChoixPedagModule.jsp").forward(request, response);
-		}else if(path.equals("/choix-listElt.do")) {
+		} else if (path.equals("/choix-listElt.do")) {
 			String elements = request.getParameter("element");
 			List<Element> elts = new ArrayList<Element>();
-			int id= se.getIDElement(elements);
+			int id = se.getIDElement(elements);
 			System.out.println(elements);
 			elts.add(new Element(id));
-			HashSet<Etudiant> etudiants =ipd.getListeEtudiantXXXX(elts);
-			request.setAttribute("etudiants",etudiants);
+			HashSet<Etudiant> etudiants = ipd.getListeEtudiantXXXX(elts);
+			request.setAttribute("etudiants", etudiants);
 			request.setAttribute("elements", elements);
 			this.getServletContext().getRequestDispatcher("/ChoixPedagELT.jsp").forward(request, response);
 
 		}
-		if(path.equals("/Mdp-oublie")) {
+		if (path.equals("/Mdp-oublie")) {
 			try {
 				Random rand = new Random();
-				randomCode=rand.nextInt(999999);
-				String host = "smtp.gmail.com";			
-				String user ="amineyassir2001@gmail.com";
-				String pass="Amineyassir20";
+				randomCode = rand.nextInt(999999);
+				String host = "smtp.gmail.com";
+				String user = "amineyassir2001@gmail.com";
+				String pass = "Amineyassir20";
 				String to = request.getParameter("email");
-				String subject="Reseting Code";
-				String message ="Your reset code is "+randomCode;
+				String subject = "Reseting Code";
+				String message = "Your reset code is " + randomCode;
 				boolean sessionDebug = false;
 				Properties pros = System.getProperties();
-				pros.put("mail.smtp.user","username"); 
-				pros.put("mail.smtp.host", "smtp.gmail.com"); 
-				pros.put("mail.smtp.port", "25"); 
-				pros.put("mail.debug", "true"); 
-				pros.put("mail.smtp.auth", "true"); 
-				pros.put("mail.smtp.starttls.enable","true"); 
-				pros.put("mail.smtp.EnableSSL.enable","true");
+				pros.put("mail.smtp.user", "username");
+				pros.put("mail.smtp.host", "smtp.gmail.com");
+				pros.put("mail.smtp.port", "25");
+				pros.put("mail.debug", "true");
+				pros.put("mail.smtp.auth", "true");
+				pros.put("mail.smtp.starttls.enable", "true");
+				pros.put("mail.smtp.EnableSSL.enable", "true");
 
-				pros.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");   
-				pros.setProperty("mail.smtp.socketFactory.fallback", "false");   
-				pros.setProperty("mail.smtp.port", "465");   
-				pros.setProperty("mail.smtp.socketFactory.port", "465"); 
+				pros.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				pros.setProperty("mail.smtp.socketFactory.fallback", "false");
+				pros.setProperty("mail.smtp.port", "465");
+				pros.setProperty("mail.smtp.socketFactory.port", "465");
 				java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 				Session mailSession = Session.getDefaultInstance(pros, null);
 				mailSession.setDebug(sessionDebug);
 				Message msg = new MimeMessage(mailSession);
 				msg.setFrom(new InternetAddress(user));
-				InternetAddress [] address = {new InternetAddress(to)};
+				InternetAddress[] address = { new InternetAddress(to) };
 				msg.setRecipients(Message.RecipientType.TO, address);
 				msg.setSubject(subject);
 				msg.setText(message);
-				
+
 				Transport transport = mailSession.getTransport("smtp");
 				transport.connect(host, user, pass);
 				transport.sendMessage(msg, msg.getAllRecipients());
 				transport.close();
-				
+
 				this.getServletContext().getRequestDispatcher("/VerificationMdp.jsp").forward(request, response);
-				
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-	}
-		else if(path.equals("/verifier-code")) {
+		} else if (path.equals("/verifier-code")) {
 			int msg = Integer.parseInt(request.getParameter("text"));
-			if(msg==randomCode) {
+			if (msg == randomCode) {
 				this.getServletContext().getRequestDispatcher("/RenetialisationMdp.jsp").forward(request, response);
-			}
-			else
+			} else
 				this.getServletContext().getRequestDispatcher("/loginAD.jsp").forward(request, response);
-			
-		}else if(path.equals("/Renetialiser-Mdp")) {
-			String username=request.getParameter("username");
-			String pass =request.getParameter("nouveauMDP");
+
+		} else if (path.equals("/Renetialiser-Mdp")) {
+			String username = request.getParameter("username");
+			String pass = request.getParameter("nouveauMDP");
 			d.UpdateUser(username, pass);
 			this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
-		}else if(path.equals("/logout")) {
+		} else if (path.equals("/logout")) {
 			HttpSession s = request.getSession();
 			s.invalidate();
 			System.out.println(s.getAttribute("user-admin"));
 			this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
-		}else if(path.equals("/list-element")) {
-			List<Element> listElement= se.listElement();
+		} else if (path.equals("/list-element")) {
+			List<Element> listElement = se.listElement();
 			request.setAttribute("elements", listElement);
 			this.getServletContext().getRequestDispatcher("/ListeElement.jsp").forward(request, response);
-					}
-			
-			
-		else if(path.equals("/ajouter-Semestre")) {
-			List<Semestre>lstSemestre=se.listSem();
+		}
+
+		else if (path.equals("/ajouter-Semestre")) {
+			List<Semestre> lstSemestre = se.listSem();
 			request.setAttribute("semestre", lstSemestre);
 			System.out.println("ajout semestre");
 			this.getServletContext().getRequestDispatcher("/ListeSemestre.jsp").forward(request, response);
-			
-		}
-		else if(path.equals("/get-etap")) { // get IdEtape maison :
+
+		} else if (path.equals("/get-etap")) { // get IdEtape maison :
 			int id = Integer.parseInt(request.getParameter("id"));
-			Etape p=se.getIdEtape(id);
+			Etape p = se.getIdEtape(id);
 			request.setAttribute("s", p);
 			this.getServletContext().getRequestDispatcher("/ProfilEtape.jsp").forward(request, response);
 		}
-		///////////////////////DELIBERATION:
-		else if(path.equals("/note-element-excel")){
+		/////////////////////// DELIBERATION:
+		else if (path.equals("/note-element-excel")) {
 			List<Element> elts = se.listElement();
 			request.setAttribute("elements", elts);
 			this.getServletContext().getRequestDispatcher("/NOTE-EXCEL.jsp").forward(request, response);
-		}else if(path.equals("/note-element-excel.do")){
+		} else if (path.equals("/note-element-excel.do")) {
 			String elt = request.getParameter("element");
 			Part filePart = request.getPart("fichier");
 			if (filePart != null) {
 				inputStream = filePart.getInputStream();
 			}
+			List<ETUD_NOTE> etn = new ArrayList<ETUD_NOTE>();
 			List<ETUD_NOTE> en = ipd.recupererLISTE(inputStream);
-			request.setAttribute("etudiants", en);
+			String msg ="";
+			for (int i = 0; i < en.size(); i++) {
+				if(ipd.isEtudiantPElt(en.get(i).getCNE(), elt)) {
+					etn.add(en.get(i));
+				}else {
+					msg="DANS VOTRE LISTE ,IL EXISTE DES ETUDIANTS NON INSCRITS A L'ELEMENT CHOISI ";
+					request.setAttribute("message", msg);
+					this.getServletContext().getRequestDispatcher("/note-element-excel").forward(request, response);
+					break;
+				}
+			}
+			
+			request.setAttribute("etudiants", etn);
+			session.setAttribute("etudiants", etn);
+			request.setAttribute("element", elt);
 			this.getServletContext().getRequestDispatcher("/editable-table.jsp").forward(request, response);
+
+		} else if (path.equals("/saveNOTE.do")) {
+			String cne = request.getParameter("id");
+			String element = request.getParameter("element");
+			ETUD_NOTE e = new ETUD_NOTE(cne, element);
+			request.setAttribute("etudiant", e);
 			
+			this.getServletContext().getRequestDispatcher("/AjoutNote.jsp").forward(request, response);
+		} else if (path.equals("/saveNOTE.php")) {
+			String cne = request.getParameter("cne");
+			String element = request.getParameter("element");
+			session.setAttribute("element", element);
+			System.out.println("Elt saveNote.php"+element);
+			int TP = Integer.parseInt(request.getParameter("TP"));
+			int CC = Integer.parseInt(request.getParameter("CC"));
+			int OR = Integer.parseInt(request.getParameter("ORDINAIRE"));
+			se.saveNOTE_ELT(cne, element, TP, OR, CC);
+			request.setAttribute("etapes", se.listEtape());
+			@SuppressWarnings("unchecked")
+			List<ETUD_NOTE> etds = (List<ETUD_NOTE>) session.getAttribute("etudiants");
+			System.out.println("Elt saveNote.php"+etds);
+			request.setAttribute("etudiants", etds);
+			this.getServletContext().getRequestDispatcher("/deliberer").forward(request, response);
+		} else if (path.equals("/choix-listp-note.do")) {
+			request.setAttribute("etapes", se.listEtape());
+			this.getServletContext().getRequestDispatcher("/Note.jsp").forward(request, response);
+		} else if (path.equals("/choix-listp-note")) {
+			int id = se.getIDEtape(request.getParameter("etape"));
+			List<Semestre> sm = se.getSemestreByEtape(id);
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestres", sm);
+			this.getServletContext().getRequestDispatcher("/NoteSEM.jsp").forward(request, response);
+		} else if (path.equals("/choix-listp-note-semestre")) {
+			int id_semestre = se.getIDSemestre(request.getParameter("semestre"));
+			List<Module> m = se.getModuleBySemestre(id_semestre);
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestre", request.getParameter("semestre"));
+			request.setAttribute("module", m);
+			this.getServletContext().getRequestDispatcher("/NoteModule.jsp").forward(request, response);
+		} else if (path.equals("/choix-listp-note-module")) {
+			String module = request.getParameter("module");
+			int id_module = se.getIDModule(module);
+			List<Element> elt = se.getElementByMODULE(id_module);
+			request.setAttribute("module", module);
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestre", request.getParameter("semestre"));
+			request.setAttribute("element", elt);
+			this.getServletContext().getRequestDispatcher("/NoteElt.jsp").forward(request, response);
+
+		} else if (path.equals("/choix-listp-note-element")) {
+			System.out.println("/choix-listp-note-element");
+			int id_elt = se.getIDElement(request.getParameter("element"));
+			List<Etudiant> etds = ipd.getEtudiantParElement(id_elt);
+			List<ETUD_NOTE> etd = ipd.EtudiantNoteV(etds, request.getParameter("element"));
+			System.out.println(etd);
+			List<ETUD_NOTE> nn = new ArrayList<ETUD_NOTE>();
+			for (int i = 0; i < etd.size(); i++) {
+				Etudiant e = ipd.info_etudiant(etd.get(i).getCNE());
+				ETUD_NOTE en = new ETUD_NOTE(e.getMassarEtud(), e.getNomFr(), e.getPrenomFr(),
+						se.getNoteElement(e.getMassarEtud(), request.getParameter("element")));
+				nn.add(en);
+			}
+			request.setAttribute("etudiants", nn);
+			session.setAttribute("etudiants", nn);
+			request.setAttribute("module", request.getParameter("module"));
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestre", request.getParameter("semestre"));
+			request.setAttribute("element", request.getParameter("element"));
+			session.setAttribute("element", request.getParameter("element"));
+			this.getServletContext().getRequestDispatcher("/editable-table.jsp").forward(request, response);
+		
+		
+		} else if (path.equals("/deliberer")) {
+			System.out.println("/DELIBERER");
+			String[] etawat = new String[99];
+			@SuppressWarnings("unchecked")
+			List<ETUD_NOTE> en = (List<ETUD_NOTE>) session.getAttribute("etudiants");
+			System.out.println(session.getAttribute("etudiants").getClass());
+			List<ETUD_NOTE> ee = new ArrayList<ETUD_NOTE>();
+			String element = (String) session.getAttribute("element");
+			System.out.println(element);
+			for (int i = 0; i < en.size(); i++) {
+				etawat[i] = se.getETAT_NOTE(en.get(i).getCNE(), element);
+				
+				ee.add(new ETUD_NOTE(en.get(i).getCNE(), en.get(i).getNom(), en.get(i).getPrenom(), se.recuperer_note(en.get(i).getCNE(), element),
+						etawat[i]));
+			}
+			request.setAttribute("element", request.getParameter("element"));
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestre", request.getAttribute("semestre"));
+			request.setAttribute("etudiants", ee);
+			System.out.println(ee);
+			this.getServletContext().getRequestDispatcher("/ListeEtudiantElementETAT.jsp").forward(request, response);
+
+		}///////////////////////////////////DELIBERER LES LISTES INSCRIS PEDAGOGIQUEMENT AL7M9
+		/////3ks dkchii li kndiru lfuq knchdu ghir li 3ndu note deja mdkhulaa  
+		else if (path.equals("/Liste-A-Deliberer.do")) {
+			request.setAttribute("etapes", se.listEtape());
+			this.getServletContext().getRequestDispatcher("/Entrer_Note.jsp").forward(request, response);
 			
-		}else if(path.equals("/saveNOTE.do")) {
-			System.out.println(44);
+		} else if (path.equals("/Liste-A-Deliberer")) {
+			int id = se.getIDEtape(request.getParameter("etape"));
+			List<Semestre> sm = se.getSemestreByEtape(id);
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestres", sm);
+			this.getServletContext().getRequestDispatcher("/Entrer_NoteSEM.jsp").forward(request, response);
+			
+		} else if (path.equals("/Liste-A-Deliberer-Semestre")) {
+			int id_semestre = se.getIDSemestre(request.getParameter("semestre"));
+			List<Module> m = se.getModuleBySemestre(id_semestre);
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestre", request.getParameter("semestre"));
+			request.setAttribute("module", m);
+			this.getServletContext().getRequestDispatcher("/Entrer_NoteModule.jsp").forward(request, response);
+			
+		} else if (path.equals("/Liste-A-Deliberer-Module")) {
+			String module = request.getParameter("module");
+			int id_module = se.getIDModule(module);
+			List<Element> elt = se.getElementByMODULE(id_module);
+			request.setAttribute("module", module);
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestre", request.getParameter("semestre"));
+			request.setAttribute("element", elt);
+			this.getServletContext().getRequestDispatcher("/Entrer_NoteElt.jsp").forward(request, response);
+			
+		} else if (path.equals("/Liste-A-Deliberer-Element")) {
+			int id_elt = se.getIDElement(request.getParameter("element"));
+			String elt=request.getParameter("element");
+			
+			List<Etudiant> etds = ipd.getEtudiantParElement(id_elt);
+			System.out.println(etds);
+			List<ETUD_NOTE> en = new ArrayList<ETUD_NOTE>();
+			for (int i = 0; i < etds.size(); i++) {
+				Etudiant e = new Etudiant(etds.get(i).getMassarEtud(), etds.get(i).getNomFr(),
+						etds.get(i).getPrenomFr());
+				en.add(se.switch_to_etudN(e, request.getParameter("element")));
+													}
+			request.setAttribute("module", request.getParameter("module"));
+			request.setAttribute("etape", request.getParameter("etape"));
+			request.setAttribute("semestre", request.getParameter("semestre"));
+			request.setAttribute("element", request.getParameter("element"));
+			session.setAttribute("element", request.getParameter("element"));
+			request.setAttribute("etudiants", en);
+			session.setAttribute("etudiants", en);
+			this.getServletContext().getRequestDispatcher("/editable-table.jsp").forward(request, response);
+		}else if(path.equals("/EXCEL.do")) {
+			
+			String element = request.getParameter("element");
+			try {
+				response.setContentType("application/octet-stream");
+				String headerKey="Content-Disposition";
+				String headerValue="attachement;filename=Serhani.xls";
+				
+				response.setHeader(headerKey, headerValue);
+				List<Etudiant> e = ipd.getEtudiantParElement(1);
+				
+				EtudiantExcelExport excel=new EtudiantExcelExport(e);
+				excel.exporter(e,response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}else if(path.equals("/etudiant-element")) {
+			String element = (String) session.getAttribute("element-prof");
+			int id_elt = se.getIDElement(element);
+			List<Etudiant> e = ipd.getEtudiantParElement(id_elt);
+			request.setAttribute("etudiants", e);
+			request.setAttribute("element", element);
+			this.getServletContext().getRequestDispatcher("/Liste_Etud_Elt.jsp").forward(request, response);
+			// affiche la liste fhwd tableau 
+			// bouton thta bch n2impoorte lliste
+		}else if(path.equals("/excel-elt.do")) {
+				String element = request.getParameter("elt");
+				int id_elt = se.getIDElement(element);
+			try {
+				response.setContentType("application/octet-stream");
+				String headerKey="Content-Disposition";
+				String headerValue="attachement;filename=EXCEL.xls";
+				
+				response.setHeader(headerKey, headerValue);
+				List<Etudiant> e = ipd.getEtudiantParElement(id_elt);
+				
+				EtudiantExcelExport excel=new EtudiantExcelExport(e);
+				excel.exporter(e,response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if(path.equals("/recuperer-Liste-Elt.do")) {
+			String element =(String)session.getAttribute("element-prof");
+			request.setAttribute("element", element);
+			this.getServletContext().getRequestDispatcher("/ImporterNote.jsp").forward(request, response);
+
+		}else if(path.equals("/recuperer-Liste-Elt")) {
+			String elt = (String)session.getAttribute("element-prof");
+			Part filePart = request.getPart("fichier");
+			if (filePart != null) {
+				inputStream = filePart.getInputStream();
+			}
+			List<ETUD_NOTE> en = ipd.recupererLISTE_Note(inputStream, elt);
+			System.out.println(en);
+			request.setAttribute("etudiants", en);
 		}
+
+
+	
+	
 	}
+
 	private static java.sql.Date convert(java.util.Date uDate) {
 		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
 		return sDate;
 	}
+	public void writeExcel(List<Etudiant> l,String excelFilePath) throws IOException, Exception {
+		Workbook workbook = new HSSFWorkbook();
+		Sheet sheet = workbook.createSheet();
+		int rowCount=0;
+		for(Etudiant e :l) {
+			Row row = sheet.createRow(++rowCount);
+			writeEtud(e, row);
+		}
+		try (FileOutputStream os= new FileOutputStream(excelFilePath)){
+			workbook.write(os);
+		}
+	
+	}
 
+	public void writeEtud(Etudiant e , Row r) {
+		Cell cell = r.createCell(0);
+		cell.setCellValue(e.getMassarEtud());
+		
+		cell = r.createCell(1);
+		cell.setCellValue(e.getNomFr());
+		
+		cell = r.createCell(2);
+		cell.setCellValue(e.getPrenomFr());
+	}
 }

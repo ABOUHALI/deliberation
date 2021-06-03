@@ -11,7 +11,7 @@ import metierEntite.Professeur;
 import metierEntite.User;
 
 public class ProfesseurDao {
-
+private StructureETab se = new StructureETab();
 public void addProf(Professeur p) {
 	Connection conn = SingletonConnection.getConnection();
 	PreparedStatement ps ;
@@ -160,4 +160,42 @@ public void modProf(String nom,String prenom,String grade,int IDetablissement,in
 		e.printStackTrace();
 	}
 }
+
+public String ElEMENTfromProf(int id_prof) {
+	Connection conn = SingletonConnection.getConnection();
+	PreparedStatement ps;
+	String elt = null;
+	int id_elt =0;
+	try {
+		ps=conn.prepareStatement("select id_elts from prof_elt where id_prof=?");
+		ps.setInt(1, id_prof);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			id_elt = rs.getInt("id_elts");
+			elt = se.getNOMELT(id_elt);
+		}
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		}
+	return elt ;
+}
+public void addRESP_FIL(Professeur p, int id_fil) {
+	Connection conn = SingletonConnection.getConnection();
+	PreparedStatement ps;
+	int idProf =getIDProf(p.getNom(),p.getPrenom());
+
+	try {
+		ps=conn.prepareStatement("insert into filier_respfiliere(id_profeRESP,id_Filier) values(?,?)");
+		ps.setInt(1, idProf);
+		ps.setInt(2, id_fil);
+		ps.executeUpdate();
+		ps.close();
+		conn.close();
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+}
+ 
 }

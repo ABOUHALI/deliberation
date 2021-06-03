@@ -13,6 +13,7 @@ import java.util.ListIterator;
 
 import org.apache.commons.math3.analysis.function.Sin;
 
+import metierEntite.ETUD_NOTE;
 import metierEntite.Element;
 import metierEntite.Etablissement;
 import metierEntite.Etape;
@@ -23,8 +24,8 @@ import metierEntite.Note;
 import metierEntite.Semestre;
 import metierEntite.annee_universitaire;
 
-public class StructureETab implements IStructureEtab {
-
+public class StructureETab  {
+	
 	public int getIDSemestre(String semestre) {
 		int sem = 0;
 		Connection conn = SingletonConnection.getConnection();
@@ -40,6 +41,26 @@ public class StructureETab implements IStructureEtab {
 			// TODO: handle exception
 		}
 		return sem;
+	}
+	
+	public String getNOMELT(int id) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		String elt=null ;
+		try {
+			ps=conn.prepareStatement("select libelle_elt from element where id_elt =? ");
+			ps.setInt(1, id);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				elt=rs.getString("libelle_elt");
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return elt ;
 	}
 
 	public Element INFO_ELEMENT(String nom) {
@@ -311,7 +332,6 @@ public class StructureETab implements IStructureEtab {
 		return filiere;
 	}
 
-	@Override
 	public List<Etape> listEtape() {
 		// TODO Auto-generated method stub
 		List<Etape> etap = new ArrayList<Etape>();
@@ -763,7 +783,7 @@ public class StructureETab implements IStructureEtab {
 			somme+=result.get(i);
 		}
 		moyenne=somme/3;
-		if(moyenne>0) {
+		if(moyenne>=10) {
 			etat ="Valide";
 		}else {
 			etat="Rattrapage";
@@ -852,8 +872,68 @@ public class StructureETab implements IStructureEtab {
 	
 	}
 	
+	public String getETAT_NOTE(String massarEtud,String elt) {
+		int id_elt = getIDElement(elt);
+		String etat=null;
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select Etat from note_elt where id_etudiantt=? and id_eltt=? ");
+			ps.setString(1, massarEtud);
+			ps.setInt(2, id_elt);
+			ps.executeQuery();
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				etat = rs.getString("Etat");
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return etat;
+	}
 	
-	
-	
+	public ETUD_NOTE switch_to_etudN(Etudiant e,String elt) {
+		ETUD_NOTE en = new ETUD_NOTE(e.getMassarEtud(), e.getNomFr(), e.getPrenomFr());
+		int id_elt = getIDElement(elt);
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select  NOTE from note_elt where id_etudiantt=? and id_eltt=?");
+			ps.setString(1, e.getMassarEtud());
+			ps.setInt(2, id_elt);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				en.setNOTE(rs.getInt("NOTE"));
+			}
+			
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+		return en ;
+	}
+	public int recuperer_note(String massarEtud,String element) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		int id_elt = getIDElement(element);
+		int note =0;
+		try {
+			ps=conn.prepareStatement("select  NOTE from note_elt where id_etudiantt=? and id_eltt=?");
+			ps.setString(1, massarEtud);
+			ps.setInt(2, id_elt);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				note=rs.getInt("NOTE");
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return note;
+	}
 	
 }
