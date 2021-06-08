@@ -368,4 +368,40 @@ public class InscripPDAO {
 		}
 		return en ;
 	}
+	
+	
+	public boolean is_etud_elt(String massarEtud , String elt) {
+		int id_elt = se.getIDElement(elt);
+		boolean b =false ;
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select id_etudiantt from note_elt where id_etudiantt=? and id_eltt=?");
+			ps.setString(1, massarEtud);
+			ps.setInt(2, id_elt);
+			ResultSet rs=ps.executeQuery();
+			b=rs.next();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return b ;
+	}
+	public boolean etud_mod(String module,String massarEtud) {
+		boolean b =true ;
+		int id_module = se.getIDModule(module);
+		List<Element> elts = se.getElementByMODULE(id_module);
+		for (int i = 0; i < elts.size(); i++) {
+			if(!is_etud_elt(massarEtud, elts.get(i).getLabelleElement())) {
+				b=false;
+				break;
+			}
+		}
+		
+		
+		return b ;
+				
+	}
+
+	
 }

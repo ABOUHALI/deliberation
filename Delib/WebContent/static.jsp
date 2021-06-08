@@ -78,7 +78,7 @@
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                             <button type="button" tabindex="0" class="dropdown-item">User Account</button>
                                             <button type="button" tabindex="0" class="dropdown-item">Settings</button>
-                                            <button type="button" tabindex="0" class="dropdown-item"><a href="logout.jsp">Actions</a></button>
+                                            <a href="logout.jsp"><button type="button" tabindex="0" class="dropdown-item">Actions</button></a>
                                            
                                            
                                         </div>
@@ -418,7 +418,7 @@
                                         Dashboard Admin
                                     </a>
                                 </li>
-                                <li class="app-sidebar__heading">UI Components</li>
+                                <li class="app-sidebar__heading">STRUCTURE</li>
                                 <li>
                                    
                                
@@ -442,7 +442,7 @@
                                        
                                     </a>
                                     
-                                    <a href="ajouter-filiere">
+                                    <a href="ajouter-Semestre">
                                  
                                         Semestre
                                        
@@ -466,13 +466,36 @@
                                        
                                     </a>
                                    
-                                      <a href="#">
+                                      <a href="ListeEnLigne">
                                    
-                                        Etudiant
+                                        Liste I-EN LIGNE
+                                       
+                                    </a>
+                                    
+                                    <a href="Liste-IAdministrative">
+                                   
+                                        Liste I-ADMINISTRATIVE
                                        
                                     </a>
                                    
-                              
+                              		<a href="choix-listp.do">
+                                   
+                                        Liste I-PEDAGOGIQUE
+                                       
+                                    </a>
+                                    <li class="app-sidebar__heading">DELIBERATION</li>
+                                    <li>
+                                    <a href="choix-listp.do">
+                                   
+                                        AJOUT LISTE NOTE EXCEL
+                                       
+                                    </a>
+                                    <a href="choix-listp-note.do">
+                                    	NOTE PAR LISTE
+                                    </a>
+                                    <a href="choix-listp-note.do">
+                                    	NOTE MANUELLEMENT 
+                                    </a>
                                    
                                      <a href="#">
                                      
@@ -481,8 +504,7 @@
                                     </a>
                                    
                                      
-                                     </li>
-                                   
+                                    </li>
                                    
                                  
                                
@@ -497,7 +519,7 @@
                                     </a>
                                 </li>
                                
-                                <li class="app-sidebar__heading">Forms</li>
+                                <li class="app-sidebar__heading">SESSION</li>
                                
                                  <li>
                                     <a href="logout">

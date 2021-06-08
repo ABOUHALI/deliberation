@@ -85,7 +85,7 @@
 																	<option>
 																		<c:forEach items="${etablissements}" var="e"
 																			varStatus="loop">
-                                                             		 ${e.getEtablissement()}  
+                                                             		<option> ${e.getEtablissement()}  </option>
                                                                          
                                                                  </c:forEach>
 																	</option>

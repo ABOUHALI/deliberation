@@ -25,7 +25,7 @@ import metierEntite.Semestre;
 import metierEntite.annee_universitaire;
 
 public class StructureETab  {
-	
+	InscripEnLigne ie = new InscripEnLigne();
 	public int getIDSemestre(String semestre) {
 		int sem = 0;
 		Connection conn = SingletonConnection.getConnection();
@@ -771,8 +771,8 @@ public class StructureETab  {
 		return p;
 	}
 
-	public int getNoteElement(String massarEtud, String elt) {
-		int moyenne=0,somme=0 ;
+	public double getNoteElement(String massarEtud, String elt) {
+		double moyenne=0,somme=0 ;
 		String etat ;
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
@@ -831,15 +831,16 @@ public class StructureETab  {
 	}
 
 	@SuppressWarnings("null")
-	public int NotedsModule(String module,String massarEtud ) {
+	public double NotedsModule(String module,String massarEtud ) {
 		int id_module = getIDModule(module);
-		int moyenne=0,somme=0,sc=0;
+		double moyenne=0,somme=0,sc=0;
 		List<Element> elts = getElementByMODULE(id_module);
 		int c[]=new int[elts.size()];
-		int tab[] = new int[elts.size()];
+		double tab[] = new double[elts.size()];
+		
 		for (int i = 0; i < elts.size(); i++) {
 			Element e =INFO_ELEMENT(elts.get(i).getLabelleElement());
-			int m = getNoteElement(massarEtud, e.getLabelleElement());
+			double m = getNoteElement(massarEtud, e.getLabelleElement());
 			tab[i]=m;
 			c[i]=e.getCoeff();
 			sc +=c[i];
@@ -848,7 +849,15 @@ public class StructureETab  {
 			moyenne+=tab[i]*c[i];
 		}
 		somme=moyenne/sc;
-		return somme ;
+		double s = Math.round(somme*100.0)/100.0;
+		return s ;
+	}
+	
+	public String get_Etat_M(String module,String massarEtud) {
+		String etat =null;
+		double d = NotedsModule(module, massarEtud);
+		etat=d>=10?"Valide":"Rattrapage";
+		return etat;
 	}
 	
 	public void saveNOTE_ELT(String massarEtud , String element ,int TP,int ORD,int CC) {
@@ -914,11 +923,11 @@ public class StructureETab  {
 		}
 		return en ;
 	}
-	public int recuperer_note(String massarEtud,String element) {
+	public double recuperer_note(String massarEtud,String element) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		int id_elt = getIDElement(element);
-		int note =0;
+		double note =0;
 		try {
 			ps=conn.prepareStatement("select  NOTE from note_elt where id_etudiantt=? and id_eltt=?");
 			ps.setString(1, massarEtud);
@@ -934,6 +943,96 @@ public class StructureETab  {
 			e.printStackTrace();
 		}
 		return note;
+	}
+	
+	public void Update_element(Element e ) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("update element set libelle_elt=?,Note_Validation=?,coefficient=? where id_elt=? ");
+			ps.setString(1, e.getLabelleElement());
+			ps.setInt(2, e.getNote_validation());
+			ps.setInt(3, e.getCoeff());
+			ps.setInt(4, e.getIDElement());
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			e2.printStackTrace();
+		}
+	}
+	
+	public String getModule(int id_module) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		String module=null;
+		try {
+			ps=conn.prepareStatement("select libelle_module from module where id_module=? ");
+			ps.setInt(1, id_module);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				module=rs.getString("libelle_module");
+			}
+			ps.close();
+			conn.close();
+			} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return module ;
+	}
+
+	public List<ETUD_NOTE> getRattrapage(String element){
+		List<ETUD_NOTE> en = new ArrayList<ETUD_NOTE>();
+		Connection conn = SingletonConnection.getConnection();
+		int id_elt = getIDElement(element);
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select id_etudiantt from note_elt where id_eltt=? and Etat='Rattrapage'");
+			ps.setInt(1, id_elt);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				ETUD_NOTE e = new ETUD_NOTE(rs.getString("id_etudiantt"));
+				e.setEtat("Rattrapage");
+				Etudiant et = ie.getET3(rs.getString("id_etudiantt"));
+				e.setNom(et.getNomFr());
+				e.setPrenom(et.getPrenomFr());
+				en.add(e);
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return en;
+	}
+
+	public List<ETUD_NOTE> getListeNote(String element){
+		List<ETUD_NOTE> en = new ArrayList<ETUD_NOTE>();
+		Connection conn = SingletonConnection.getConnection();
+		int id_elt = getIDElement(element);
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select id_etudiantt , NOTE,Etat from note_elt where id_eltt=? ");
+			ps.setInt(1, id_elt);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				ETUD_NOTE e = new ETUD_NOTE(rs.getString("id_etudiantt"),rs.getDouble("NOTE"));
+				Etudiant et = ie.getET3(rs.getString("id_etudiantt"));
+				e.setNom(et.getNomFr());
+				e.setPrenom(et.getPrenomFr());
+				e.setEtat(getETAT_NOTE(rs.getString("id_etudiantt"), element));
+				en.add(e);
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return en;
 	}
 	
 }

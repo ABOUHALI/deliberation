@@ -84,7 +84,7 @@ public class InscripEnLigne implements IInscriptionEnligne {
 		PreparedStatement ps;
 
 		try {
-			ps = conn.prepareStatement("select * from etudiant");
+			ps = conn.prepareStatement("select * from etudiant where insce=0");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Etudiant etudiant = new Etudiant();

@@ -197,5 +197,43 @@ public void addRESP_FIL(Professeur p, int id_fil) {
 		e.printStackTrace();
 	}
 }
- 
+public String getRoleProf(int id_prof) {
+	Connection conn = SingletonConnection.getConnection();
+	PreparedStatement ps ;
+	String role =null;
+	try {
+		ps=conn.prepareStatement("select ROLE_PROF from professeur where id_professeur=?");
+		ps.setInt(1, id_prof);
+		ResultSet rs =ps.executeQuery();
+		while(rs.next()) {
+			role=rs.getString("ROLE_PROF");
+		}
+		ps.close();
+		conn.close();
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	return role ;
+}
+
+public String ModulefromRM(int id_prof) {
+	Connection conn = SingletonConnection.getConnection();
+	PreparedStatement ps;
+	String module =null;
+	int id_module =0;
+	try {
+		ps=conn.prepareStatement("select IDMODULE from prof_module where idProfesseur=?");
+		ps.setInt(1, id_prof);
+		ResultSet rs =ps.executeQuery();
+		while(rs.next()) {
+			id_module=rs.getInt("IDMODULE");
+			module=se.getModule(id_module);
+		}
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	return module ;
+}
 }

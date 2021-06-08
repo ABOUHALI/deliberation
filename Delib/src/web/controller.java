@@ -38,6 +38,7 @@ import dao.InscriptionADministrative;
 import dao.LoginDAO;
 import dao.ProfesseurDao;
 import dao.StructureETab;
+import metierEntite.ETUD_MODULE;
 import metierEntite.ETUD_NOTE;
 import metierEntite.Element;
 import metierEntite.Etablissement;
@@ -65,7 +66,8 @@ import metierEntite.annee_universitaire;
 		"/verifier-code", "/Renetialiser-Mdp", "/list-element", "/ajouter-Semestre", "/get-etap", "/note-element-excel",
 		"/note-element-excel.php", "/saveNOTE.php", "/note-element", "/choix-listp-note", "/choix-listp-note-semestre",
 		"/choix-listp-note-element", "/choix-listp-note-module", "/deliberer", "/Liste-A-Deliberer",
-		"/Liste-A-Deliberer-Element", "/Liste-A-Deliberer-Module", "/Liste-A-Deliberer-Semestre","/etudiant-element","/recuperer-Liste-Elt" })
+		"/Liste-A-Deliberer-Element", "/Liste-A-Deliberer-Module", "/Liste-A-Deliberer-Semestre","/etudiant-element",
+		"/recuperer-Liste-Elt","/etudiant_module" })
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 
 public class controller extends HttpServlet {
@@ -290,6 +292,7 @@ public class controller extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/ProfilEtab.jsp").forward(request, response);
 
 		} else if (path.equals("/ListeEnLigne")) {
+			listEtu = insc.listEt();
 			request.setAttribute("etudiants", listEtu);
 			this.getServletContext().getRequestDispatcher("/ListeEnLigne.jsp").forward(request, response);
 
@@ -298,6 +301,7 @@ public class controller extends HttpServlet {
 			List<annee_universitaire> au = se.List_ann();
 			Etudiant etudiant = insc.getEt(masssarEtud);
 			request.setAttribute("e", etudiant);
+			request.setAttribute("massar", masssarEtud);
 			request.setAttribute("etab", listEtab);
 			request.setAttribute("fil", se.listFiliere());
 			request.setAttribute("an_acad", au);
@@ -310,8 +314,7 @@ public class controller extends HttpServlet {
 			String[] nomcmplt = nm.split("--");
 			String nomFr = nomcmplt[0];
 			String PrenomFr = nomcmplt[1];
-			String massar = insc.getetudBYNP(nomFr, PrenomFr);
-
+			String massar =request.getParameter("cne");
 			int tel = Integer.parseInt(request.getParameter("tel"));
 			int fil = Integer.parseInt(request.getParameter("filiere"));
 
@@ -385,6 +388,7 @@ public class controller extends HttpServlet {
 			ia.addIA(iad, id_anacad);
 			int ID = ia.IDofADMINSITRATIVE(iad.getTelephone(), iad.getAdressPerson());
 			ia.addIA_FIL_ET(ID, massar, fil);
+			this.getServletContext().getRequestDispatcher("/ListeEnLigne").forward(request, response);
 
 		} else if (path.equals("/ajouter-professeur")) {
 			List<Etablissement> etab = se.listETab();
@@ -661,7 +665,7 @@ public class controller extends HttpServlet {
 					break;
 				}
 			}
-			
+
 			request.setAttribute("etudiants", etn);
 			session.setAttribute("etudiants", etn);
 			request.setAttribute("element", elt);
@@ -672,7 +676,7 @@ public class controller extends HttpServlet {
 			String element = request.getParameter("element");
 			ETUD_NOTE e = new ETUD_NOTE(cne, element);
 			request.setAttribute("etudiant", e);
-			
+
 			this.getServletContext().getRequestDispatcher("/AjoutNote.jsp").forward(request, response);
 		} else if (path.equals("/saveNOTE.php")) {
 			String cne = request.getParameter("cne");
@@ -736,8 +740,8 @@ public class controller extends HttpServlet {
 			request.setAttribute("element", request.getParameter("element"));
 			session.setAttribute("element", request.getParameter("element"));
 			this.getServletContext().getRequestDispatcher("/editable-table.jsp").forward(request, response);
-		
-		
+
+
 		} else if (path.equals("/deliberer")) {
 			System.out.println("/DELIBERER");
 			String[] etawat = new String[99];
@@ -749,7 +753,7 @@ public class controller extends HttpServlet {
 			System.out.println(element);
 			for (int i = 0; i < en.size(); i++) {
 				etawat[i] = se.getETAT_NOTE(en.get(i).getCNE(), element);
-				
+
 				ee.add(new ETUD_NOTE(en.get(i).getCNE(), en.get(i).getNom(), en.get(i).getPrenom(), se.recuperer_note(en.get(i).getCNE(), element),
 						etawat[i]));
 			}
@@ -765,14 +769,14 @@ public class controller extends HttpServlet {
 		else if (path.equals("/Liste-A-Deliberer.do")) {
 			request.setAttribute("etapes", se.listEtape());
 			this.getServletContext().getRequestDispatcher("/Entrer_Note.jsp").forward(request, response);
-			
+
 		} else if (path.equals("/Liste-A-Deliberer")) {
 			int id = se.getIDEtape(request.getParameter("etape"));
 			List<Semestre> sm = se.getSemestreByEtape(id);
 			request.setAttribute("etape", request.getParameter("etape"));
 			request.setAttribute("semestres", sm);
 			this.getServletContext().getRequestDispatcher("/Entrer_NoteSEM.jsp").forward(request, response);
-			
+
 		} else if (path.equals("/Liste-A-Deliberer-Semestre")) {
 			int id_semestre = se.getIDSemestre(request.getParameter("semestre"));
 			List<Module> m = se.getModuleBySemestre(id_semestre);
@@ -780,7 +784,7 @@ public class controller extends HttpServlet {
 			request.setAttribute("semestre", request.getParameter("semestre"));
 			request.setAttribute("module", m);
 			this.getServletContext().getRequestDispatcher("/Entrer_NoteModule.jsp").forward(request, response);
-			
+
 		} else if (path.equals("/Liste-A-Deliberer-Module")) {
 			String module = request.getParameter("module");
 			int id_module = se.getIDModule(module);
@@ -790,11 +794,11 @@ public class controller extends HttpServlet {
 			request.setAttribute("semestre", request.getParameter("semestre"));
 			request.setAttribute("element", elt);
 			this.getServletContext().getRequestDispatcher("/Entrer_NoteElt.jsp").forward(request, response);
-			
+
 		} else if (path.equals("/Liste-A-Deliberer-Element")) {
 			int id_elt = se.getIDElement(request.getParameter("element"));
 			String elt=request.getParameter("element");
-			
+
 			List<Etudiant> etds = ipd.getEtudiantParElement(id_elt);
 			System.out.println(etds);
 			List<ETUD_NOTE> en = new ArrayList<ETUD_NOTE>();
@@ -802,7 +806,7 @@ public class controller extends HttpServlet {
 				Etudiant e = new Etudiant(etds.get(i).getMassarEtud(), etds.get(i).getNomFr(),
 						etds.get(i).getPrenomFr());
 				en.add(se.switch_to_etudN(e, request.getParameter("element")));
-													}
+			}
 			request.setAttribute("module", request.getParameter("module"));
 			request.setAttribute("etape", request.getParameter("etape"));
 			request.setAttribute("semestre", request.getParameter("semestre"));
@@ -812,23 +816,23 @@ public class controller extends HttpServlet {
 			session.setAttribute("etudiants", en);
 			this.getServletContext().getRequestDispatcher("/editable-table.jsp").forward(request, response);
 		}else if(path.equals("/EXCEL.do")) {
-			
+
 			String element = request.getParameter("element");
 			try {
 				response.setContentType("application/octet-stream");
 				String headerKey="Content-Disposition";
 				String headerValue="attachement;filename=Serhani.xls";
-				
+
 				response.setHeader(headerKey, headerValue);
 				List<Etudiant> e = ipd.getEtudiantParElement(1);
-				
+
 				EtudiantExcelExport excel=new EtudiantExcelExport(e);
 				excel.exporter(e,response);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			/////////////////////prof element
 		}else if(path.equals("/etudiant-element")) {
 			String element = (String) session.getAttribute("element-prof");
 			int id_elt = se.getIDElement(element);
@@ -839,19 +843,19 @@ public class controller extends HttpServlet {
 			// affiche la liste fhwd tableau 
 			// bouton thta bch n2impoorte lliste
 		}else if(path.equals("/excel-elt.do")) {
-				String element = request.getParameter("elt");
-				int id_elt = se.getIDElement(element);
+			String element = request.getParameter("elt");
+			int id_elt = se.getIDElement(element);
 			try {
 				response.setContentType("application/octet-stream");
 				String headerKey="Content-Disposition";
 				String headerValue="attachement;filename=EXCEL.xls";
-				
+
 				response.setHeader(headerKey, headerValue);
 				List<Etudiant> e = ipd.getEtudiantParElement(id_elt);
-				
+
 				EtudiantExcelExport excel=new EtudiantExcelExport(e);
 				excel.exporter(e,response);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -869,11 +873,157 @@ public class controller extends HttpServlet {
 			List<ETUD_NOTE> en = ipd.recupererLISTE_Note(inputStream, elt);
 			System.out.println(en);
 			request.setAttribute("etudiants", en);
+			request.setAttribute("element", elt);
+			this.getServletContext().getRequestDispatcher("/Liste_Etud_Elt_Note.jsp").forward(request, response);
+
+		}else if(path.equals("/mon_element.do")) {
+			String element=(String)session.getAttribute("element-prof");
+			Element e = se.INFO_ELEMENT(element);
+			request.setAttribute("element", e);
+			this.getServletContext().getRequestDispatcher("/mon-element.jsp").forward(request, response);
+
+		}else if(path.equals("/update_mon_element.do")){
+			int id_element=Integer.parseInt(request.getParameter("idelement"));
+			String libelle = request.getParameter("libelle");
+			int note = Integer.parseInt(request.getParameter("note"));
+			int id_mod = Integer.parseInt(request.getParameter("idmo"));
+			int coeff = Integer.parseInt(request.getParameter("coeff"));
+			Element e = new Element(id_element, libelle, id_mod, coeff, note);
+			se.Update_element(e);
+			String message = "Votre Update a ete bien sauvegarde !";
+			request.setAttribute("message", message);
+			request.setAttribute("element", e);
+			this.getServletContext().getRequestDispatcher("/mon-element.jsp").forward(request, response);
+		}else if(path.equals("/etudiant_module")) {
+			String module=(String)session.getAttribute("module-resp");
+			int id_module =se.getIDModule(module);
+			List<Element> e = se.getElementByMODULE(id_module);
+			List<Element> elts = new ArrayList<Element>();
+			for (int i = 0; i < e.size(); i++) {
+				elts.add(se.INFO_ELEMENT(e.get(i).getLabelleElement()));
+			}
+			HashSet<Etudiant> en = ipd.getListeEtudiantXXXX(elts);
+			request.setAttribute("etudiants", en);
+			request.setAttribute("module", module);
+			this.getServletContext().getRequestDispatcher("/Liste_Etud_Module.jsp").forward(request, response);
+
+		}else if(path.equals("/recuperer-Liste-module.do")) {
+			int id_module =se.getIDModule((String)session.getAttribute("module-resp"));
+			List<Element> e = se.getElementByMODULE(id_module);
+			List<Element> elts = new ArrayList<Element>();
+
+			for (int i = 0; i < e.size(); i++) {
+				elts.add(se.INFO_ELEMENT(e.get(i).getLabelleElement()));
+			}
+			List<Etudiant> et1 = ipd.getEtudiantParElement(elts.get(0).getIDElement());
+			List<Etudiant> et2 = ipd.getEtudiantParElement(elts.get(1).getIDElement());
+			//////////////////////1-ghir li mdkhl note|2-khs ntester khs ikun f les deux elts
+			//pour et1=>elts1///
+
+			List<ETUD_NOTE> nn1= ipd.EtudiantNoteV(et1, elts.get(0).getLabelleElement());//gha massarETUD li kyn fhad ETUD_NOTE
+			List<ETUD_NOTE> en1 =new ArrayList<ETUD_NOTE>();
+			for (int i = 0; i < nn1.size(); i++) {
+				en1.add(se.switch_to_etudN(insc.getET3(nn1.get(i).getCNE()), elts.get(0).getLabelleElement()));
+			}
+			//pour et2=>elts2//
+
+			List<ETUD_NOTE> nn2= ipd.EtudiantNoteV(et2, elts.get(0).getLabelleElement());//gha massarETUD li kyn fhad ETUD_NOTE
+			List<ETUD_NOTE > en2 = new ArrayList<ETUD_NOTE>();
+			for (int i = 0; i < nn2.size(); i++) {
+				en2.add(se.switch_to_etudN(insc.getET3(nn2.get(i).getCNE()), elts.get(1).getLabelleElement()));
+			}
+
+			request.setAttribute("etudiants1", en1);
+			session.setAttribute("etudiants1", en1);
+
+			request.setAttribute("element1",  elts.get(0).getLabelleElement());
+			session.setAttribute("element1",  elts.get(0).getLabelleElement());
+
+			request.setAttribute("etudiants2", en2);
+			session.setAttribute("etudiants2", en2);
+
+			request.setAttribute("element2",  elts.get(1).getLabelleElement());
+			session.setAttribute("element2",  elts.get(1).getLabelleElement());
+
+			request.setAttribute("elements", elts);
+			session.setAttribute("elements", elts);
+
+			this.getServletContext().getRequestDispatcher("/List_ETUD_M.jsp").forward(request, response);
+
+		}else if(path.equals("/deliberer-module.do")) {
+			/*List<ETUD_NOTE> en1 = ((List<ETUD_NOTE>) session.getAttribute("etudiants1"));
+			String elts1 = (String) session.getAttribute("element1");
+
+			List<ETUD_NOTE> en2 = ((List<ETUD_NOTE>) session.getAttribute("etudiants2"));
+			String elts2 = (String) session.getAttribute("element2");
+
+			List<Element> ets = new ArrayList<Element>();
+			ets.add(new Element(elts1));
+			ets.add(new Element(elts2));*/
+
+			String module=(String)session.getAttribute("module-resp");
+			System.out.println(module);
+			List<Element> elts = se.getElementByMODULE(se.getIDModule(module));
+			List<Element> nv = new ArrayList<Element>();
+			for (int i = 0; i < elts.size(); i++) {
+				nv.add(se.INFO_ELEMENT(elts.get(i).getLabelleElement()));
+			}
+			HashSet<Etudiant> hs = ipd.getListeEtudiantXXXX(nv);
+			List<Etudiant> ee =new ArrayList<Etudiant>(hs);
+			List<ETUD_NOTE> nn = new ArrayList<ETUD_NOTE>();
+			for (int i = 0; i < ee.size(); i++) {
+				if(ipd.etud_mod(module, ee.get(i).getMassarEtud())){
+					ETUD_NOTE en = new ETUD_NOTE(ee.get(i).getMassarEtud(), se.NotedsModule(module, ee.get(i).getMassarEtud()));
+					en.setNom(ee.get(i).getNomFr());
+					en.setPrenom(ee.get(i).getPrenomFr());
+					en.setEtat(se.get_Etat_M(module, ee.get(i).getMassarEtud()));
+					nn.add(en);	
+				}}
+			request.setAttribute("etudiants", nn);
+			request.setAttribute("module", module);
+			this.getServletContext().getRequestDispatcher("/List_ETUD_M_NOTE.jsp").forward(request, response);
+
+		}else if(path.equals("/rattrapage.do")) {
+			String element = request.getParameter("element");
+			System.out.println(element);
+			List<ETUD_NOTE> ratt =se.getRattrapage(element);
+			request.setAttribute("etudiants", ratt);
+			request.setAttribute("element", element);
+			this.getServletContext().getRequestDispatcher("/Liste_Etud_EltR.jsp").forward(request, response);
+
+		}else if(path.equals("/lnote-element.do")) {
+			String element = (String) session.getAttribute("element-prof");
+			List<ETUD_NOTE> en = se.getListeNote(element);
+			request.setAttribute("etudiants", en);
+			request.setAttribute("element", element);
+			this.getServletContext().getRequestDispatcher("/liste_note.jsp").forward(request, response);
+
+		}else if(path.equals("/excel-eltR.do")) {
+			String element = request.getParameter("elt");
+			try {
+				response.setContentType("application/octet-stream");
+				String headerKey="Content-Disposition";
+				String headerValue="attachement;filename=EXCEL.xls";
+
+				response.setHeader(headerKey, headerValue);
+				List<ETUD_NOTE> ratt =se.getRattrapage(element);
+				List<Etudiant> e = new ArrayList<Etudiant>();
+				for (int i = 0; i < ratt.size(); i++) {
+					Etudiant etud =new Etudiant(ratt.get(i).getCNE(), ratt.get(i).getNom(),ratt.get(i).getPrenom());
+					System.out.println(etud);
+					e.add(etud);
+					}
+				EtudiantExcelExport excel=new EtudiantExcelExport(e);
+				excel.exporter(e,response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 
-	
-	
+
+
 	}
 
 	private static java.sql.Date convert(java.util.Date uDate) {
@@ -891,16 +1041,16 @@ public class controller extends HttpServlet {
 		try (FileOutputStream os= new FileOutputStream(excelFilePath)){
 			workbook.write(os);
 		}
-	
+
 	}
 
 	public void writeEtud(Etudiant e , Row r) {
 		Cell cell = r.createCell(0);
 		cell.setCellValue(e.getMassarEtud());
-		
+
 		cell = r.createCell(1);
 		cell.setCellValue(e.getNomFr());
-		
+
 		cell = r.createCell(2);
 		cell.setCellValue(e.getPrenomFr());
 	}

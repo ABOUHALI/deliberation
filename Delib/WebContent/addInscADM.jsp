@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" 
 	pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
+<%@include file="static.jsp"%>
+<div class="edit" style="margin-left:300px; margin-bottom: 300px; "  >
 <div class="main-card mb-3 card">
 	<div class="card-body">
 		<h5 class="card-title">Inscription Administrative de l'Etudiant</h5>
@@ -17,7 +17,7 @@
 						<label for="Nom Etudiant" class="">Nom Etudiant</label> <input
 							type="text"
 							value="${e.getNomFr() } -- ${e.getPrenomFr() }"
-							 name="test" />
+							 name="test" readonly="readonly"/>
 
 
 					</div>
@@ -28,7 +28,7 @@
 					<div class="position-relative form-group">
 						<label for="Nom Etudiant" class="">CNE</label> <input
 							type="text"
-							
+							value="${massar}" readonly="readonly"
 							 name="cne" />
 
 
@@ -44,7 +44,7 @@
 
 					</div>
 				</div>
-				<div class="form-row">
+				<div class="form-row" style="margin:auto;align-content:flex-end;">
 					<div class="col-md-6">
 						<div class="position-relative form-group">
 							<label for="Nom Etudiant" class="">Telephone</label> <input
@@ -137,7 +137,7 @@
 							name="photo" id="file" type="file" class="form-control-file">
 					</div>
 				</div>
-				<div class="col-md-6" id="an" style="display: none">
+				<div class="col-md-6" id="cne" style="display: none">
 					<div class="position-relative form-group">
 						<label for="annee_academique" class="">Inserer CNE</label><input
 							name="cne" id="file" type="file" class="form-control-file">
@@ -176,7 +176,7 @@
 			<button class="mt-2 btn btn-primary col-md-12" type="submit">Valider</button>
 		</form>
 		
-
+</div>
 	</div>
 </div>
 

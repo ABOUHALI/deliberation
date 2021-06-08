@@ -61,14 +61,22 @@ public class LoginPROF extends HttpServlet {
 			String role = ld.Role(user);
 			int id_prof = ld.username_info_prof(username, password);
 			String elt = pd.ElEMENTfromProf(id_prof);
-			session.setAttribute("user-prof", user);
-			System.out.println(session.getAttribute("user-prof"));
-			session.setAttribute("element-prof", elt);
-			this.getServletContext().getRequestDispatcher("/indexdprof.jsp").forward(request, response);
+			String role_prof = pd.getRoleProf(id_prof);
+			if(role_prof.equals("Professeur")) {
+				session.setAttribute("user-prof", user);
+				session.setAttribute("element-prof", elt);
+				System.out.println(elt);
+				this.getServletContext().getRequestDispatcher("/indexdprof.jsp").forward(request, response);}
+			else if(role_prof.equals("Responsable de module")) {////mzl khs nbda ntester wshhh module fih 1 elemnt wla la 
+				String module = pd.ModulefromRM(id_prof);
+				session.setAttribute("user-resp", user);
+				session.setAttribute("module-resp", module);
+				this.getServletContext().getRequestDispatcher("/indexdresp.jsp").forward(request, response);
 
-			}
+			}}
 		else {
 			this.getServletContext().getRequestDispatcher("/errorLOGIN.jsp").forward(request, response);
 		}
 	}
 	}
+	

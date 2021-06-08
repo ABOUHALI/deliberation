@@ -31,6 +31,8 @@ public class TEST {
 		StructureETab se = new StructureETab();
 		InscriptionADministrative iad = new InscriptionADministrative();
 		InscripPDAO ip = new InscripPDAO();
+		InscripEnLigne ie = new InscripEnLigne();
+		ProfesseurDao pd = new ProfesseurDao();
 		java.sql.Date date_sql = new java.sql.Date(4/13/2021);
 		/*Etudiant e = new Etudiant("test1", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm",date_sql , "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", "mm", null);
 		InscripEnLigne il = new InscripEnLigne();
@@ -133,7 +135,43 @@ public class TEST {
 		System.out.println(elts);
 		System.out.println(ip.getListeEtudiantXXXX(elts));*/
 		/*System.out.println(ip.isEtudiantPElt("Z789456","algo 2"));*/
-		System.out.println(ip.getListeEtudiant("java 1"));
+		/*int id_module =se.getIDModule("java");
+		List<Element> e = se.getElementByMODULE(id_module);
+		List<Element> elts = new ArrayList<Element>();
+			
+		for (int i = 0; i < e.size(); i++) {
+			elts.add(se.INFO_ELEMENT(e.get(i).getLabelleElement()));
+		}
+		List<Etudiant> et1 = ip.getEtudiantParElement(elts.get(0).getIDElement());
+		List<Etudiant> et2 = ip.getEtudiantParElement(elts.get(1).getIDElement());
+		//pour et1///
+		List<ETUD_NOTE> nn1= ip.EtudiantNoteV(et1, elts.get(0).getLabelleElement());//gha massarETUD li kyn fhad ETUD_NOTE
+		List<ETUD_NOTE> en1 =new ArrayList<ETUD_NOTE>();
+		for (int i = 0; i < nn1.size(); i++) {
+			en1.add(se.switch_to_etudN(ie.getET3(nn1.get(i).getCNE()), elts.get(0).getLabelleElement()));
+		}
+		System.out.println(en1);
+		//pour et2//
+		List<ETUD_NOTE > en2 = new ArrayList<ETUD_NOTE>();
+		for (int i = 0; i < et2.size(); i++) {
+			en2.add(se.switch_to_etudN(et2.get(i), elts.get(1).getLabelleElement()));
+		}*/
+		/*List<Element> elts = se.getElementByMODULE(se.getIDModule("java"));
+		List<Element> nv = new ArrayList<Element>();
+		for (int i = 0; i < elts.size(); i++) {
+			nv.add(se.INFO_ELEMENT(elts.get(i).getLabelleElement()));
+		}
+		HashSet<Etudiant> hs =ip.getListeEtudiantXXXX(nv);
+		System.out.println(hs);*/
+		/*System.out.println(pd.ModulefromRM(7));
+		/*List<Etudiant> ee =new ArrayList<Etudiant>(hs);
+		System.out.println(ee);
+		System.out.println(hs);
+
+
+		System.out.println(ip.etud_mod("java","M133462726"));*/
+		System.out.println(se.getRattrapage("java 1"));
+		/*System.out.println(se.NotedsModule("java","H444444"));
 		///////////////EXCEL LISTE/////////////
 		/*controller c = new  controller();
 		List<Etudiant> l = ip.getEtudiantParElement(2);

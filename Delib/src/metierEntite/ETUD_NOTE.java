@@ -4,9 +4,9 @@ public class ETUD_NOTE extends Etudiant{
 private String CNE;
 private String nom;
 private String prenom;
-private int NOTE;
+private double NOTE;
 private String etat;
-public ETUD_NOTE(String CNE,String nom , String prenom , int NOTE,String etat) {
+public ETUD_NOTE(String CNE,String nom , String prenom , double NOTE,String etat) {
 	this.CNE=CNE;
 	this.nom=nom;
 	this.prenom=prenom;
@@ -17,7 +17,7 @@ public ETUD_NOTE(String cNE) {
 	super();
 	CNE = cNE;
 }
-public ETUD_NOTE(String cNE, int nOTE) {
+public ETUD_NOTE(String cNE, double nOTE) {
 	super();
 	CNE = cNE;
 	NOTE = nOTE;
@@ -45,13 +45,13 @@ public String getPrenom() {
 public void setPrenom(String prenom) {
 	this.prenom = prenom;
 }
-public int getNOTE() {
+public double getNOTE() {
 	return NOTE;
 }
-public void setNOTE(int nOTE) {
-	NOTE = nOTE;
+public void setNOTE(double d) {
+	NOTE = d;
 }
-public ETUD_NOTE(String cNE, String nom, String prenom, int nOTE) {
+public ETUD_NOTE(String cNE, String nom, String prenom, double nOTE) {
 	super();
 	CNE = cNE;
 	this.nom = nom;

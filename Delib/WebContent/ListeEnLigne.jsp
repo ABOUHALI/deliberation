@@ -19,7 +19,7 @@
 							<h4>Inscriptions en ligne List</h4>
 
 							<div class="add-product">
-								<a href="">Ajouter une inscription depuis excel</a>
+								<a href="add-inscriptionEexcel">Ajouter une inscription depuis excel</a>
 							</div>
 							<div class="asset-inner">
 								<table>
