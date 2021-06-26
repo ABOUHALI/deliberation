@@ -6,6 +6,23 @@ private String nom;
 private String prenom;
 private double NOTE;
 private String etat;
+private String element;
+public String getElement() {
+	return element;
+}
+public void setElement(String element) {
+	this.element = element;
+}
+public ETUD_NOTE(String massarEtud, String nomFr, String prenomFr, String cNE, String nom, String prenom, double nOTE,
+		String etat, String element) {
+	super(massarEtud, nomFr, prenomFr);
+	CNE = cNE;
+	this.nom = nom;
+	this.prenom = prenom;
+	NOTE = nOTE;
+	this.etat = etat;
+	this.element = element;
+}
 public ETUD_NOTE(String CNE,String nom , String prenom , double NOTE,String etat) {
 	this.CNE=CNE;
 	this.nom=nom;
@@ -68,9 +85,11 @@ public ETUD_NOTE() {
 	super();
 }
 
+
 @Override
 public String toString() {
-	return "ETUD_NOTE [CNE=" + CNE + ", nom=" + nom + ", prenom=" + prenom + ", NOTE=" + NOTE + ", etat=" + etat + "]";
+	return "ETUD_NOTE [CNE=" + CNE + ", nom=" + nom + ", prenom=" + prenom + ", NOTE=" + NOTE + ", etat=" + etat
+			+ ", element=" + element + "]";
 }
 public String getEtat() {
 	return etat;

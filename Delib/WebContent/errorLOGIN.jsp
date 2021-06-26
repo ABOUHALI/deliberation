@@ -151,7 +151,7 @@ body {
 			</div>
 			<h2>Erreur</h2>
 			<p>LOGIN n'est pas bien passee  </p>
-			<a href="/login.jsp">home page</a>
+			<a href="home">home page</a>
 		</div>
 	</div>
 

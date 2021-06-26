@@ -334,6 +334,7 @@ table.table .avatar {
 						<th>Id Semestre</th>
 						<th>Nom Semestre</th>
 						<th>Etape</th>
+						<th>Note  validation</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -345,13 +346,10 @@ table.table .avatar {
 								<td><c:out value="${s.getIDSemestre()}" /></td>
 								<td><c:out value="${ s.getLabelleSemestre()}" /></td>
 								<td><a href="get-etap?id=<c:out  value='${s.getIDEtape()}'/>"><c:out value="${ s.getIDEtape()}" /></a></td>
-
-								<td><a href="#editEmployeeModal" class="edit"
+								<td><c:out value="${ s.getNoteValidation()}" /></td>
+								<td><a href="modifier-semestre.do?id=<c:out value='${s.getIDSemestre()}'/>" class="edit"
 									data-toggle="modal"><i class="material-icons"
-										data-toggle="tooltip" title="Edit">&#xE254;</i></a> <a
-									href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-										class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-
+										data-toggle="tooltip" title="Edit">&#xE254;</i></a> 
 								</td>
 							</tr>
 
@@ -370,7 +368,7 @@ table.table .avatar {
 	<div id="addEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="ajouter-Semestre" method="post">
+				<form action="ajouter-semestre.do" method="post">
 					<div class="modal-header">
 						<h4 class="modal-title">Ajouter Semestre</h4>
 						<button type="button" class="close" data-dismiss="modal"
@@ -378,12 +376,12 @@ table.table .avatar {
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Id</label> <input type="text" class="form-control"
+							<label>Id</label> <input type="text" class="form-control"name="id-semestre"
 								required>
 						</div>
 						<div class="form-group">
 							<label>Nom </label> <input type="text"
-								class="form-control" name="filiere" required>
+								class="form-control" name="semestre" required>
 						</div>
 
 
@@ -395,11 +393,11 @@ table.table .avatar {
 								<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 									<div class="form-select-list">
 										<select class="form-control custom-select-value"
-											name="etablissement">
+											name="etape">
 
 
-											<c:forEach items="${etablissements}" var="e" varStatus="loop">
-												<option>${e.getEtablissement()}</option>
+											<c:forEach items="${etape}" var="e" varStatus="loop">
+												<option>${e.getLabelleEtape()}</option>
 
 											</c:forEach>
 
@@ -409,6 +407,11 @@ table.table .avatar {
 								</div>
 							</div>
 
+						</div>
+						
+						<div class="form-group">
+							<label>Note de validation </label> <input type="text"
+								class="form-control" name="note" required>
 						</div>
 
 						<div class="modal-footer">

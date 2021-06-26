@@ -8,7 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Language" content="en">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>R E S P -- D E L I B</title>
+<title>ESP E T U D I A N T </title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
 <meta name="description"
@@ -100,7 +100,7 @@
 								<div class="widget-content-left  ml-3 header-user-info">
 									<div class="widget-heading">
 										<%
-											out.println(session.getAttribute("user-resp"));
+											out.println(session.getAttribute("user-etudiant"));
 										%>
 									</div>
 
@@ -477,13 +477,11 @@
 				<div class="app-sidebar__inner">
 					<ul class="vertical-nav-menu">
 
-						<li class="app-sidebar__heading">Dashboards RESP</li>
-						<li><a
-							href="etudiant_module"> MES ETUDIANTS </a> <a
-							href="recuperer-Liste-module.do"> DELIBERER MODULE </a> <a
-							href="mon_module.do"> MON MODULE </a>
+						<li class="app-sidebar__heading">Dashboards ETUDIANT</li>
+						<li><a href="releve_note.do"> RELEVE DE NOTE </a> <a
+							href="etudiant_module"> CERTIFICAT DE SCOLARITE </a> 
 
-						<li class="app-sidebar__heading">Forms</li>
+						<li class="app-sidebar__heading">Session</li>
 
 						<li><a href="logout"> Se déconnecter </a></li>
 

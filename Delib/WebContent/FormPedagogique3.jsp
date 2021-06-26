@@ -89,7 +89,7 @@
 											</div>
 											<div class="form-group">
 													<label>Elements</label><br> <select name="element"
-														class="form-control">
+														class="form-control" multiple="multiple">
 														<option>
 															<!-- 														<label th:text="${p.libelle_etape}" th:value="${p.id}"></label> -->
 

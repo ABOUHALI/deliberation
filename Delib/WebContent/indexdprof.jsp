@@ -478,19 +478,19 @@
 					<ul class="vertical-nav-menu">
 
 						<li class="app-sidebar__heading">Dashboards PROF</li>
-						<li><a href="Liste-Etablissement"> Etablissement </a> <a
+						<li> <a
 							href="etudiant-element"> MES ETUDIANTS </a> <a
 							href="recuperer-Liste-Elt.do"> IMPORTER NOTE </a> 
 							<a href="lnote-element.do">
 								LISTE DELIBERES </a>
 								<a
 							href="mon_element.do"> Element </a> 
-								 <a href="list-element"> IMPORTER RATTRAPAGE </a> <a
-							href="ajouter-professeur"> Professeur </a>
+								 <a href="recuperer-Liste-EltR.do"> IMPORTER RATTRAPAGE </a> <a
+							href="collegues.do"> MES COLLEGUES </a>
 						<li>
-						<li><a href="#"> Notes </a></li>
+						
 
-						<li class="app-sidebar__heading">Forms</li>
+						<li class="app-sidebar__heading">SESSION</li>
 
 						<li><a href="logout"> Se déconnecter </a></li>
 

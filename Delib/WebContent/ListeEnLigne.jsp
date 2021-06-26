@@ -14,15 +14,17 @@
 		<div class="product-status mg-b-15">
 			<div class="container-fluid">
 				<div class="row">
+				
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="product-status-wrap drp-lst">
-							<h4>Inscriptions en ligne List</h4>
+							<h4>Liste Inscription en ligne</h4>
 
 							<div class="add-product">
 								<a href="add-inscriptionEexcel">Ajouter une inscription depuis excel</a>
 							</div>
-							<div class="asset-inner">
-								<table>
+							<div class="body">
+								<table id="mainTable" class="table table-striped">
+								<thead>
 									<tr>
 
 										<th>Code Massar</th>
@@ -34,7 +36,7 @@
 										<th>Date de l'inscription</th>
 										<th>Action</th>
 									</tr>
-
+									</thead>
 									<c:forEach items="${etudiants}" var="e" >
 										<tr>
 
@@ -52,6 +54,7 @@
 												<a href="/Delib/administrative.php?massarEtud=<c:out value='${e.getMassarEtud()}'/>" ><button
 														class="btn btn-primary waves-effect waves-light">
 														Inscrire administrativement</button> </a>
+												<a href="annuler_Inscription?massar=<c:out value='${e.getMassarEtud()}'/>"  ><button type="button" class="btn btn-primary waves-effect btn-danger">Annuler Inscription</button> </a>
 
 											</td>
 
@@ -67,6 +70,7 @@
 						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>

@@ -201,7 +201,7 @@
 																</div>
 															</div>
 														</div>
-
+														</div>
 
 
 														<div class="form-group-inner" id="module" hidden="true">
@@ -245,6 +245,21 @@
 																</div>
 															</div>
 														</div>
+														<div id="row_dim">
+														<div class="form-group-inner" id="nvs" hidden="true">
+															<div class="row">
+																<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																	<label class="login2 pull-right pull-right-pro">Note Validation</label>
+																</div>
+																<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																	<div class="form-select-list">
+																		<input name="nvs" type="text"
+																			class="form-control example1" id="nvs"
+																			placeholder="Note Validation Semestre">
+																	</div>
+																</div>
+															</div>
+														</div>
 
 
 
@@ -259,6 +274,7 @@
 											            $('#element').show(); 
 											            $('#module').hide(); 
 											            $('#filiere').hide(); 
+											            $('#nvs').hide();
 											        }
 													
 													else if($('#role').val() == 'Responsable de filiere') {
@@ -266,9 +282,10 @@
 											            $('#element').hide(); 
 											            $('#module').hide(); 
 											            $('#filiere').show(); 
+											            $('#nvs').show();
 											        }
 													else if($('#role').val() == 'Responsable de module') {
-
+														$('#nvs').hide();
 											            $('#element').hide(); 
 											            $('#module').show(); 
 											            $('#filiere').hide(); 

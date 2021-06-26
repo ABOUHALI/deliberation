@@ -32,7 +32,7 @@ public class InscripEnLigne implements IInscriptionEnligne {
 
 		try {
 			ps = conn.prepareStatement(
-					"insert into etudiant values(?, ?, ?, ?, ?, ?,?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
+					"insert into etudiant values(?, ?, ?, ?, ?, ?,?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)");
 
 			ps.setString(1, etudiant.getNomFr());
 			ps.setString(2, etudiant.getNomAr());
@@ -64,7 +64,8 @@ public class InscripEnLigne implements IInscriptionEnligne {
 			ps.setString(23, etudiant.getGroupSocio());
 
 			ps.setBlob(24, etudiant.getPhoto());
-
+			ps.setInt(25, 0);
+			ps.setString(26, etudiant.getEmail());
 			ps.executeUpdate();
 
 			ps.close();
@@ -77,7 +78,58 @@ public class InscripEnLigne implements IInscriptionEnligne {
 			e.printStackTrace();
 		}
 	}
+	public void addEtUSER(String cne, User user) {
+		// TODO Auto-generated method stub
+		Connection conn = SingletonConnection.getConnection();
 
+		PreparedStatement ps;
+		
+		try {
+			ps = conn.prepareStatement("insert into user(password,username,id_etud,roles) values (?,?,?,?)");
+			ps.setString(1, user.getMdp());
+			ps.setString(2, user.getLogin());
+			ps.setString(3, cne);
+			ps.setString(4, "etudiant");
+			ps.executeUpdate();
+			ps.close();
+			conn.close();
+			System.out.println("user-etudiant");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void deleteETUSER(String massar) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement("delete from user where id_etud=?");
+			ps.setString(1, massar);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		
+	}
+	
+	public String getEmail(String massar) {
+		Connection conn=SingletonConnection.getConnection();
+		PreparedStatement ps;
+		String email=null;
+		try {
+			ps=conn.prepareStatement("select email from etudiant where massarEtud=?");
+			ps.setString(1, massar);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				email = rs.getString("email");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return email;
+		
+	}
 	public List<Etudiant> listEt() {
 		List<Etudiant> list = new ArrayList<Etudiant>();
 		Connection conn = SingletonConnection.getConnection();
@@ -122,7 +174,7 @@ public class InscripEnLigne implements IInscriptionEnligne {
 		return list;
 	}
 
-	public boolean deleteEt(String massarEtud) {
+	public void deleteEt(String massarEtud) {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
@@ -133,7 +185,7 @@ public class InscripEnLigne implements IInscriptionEnligne {
 			e.printStackTrace();
 
 		}
-		return false;
+		
 	}
 
 	public Etudiant getEt(String massarEtud) {

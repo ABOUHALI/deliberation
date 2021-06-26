@@ -1,27 +1,12 @@
 package dao;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
-import org.apache.poi.ss.formula.SheetIdentifier;
+import metierEntite.Module;
 
-import metierEntite.ETUD_NOTE;
-import metierEntite.Element;
-import metierEntite.Etablissement;
-import metierEntite.Etape;
-import metierEntite.EtudFil;
-import metierEntite.Etudiant;
-import metierEntite.Filiere;
-import metierEntite.Inscrip_Administartive;
-import metierEntite.Semestre;
-import metierEntite.User;
-import metierEntite.annee_universitaire;
-import web.controller;
 
 public class TEST {
 
@@ -170,7 +155,17 @@ public class TEST {
 
 
 		System.out.println(ip.etud_mod("java","M133462726"));*/
-		System.out.println(se.getRattrapage("java 1"));
+		/*int id_filiere =se.getIDFiliere("Informatique");
+		List<Semestre> sem =pd.semsFROM_fil(id_filiere);
+		List<Element> totals = new ArrayList<Element>();
+		for (int i = 0; i < sem.size(); i++) {
+			List<Element> le = ip.getElementDANSSemestre(sem.get(i).getLabelleSemestre());
+			totals.addAll(le);
+		}
+		HashSet<Etudiant> hs = ip.getListeEtudiantXXXX(totals);
+		System.out.println(hs);*/
+		
+		System.out.println(ip.getEtatSEM("B999999", "semestre 1 INFO"));
 		/*System.out.println(se.NotedsModule("java","H444444"));
 		///////////////EXCEL LISTE/////////////
 		/*controller c = new  controller();

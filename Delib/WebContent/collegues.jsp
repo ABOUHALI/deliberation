@@ -16,40 +16,45 @@
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="product-status-wrap drp-lst">
-							<h4>LISTE</h4>
+							<h4>LISTE DE MES COLLEGUES</h4>
 							<nav aria-label="navigation">
 								
 							</nav>
 							
 							<div class="asset-inner">
-								<div class="form-group">
-									<label>ELEMENT</label><br> <input type="text"
-										name="element" class="form-control" value="${element}"
-										readonly="readonly">
-								</div>
+
 
 								
+								
+
+
 							</div>
 							<div class="body">
 
 								<table id="mainTable" class="table table-striped">
 									<thead>
 										<tr>
-											<th>CNE</th>
+											<th>ID PROF</th>
 											<th>NOM</th>
 											<th>PRENOM</th>
-											<th>NOTE</th>
+											<th>E-mail</th>
+											<th>Etablissement</th>
+											<th>Grade</th>
+											<th>element</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<c:forEach items="${etudiants}" var="e">
+											<c:forEach items="${professeurs}" var="p">
 												<tr>
 													
-													<td><c:out value="${e.getCNE()}" /></td>
-													<td><c:out value="${e.getNom()}" /></td>
-													<td><c:out value="${e.getPrenom()}" /></td>
-													<td><c:out value="${e.getNOTE()}" /></td>
+													<td><c:out value="${p.getId()}" /></td>
+													<td><c:out value="${p.getNom()}" /></td>
+													<td><c:out value="${p.getPrenom()}" /></td>
+													<td><c:out value="${p.getEmail()}" /></td>
+													<td><c:out value="${etab}" /></td>
+													<td><c:out value="${p.getGrade()}" /></td>
+													<td><c:out value="${p.getElement()}" /></td>
 												</tr>
 											</c:forEach>
 										</tr>
@@ -59,7 +64,7 @@
 								
 							</div>
 
-							
+
 						</div>
 					</div>
 				</div>

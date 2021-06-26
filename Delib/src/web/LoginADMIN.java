@@ -56,10 +56,10 @@ public class LoginADMIN extends HttpServlet {
 		User user = new User(0, username, password, null, 0, null);
 		if (ld.validation(user)) {
 			String role = ld.Role(user);
-			System.out.println(role);
 			if(role.equals("admin")) {
+				System.out.println(4);
 				session.setAttribute("user-admin", user);
-				System.out.println(user);
+				System.out.println(session.getAttribute("user-admin"));
 				this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 
 			}

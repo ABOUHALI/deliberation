@@ -58,7 +58,15 @@
 								</table>
 
 							</div>
+							<div>
+									<div>
 
+										<a href="pdf-module.do" class="btn btn-primary btn-lg "
+											role="button">
+												PV <i class="fa fa-file-pdf-o"></i>
+											 </a>
+									</div>
+								</div>
 
 						</div>
 					</div>

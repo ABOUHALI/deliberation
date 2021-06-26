@@ -51,7 +51,11 @@ public class LoginETUDIANT extends HttpServlet {
 			String role=ld.Role(user);
 			if(role.equals("etudiant")) {
 				System.out.println("espace -etudiant");
+				String id_etud =ld.username_info_ETUD(username, password);
+				session.setAttribute("massar", id_etud);
 				session.setAttribute("user-etudiant", user);
+				this.getServletContext().getRequestDispatcher("/indexEtudiant.jsp").forward(request, response);
+
 			}
 		}else {
 			this.getServletContext().getRequestDispatcher("/errorLOGIN.jsp").forward(request, response);

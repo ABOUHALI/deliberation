@@ -16,6 +16,45 @@ public class Etudiant {
 	private Date dateN;//10
 	//private String et;//11
 	private String villeBac;//12
+	private String email;
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Etudiant(String massarEtud, String nomFr, String nomAr, String prenomFr, String prenomAr, String acad,
+			String an_Bac, String cin, String date1in, Date dateN, String villeBac, String email, String lieuN_ar,
+			String lieuN_fr, String villeNaissance, String lycee, String mt, String nationalite, String province,
+			String sBac, String sexe, String region, String etatPhy, String groupSocio, InputStream photo) {
+		super();
+		this.massarEtud = massarEtud;
+		NomFr = nomFr;
+		NomAr = nomAr;
+		PrenomFr = prenomFr;
+		PrenomAr = prenomAr;
+		this.acad = acad;
+		this.an_Bac = an_Bac;
+		this.cin = cin;
+		this.date1in = date1in;
+		this.dateN = dateN;
+		this.villeBac = villeBac;
+		this.email = email;
+		this.lieuN_ar = lieuN_ar;
+		this.lieuN_fr = lieuN_fr;
+		this.villeNaissance = villeNaissance;
+		this.lycee = lycee;
+		this.mt = mt;
+		this.nationalite = nationalite;
+		this.province = province;
+		this.sBac = sBac;
+		this.sexe = sexe;
+		this.region = region;
+		this.etatPhy = etatPhy;
+		GroupSocio = groupSocio;
+		this.photo = photo;
+	}
 	public Etudiant(String massarEtud, String nomFr, String prenomFr) {
 		super();
 		this.massarEtud = massarEtud;

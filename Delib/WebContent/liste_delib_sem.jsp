@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -7,7 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Element</title>
+<title>D E L I B E R A T I O N </title>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
@@ -287,34 +289,99 @@ table.table .avatar {
 
 </head>
 <body>
-	<%@include file="static.jsp"%>
+	<%@include file="indexdfilier.jsp"%>
 	<div class="edit" style="margin-left: 300px; margin-bottom: 300px;">
-		<form action="saveNOTE.php" method="post">
+		<form action="note-listSemestre.do" method="post">
+
+
+			<h2>DELIB -- SEMESTRE</h2>
+			<div class="form-row">
+
+
+				<select class="form-select" aria-label="Disabled select example" name="choix" disabled>
+					
+					<option value="semestre" selected >Semestre</option>
+					
+				</select>
+				<select class="form-select" aria-label="Disabled select example" name="semestres" >
+					
+					<c:forEach items="${semestres}" var="s">
+						
+						<option value="${s}">${s}</option>
+					</c:forEach>
+				</select>
+				<input type="submit" value="afficher">
+			</div>
+			<div class="main-content">
+          <div class="section-header">
+            <h1>Liste des Etudiants par Semestre </h1>
+          </div>
+         
+
+            <div class="container mt-5">
+              <div class="card">
+                
+                <div class="card-body p-0">
+                 
+				<div class="form-group"></div>
+		
+                   <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                      <thead>
+                        <tr>
+                       	
+    					<th>CNE</th>
+    					<th>Nom</th>
+    					<th>Prenom</th>
+    					<th>Semestre</th>
+    					<th>ETAT</th>
+    					<th>note</th>
+    					<!--  <th>Module</th>
+    					<th>Element</th>-->
+    				    
+                        </tr>
+                      </thead>
+                      <tbody >
+                	<c:forEach items="${etudiants}"  var="e">
+                        <tr >
+                        
+                        	<td ><c:out value="${e.getCNE()}"/></td>
+                        	<td ><c:out value="${e.getNom()}"/></td>
+							<td ><c:out value="${e.getPrenom()}"/></td>
+							<td ><c:out value="${semestre}"/></td>
+							<td ><c:out value="${e.getEtat()}"/></td>
+							<td ><c:out value="${e.getNOTE()}"/></td>
+							<!--  <td ><c:out value=""/></td>
+							<td ><c:out value=""/></td>-->
+							
+							
+						
+					
+                          
+                        </tr>
+ 					</c:forEach>	
+ 
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </form>
+                                <button type="button" class="btn btn-info" onclick="window.location.href = 'pdf_semestre.do?sem=<c:out value="${semestre}"/>';">PV PDF</button>
+        
+        </div>
+      
+        
+        
+        
+        
 
 			
-				<h2>
-					NOTE :
-									</h2>
-				<div class="form-row">
-					<input name="cne" value="${etudiant.getCNE()}" readonly="readonly">
-					<input name="element" value="${etudiant.getNom()}" readonly="readonly">
-					<div class="col">
-						<input type="text" class="form-control" placeholder="NOTE TP"
-							name="TP" min="0" max="20">
-					</div>
-					<div class="col">
-						<input type="text" class="form-control" placeholder="CC"
-							name="CC"  min="0" max="20" >
-					</div>
-					<div class="col">
-						<input type="text" class="form-control" placeholder="ORDINAIRE"
-							name="ORDINAIRE"  min="0" max="20" >
-					</div>
-				</div>
-
 			
-			<input type="submit" class="btn btn-lg btn-primary" value="submit">
-		</form>
-		</div>
+	
 </body>
 </html>

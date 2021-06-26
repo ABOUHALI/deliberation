@@ -346,11 +346,10 @@ table.table .avatar {
 								<td><c:out value="${ et. getLabelleEtape()}" /></td>
 								<td><c:out value="${ et. isDiplomante()}" /></td>
 								<td><a href="get-filiere?id=<c:out  value='${et.getIDFiliere()}'/>"><c:out value="${ et.getIDFiliere()}" /></a></td>
-								<td><a href="#editEmployeeModal" class="edit"
-									data-toggle="modal"><i class="material-icons"
-										data-toggle="tooltip" title="Edit">&#xE254;</i></a> <a
-									href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-										class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+								<td><a href="modifier-etape.do?id=<c:out value='${ et.getIDEtape()}'/>" class="edit"
+								><i class="material-icons"
+										data-toggle="tooltip" title="Edit">&#xE254;</i></a> 
+									
 
 								</td>
 							</tr>
@@ -379,7 +378,7 @@ table.table .avatar {
 					<div class="modal-body">
 					
 						<div class="form-group">
-							<label>Id Etape</label> <input type="text"
+							<label>Id Etape</label> <input type="text" name="id_etape"
 								class="form-control" required>
 						</div>
 						
@@ -417,7 +416,7 @@ table.table .avatar {
 									<div class="form-select-list">
 										<select class="form-control custom-select-value"
 											name="filieres">
-											<option></option>
+											
 											<c:forEach items="${filieres}" var="e" varStatus="loop">
 												<option>${e.getFiliere()}</option>
 											</c:forEach>

@@ -290,7 +290,7 @@ table.table .avatar {
 </head>
 <body>
 	<%@include file="static.jsp"%>
-	<div class="edit" style="margin-left: 300px; margin-bottom: 300px;">
+	<div class="edit" style="margin-left: 300px; margin-bottom: 50px;">
 		<form action="choix-listElt.do" method="post">
 
 
@@ -308,7 +308,8 @@ table.table .avatar {
 					
 					<c:forEach items="${elements}" var="e">
 						
-						<option value="${e}">${e}</option>
+							<option value="${e}">${e}</option>
+						
 					</c:forEach>
 				</select>
 				<input type="submit" value="afficher">
@@ -361,16 +362,24 @@ table.table .avatar {
                       </tbody>
                     </table>
                     <ul class="nav nav-pills">
-				
+                    
+								
 				</ul>
-                  </div>
+				</div>
                 </div>
               </div>
             </div>
           </div>
         
         </form>
-        </div>
+        <div>
+					<a href="excelELEMENT.do">
+										<button type="submit" class="btn btn-primary btn-lg">LISTE EN EXCEL</button>
+									</a>
+								
+									</div>
+                  </div>
+       
       
         
         

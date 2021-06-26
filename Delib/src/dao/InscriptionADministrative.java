@@ -5,7 +5,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import metierEntite.EtudFil;
 import metierEntite.Etudiant;
@@ -57,26 +60,31 @@ public class InscriptionADministrative {
 	public void addIA(Inscrip_Administartive iad, int idau) {
 		Connection conn = SingletonConnection.getConnection();
 		
-		PreparedStatement ps;
+		PreparedStatement ps1,ps2;
 		
 		try {
-			ps = conn.prepareStatement(
+			ps1 = conn.prepareStatement(
 					"insert into inscripadministrative(fid_anne_acad,acte_naisss,bac,CIN,CNE,date_pre_inscription,date_valid_inscription,AdressPerson,Telephone,AdresseParents,BOURSE,photo,Rel_Note) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			ps.setInt(1, idau);
-			ps.setBlob(2, iad.getActe_de_naissance());
-			ps.setBlob(3, iad.getBac());
-			ps.setBlob(4, iad.getCin());
-			ps.setString(5, iad.getCne());
-			ps.setDate(6, iad.getDate_pre_inscription());
-			ps.setDate(7, iad.getDate_valid_inscrip());
-			ps.setString(8, iad.getAdressPerson());
-			ps.setInt(9, iad.getTelephone());
-			ps.setString(10, iad.getAdresseParents());
-			ps.setBoolean(11, iad.isBourse());
-			ps.setBlob(12, iad.getPhoto());
-			ps.setBlob(13, iad.getRel_note());
-			ps.executeUpdate();
-			ps.close();
+			ps2=conn.prepareStatement("UPDATE etudiant SET insce = '1' WHERE massarEtud = ?");
+			ps1.setInt(1, idau);
+			ps1.setBlob(2, iad.getActe_de_naissance());
+			ps1.setBlob(3, iad.getBac());
+			ps1.setBlob(4, iad.getCin());
+			ps1.setString(5, iad.getCne());
+			ps1.setDate(6, iad.getDate_pre_inscription());
+			ps1.setDate(7, iad.getDate_valid_inscrip());
+			ps1.setString(8, iad.getAdressPerson());
+			ps1.setInt(9, iad.getTelephone());
+			ps1.setString(10, iad.getAdresseParents());
+			ps1.setBoolean(11, iad.isBourse());
+			ps1.setBlob(12, iad.getPhoto());
+			ps1.setBlob(13, iad.getRel_note());
+			ps2.setString(1, iad.getCne());
+		
+			ps1.executeUpdate();
+			ps2.executeUpdate();
+			ps2.close();
+			ps1.close();
 			conn.close();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -158,4 +166,38 @@ public class InscriptionADministrative {
 		return etud;
 	}
 
+	public Map<Integer,String> ordreSemFil(String Filiere){
+		HashMap<Integer, String> so = new HashMap<Integer, String>();
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		try {
+			ps=conn.prepareStatement("select s.libelle_semestre,s.ordre from semestre s , etape e , filiere f where f.id_filiere=e.fid_fil and e.id_Etape=s.fid_etap and f.nom_filier=?");
+			ps.setString(1, Filiere);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				so.put( rs.getInt("ordre"),rs.getString("libelle_semestre"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return so;
+	}
+	public Date getDATEid(int id) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		Date d=null;
+		try {
+			ps=conn.prepareStatement("select anne_acad from anneuniversitaire where id_anne_acad=?");
+			ps.setInt(1, id);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				d=rs.getDate("anne_acad");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return d ;
+	}
 }

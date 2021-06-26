@@ -19,7 +19,7 @@
 							<h4>NOTE</h4>
 
 							<div class="add-product">
-								<a href="/note-element-excel">Ajouter une note depuis Liste
+								<a href="note-element-excel">Ajouter une note depuis Liste
 									excel</a>
 							</div>
 							<div class="asset-inner">

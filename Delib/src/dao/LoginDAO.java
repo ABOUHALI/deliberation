@@ -73,4 +73,22 @@ public int username_info_prof(String username , String password) {
 	}
 	return id_prof;
 }
+public String username_info_ETUD(String username , String password) {
+	Connection conn = SingletonConnection.getConnection();
+	PreparedStatement ps;
+	String id_etud =null;
+	try {
+		ps=conn.prepareStatement("select id_etud from user where username=? and password=?");
+		ps.setString(1, username);
+		ps.setString(2, password);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			id_etud = rs.getString("id_etud");
+		}
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	return id_etud;
+}
 }

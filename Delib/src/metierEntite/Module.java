@@ -65,5 +65,8 @@ public class Module {
 		this.note_valid = note_valid;
 		this.nbr_elt = nbr_elt;
 	}
+	public Module() {
+		// TODO Auto-generated constructor stub
+	}
 	
 }

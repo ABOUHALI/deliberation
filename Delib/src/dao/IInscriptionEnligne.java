@@ -9,7 +9,7 @@ import metierEntite.User;
 public interface IInscriptionEnligne {
 	public void addEt(Etudiant etudiant);
 	public List<Etudiant> listEt();
-	public boolean deleteEt(String massarEtud);
+	public void deleteEt(String massarEtud);
 	public Etudiant getEt(String massarEtud);
 	public void updateEt(Etudiant etudiant);
 	public void addEtExcel(InputStream file);

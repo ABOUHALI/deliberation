@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
+    <title>D E L I B E R A T I O N </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -460,7 +460,7 @@
                                        
                                     </a>
                                    
-                                      <a href="ajouter-professeur">
+                                      <a href="Liste-Prof">
                                    
                                         Professeur
                                        
@@ -483,36 +483,28 @@
                                         Liste I-PEDAGOGIQUE
                                        
                                     </a>
+                                    <li class="app-sidebar__heading">DELIBERATION</li>
+                                    <li>
+                                    <a href="note-element-excel">
+                                   
+                                        AJOUT LISTE NOTE EXCEL
+                                       
+                                    </a>
+                                    <a href="choix-listp-note.do">
+                                    	CONSULTATION NOTE 
+                                    </a>
+                                    <a href="Liste-A-Deliberer.do">
+                                    	NOTE MANUELLEMENT 
+                                    </a>
                                    
                               
                                    
-                                     <a href="#">
                                      
-                                        Inscription
-                                       
-                                    </a>
-                                   
-                                     
-                                     </li>
-                                   
-                                   
-                                 
-                               
-                                <li>
-                                 
-                               
-                                   
-                                <li  >
-                                    <a href="#">
-                                     
-                                        Notes
-                                    </a>
-                                </li>
                                
                                 <li class="app-sidebar__heading">Forms</li>
                                
                                  <li>
-                                    <a href="logout">
+                                    <a href="http://localhost:8080/Delib/logout">
                                      
                                         Se déconnecter
                                     </a>

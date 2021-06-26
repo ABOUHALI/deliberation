@@ -41,7 +41,7 @@ public class LoginPROF extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		this.getServletContext().getRequestDispatcher("/loginAD.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/loginPROF.jsp").forward(request, response);
 
 	}
 
@@ -62,9 +62,11 @@ public class LoginPROF extends HttpServlet {
 			int id_prof = ld.username_info_prof(username, password);
 			String elt = pd.ElEMENTfromProf(id_prof);
 			String role_prof = pd.getRoleProf(id_prof);
+			String etab=pd.etabFROMprof(id_prof);
 			if(role_prof.equals("Professeur")) {
 				session.setAttribute("user-prof", user);
 				session.setAttribute("element-prof", elt);
+				session.setAttribute("etablissement", etab);
 				System.out.println(elt);
 				this.getServletContext().getRequestDispatcher("/indexdprof.jsp").forward(request, response);}
 			else if(role_prof.equals("Responsable de module")) {////mzl khs nbda ntester wshhh module fih 1 elemnt wla la 
@@ -73,7 +75,19 @@ public class LoginPROF extends HttpServlet {
 				session.setAttribute("module-resp", module);
 				this.getServletContext().getRequestDispatcher("/indexdresp.jsp").forward(request, response);
 
-			}}
+			}else if(role_prof.equals("Responsable de filiere")) {
+				String Filiere=pd.FiliereFROMRF(id_prof);
+				session.setAttribute("user-fil", user);
+				System.out.println(user);
+				session.setAttribute("filiere-resp", Filiere);
+				this.getServletContext().getRequestDispatcher("/indexdfilier.jsp").forward(request, response);
+
+				
+				
+			}
+			
+		
+		}
 		else {
 			this.getServletContext().getRequestDispatcher("/errorLOGIN.jsp").forward(request, response);
 		}

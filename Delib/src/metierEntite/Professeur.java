@@ -9,6 +9,26 @@ public class Professeur {
 	private String role;
 	private int filiere;
 	private String grade ;
+	private String element;
+	public Professeur(int id, String nom, String prenom, String email, int etablissement, String role, int filiere,
+			String grade, String element) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.etablissement = etablissement;
+		this.role = role;
+		this.filiere = filiere;
+		this.grade = grade;
+		this.element = element;
+	}
+	public String getElement() {
+		return element;
+	}
+	public void setElement(String element) {
+		this.element = element;
+	}
 	public int getId() {
 		return id;
 	}
@@ -69,4 +89,11 @@ public class Professeur {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+	@Override
+	public String toString() {
+		return "Professeur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", etablissement="
+				+ etablissement + ", role=" + role + ", filiere=" + filiere + ", grade=" + grade + ", element="
+				+ element + "]";
+	}
+	
 }

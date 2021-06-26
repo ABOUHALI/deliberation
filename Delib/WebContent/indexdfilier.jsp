@@ -8,7 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Language" content="en">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>R E S P -- D E L I B</title>
+<title>RESP-F I L I E R E  -- D E L I B</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
 <meta name="description"
@@ -100,7 +100,7 @@
 								<div class="widget-content-left  ml-3 header-user-info">
 									<div class="widget-heading">
 										<%
-											out.println(session.getAttribute("user-resp"));
+											out.println(session.getAttribute("user-fil"));
 										%>
 									</div>
 
@@ -477,13 +477,13 @@
 				<div class="app-sidebar__inner">
 					<ul class="vertical-nav-menu">
 
-						<li class="app-sidebar__heading">Dashboards RESP</li>
-						<li><a
-							href="etudiant_module"> MES ETUDIANTS </a> <a
-							href="recuperer-Liste-module.do"> DELIBERER MODULE </a> <a
-							href="mon_module.do"> MON MODULE </a>
-
-						<li class="app-sidebar__heading">Forms</li>
+						<li class="app-sidebar__heading">Dashboards RESP-FILIERE</li>
+						<li> <a
+							href="etudiant_semestre"> MES ETUDIANTS </a> <a
+							href="recuperer-Liste-semestre.do"> DELIBERER SEMESTRE </a> 
+						<li></li>
+						
+						<li class="app-sidebar__heading">Session</li>
 
 						<li><a href="logout"> Se déconnecter </a></li>
 

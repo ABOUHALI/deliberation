@@ -311,19 +311,22 @@ table.table .avatar {
 </script>
 </head>
 <body>
+
+	<%@include file="static.jsp"%>
+	<div class="edit" style="margin-left:300px; margin-bottom: 300px; "  >
 	<div class="container">
 		<div class="table-wrapper">
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>
-							Liste <b>Filiere</b>
+							Liste <b>Professeur</b>
 						</h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="#addEmployeeModal" class="btn btn-success"
-							data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Ajouter
-								Filiere</span></a>
+						<a href="ajouter-professeur" class="btn btn-success" data-toggle="data-toggle"
+							><i class="material-icons">&#xE147;</i> <span>Ajouter
+								Professeur</span></a>
 					</div>
 				</div>
 			</div>
@@ -331,25 +334,37 @@ table.table .avatar {
 				<thead>
 					<tr>
 
-						<th>Id Filiere</th>
-						<th>Nom Filiere</th>
+						<th>Id Professeur</th>
+						<th>Nom </th>
+						<th>Prenom</th>
+						<th>Email</th>
+						<th>Role</th>
+						<th>Grade</th>
+						<th>Filiere</th>
 						<th>Etablissement</th>
-						<th>Actions</th>
+						
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 
-						<c:forEach items="${filiere}" var="f">
+						<c:forEach items="${professeur}" var="pro">
 							<tr>
-								<td><c:out value="${f.getIDFiliere()}" /></td>
-								<td><c:out value="${ f.getFiliere()}" /></td>
-								<td><a href="get-etab?id=<c:out  value='${f.getIDetab()}'/>"><c:out value="${ f.getIDetab()}" /></a></td>
-
-								<td><a href="modifier-filiere.do?id=<c:out value='${f.getIDFiliere()}'/>"class="edit"
-									><i class="material-icons"
-										data-toggle="tooltip" title="Edit">&#xE254;</i></a> 
-									
+								<td><c:out value="${pro.getId()}" /></td>
+								<td><c:out value="${ pro.getNom()}" /></td>
+								<td><c:out value="${ pro.getPrenom()}" /></td>
+								<td><c:out value="${pro.getEmail()}" /></td>
+								<td><c:out value="${pro.getRole()}" /></td>
+								<td><c:out value="${pro.getGrade()}" /></td>
+								<td><a href="get-filiere?id=<c:out  value='${pro.getFiliere()}'/>"><c:out value="${ pro.getFiliere()}" /></a></td>
+								<td><a href="get-etab?id=<c:out  value='${pro.getEtablissement()}'/>"><c:out value="${ pro.getEtablissement()}" /></a></td>
+			
+								<td><a href="#editEmployeeModal" class="edit"
+									data-toggle="modal"><i class="material-icons"
+										data-toggle="tooltip" title="Edit">&#xE254;</i></a> <a
+									href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
+										class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 
 								</td>
 							</tr>
@@ -363,15 +378,16 @@ table.table .avatar {
 
 		</div>
 	</div>
+	</div>
 	<!-- Edit Modal HTML -->
 
 
 	<div id="addEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="ajouter-filiere.do" method="post">
+				<form action="ajouter-module.do" method="post">
 					<div class="modal-header">
-						<h4 class="modal-title">Ajouter Filiere</h4>
+						<h4 class="modal-title">Ajouter Module</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
@@ -380,25 +396,40 @@ table.table .avatar {
 							<label>Id</label> <input type="text" class="form-control"
 								required>
 						</div>
+
 						<div class="form-group">
-							<label>Nom Filiere</label> <input type="text"
-								class="form-control" name="filiere" required>
+							<label>Labelle Module</label> <input type="text"
+								class="form-control" name="module" required>
 						</div>
-
-
+						
+						<div class="form-group">
+							<label>Note Validation</label> <input type="text"
+								class="form-control" name="note" required>
+						</div>
+						
+						<div class="form-group">
+							<label>Coefficient</label> <input type="text"
+								class="form-control" name="coeff" required>
+						</div>
+						
+						<div class="form-group">
+							<label>Nombre Elt</label> <input type="text"
+								class="form-control" name="n-elt" required>
+						</div>
+						
 						<div class="form-group-inner">
 							<div class="row">
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-									<label class="login2 pull-right pull-right-pro">Etablissement</label>
+									<label class="login2 pull-left pull-left-pro">Semestre</label>
 								</div>
 								<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 									<div class="form-select-list">
 										<select class="form-control custom-select-value"
-											name="etablissement">
+											name="semestre">
 
 
-											<c:forEach items="${etablissements}" var="e" varStatus="loop">
-												<option>${e.getEtablissement()}</option>
+											<c:forEach items="${semestre}" var="s" varStatus="loop">
+												<option>${s.getLabelleSemestre()}</option>
 
 											</c:forEach>
 
@@ -407,14 +438,14 @@ table.table .avatar {
 									</div>
 								</div>
 							</div>
-
 						</div>
+					</div>
 
-						<div class="modal-footer">
-							<input type="button" class="btn btn-default" data-dismiss="modal"
-								value="Cancel"> <input type="submit"
-								class="btn btn-success" value="Add">
-						</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-default" data-dismiss="modal"
+							value="Cancel"> <input type="submit"
+							class="btn btn-success" value="Add">
+					</div>
 				</form>
 			</div>
 		</div>
@@ -426,7 +457,7 @@ table.table .avatar {
 			<div class="modal-content">
 				<form>
 					<div class="modal-header">
-						<h4 class="modal-title">Modifier Etablissement</h4>
+						<h4 class="modal-title">Modifier Module</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>

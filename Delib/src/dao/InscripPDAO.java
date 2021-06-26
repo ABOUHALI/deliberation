@@ -17,10 +17,13 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
+import com.itextpdf.text.log.SysoCounter;
+
 import metierEntite.ETUD_NOTE;
 import metierEntite.Element;
 import metierEntite.Etudiant;
 import metierEntite.Inscrip_pedagogique;
+import metierEntite.Module;
 
 public class InscripPDAO {
 	private InscripEnLigne ie = new InscripEnLigne();
@@ -183,9 +186,7 @@ public class InscripPDAO {
 		return etud;
 	}
 
-	
-	
-	
+
 	@SuppressWarnings("resource")
 	public List<ETUD_NOTE> recupererLISTE(InputStream file) {
 		ArrayList<ETUD_NOTE> etudiants = new ArrayList<ETUD_NOTE>();
@@ -194,12 +195,13 @@ public class InscripPDAO {
 			HSSFWorkbook wb = new HSSFWorkbook(file);
 			HSSFSheet sheet = wb.getSheetAt(0);
 			Iterator<Row> rows = sheet.rowIterator();
+			Row headerRow =rows.next();
 			while (rows.hasNext()) {
 				System.out.println("  in  ");
 				values.clear();
 				HSSFRow row = (HSSFRow) rows.next();
 				Iterator<Cell> cells = row.cellIterator();
-
+				
 				while (cells.hasNext()) {
 
 					HSSFCell cell = (HSSFCell) cells.next();
@@ -309,6 +311,7 @@ public class InscripPDAO {
 			HSSFWorkbook wb = new HSSFWorkbook(file);
 			HSSFSheet sheet = wb.getSheetAt(0);
 			Iterator<Row> rows = sheet.rowIterator();
+			Row headerRow =rows.next();
 			while (rows.hasNext()) {
 				System.out.println("  in  ");
 				values.clear();
@@ -322,7 +325,7 @@ public class InscripPDAO {
 					if (cell.getCellType() == CellType.STRING)
 						values.add(cell.getStringCellValue());
 					else if (cell.getCellType() == CellType.NUMERIC) {
-						values.add(Integer.toString((int) (cell.getNumericCellValue())));
+						values.add(Double.toString((double) (cell.getNumericCellValue())));
 
 					}
 
@@ -331,9 +334,9 @@ public class InscripPDAO {
 				e.setCNE(values.get(0));
 				e.setNom(values.get(1));
 				e.setPrenom(values.get(2));
-				int tp = Integer.parseInt(values.get(3));
-				int cc = Integer.parseInt(values.get(4));
-				int o =Integer.parseInt(values.get(5));
+				double tp = Double.parseDouble(values.get(3));
+				double cc = Double.parseDouble(values.get(4));
+				double o =Double.parseDouble(values.get(5));
 				se.saveNOTE_ELT(values.get(0), elt, tp, o, cc);
 				e.setNOTE(se.recuperer_note(values.get(0), elt));
 				etudiants.add(e);
@@ -345,6 +348,52 @@ public class InscripPDAO {
 		return etudiants;
 	}	
 
+	public List<ETUD_NOTE> recupererLISTE_Ratt(InputStream file,String elt) {
+		List<ETUD_NOTE> en = new ArrayList<ETUD_NOTE>();
+		ArrayList<String> values = new ArrayList<String>();
+		try {
+			HSSFWorkbook wb = new HSSFWorkbook(file);
+			HSSFSheet sheet = wb.getSheetAt(0);
+			Iterator<Row> rows = sheet.rowIterator();
+			Row headerRow =rows.next();
+			while (rows.hasNext()) {
+				System.out.println("  in  ");
+				values.clear();
+				HSSFRow row = (HSSFRow) rows.next();
+				Iterator<Cell> cells = row.cellIterator();
+
+				while (cells.hasNext()) {
+
+					HSSFCell cell = (HSSFCell) cells.next();
+
+					if (cell.getCellType() == CellType.STRING)
+						values.add(cell.getStringCellValue());
+					else if (cell.getCellType() == CellType.NUMERIC) {
+						values.add(Double.toString((double) (cell.getNumericCellValue())));
+
+					}
+
+				}
+				ETUD_NOTE e = new ETUD_NOTE();
+				e.setCNE(values.get(0));
+				e.setNom(values.get(1));
+				e.setPrenom(values.get(2));
+				double nr = Double.parseDouble(values.get(3));
+				se.calcule_Ratt(values.get(0), elt,nr);
+				e.setNOTE(se.recuperer_note(values.get(0), elt));
+				e.setEtat(se.getETAT_NOTE(values.get(0), elt));
+				en.add(e);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return en;
+		
+	}	
+
+	
+	
 	public List<ETUD_NOTE> getListeEtudiant(String elt ){
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
@@ -367,8 +416,45 @@ public class InscripPDAO {
 			e.printStackTrace();
 		}
 		return en ;
+		
+		
 	}
 	
+	public double calculerSEM(String massarEtud,String semestre) {
+		List<Element> elt = getElementDANSSemestre(semestre);
+		double d =0,res=0;
+		if(is_etud_sem(massarEtud, semestre)) {
+		for (int i = 0; i < elt.size(); i++) {
+			String element =se.getElement(elt.get(i).getIDElement());
+				double e = se.recuperer_note(massarEtud, element);
+				d+=e;
+				
+		}}
+		res=d/elt.size();
+		return res;
+	}
+	
+	public String getEtatSEM(String massarEtud ,String semestre) {
+		String etat="";
+		double ms =calculerSEM(massarEtud, semestre);
+		List<Module> m = moduleDANSsemestre(semestre);
+		boolean hh1=true;
+		boolean hh2 =true;
+		for (int i = 0; i < m.size(); i++) {
+			double nm=se.NotedsModule(m.get(i).getLabelleMod(), massarEtud);
+			hh1 = hh1 && nm >= 10;
+			hh2 = hh2 && nm <= 10 && nm>=5;
+			
+		}
+		if(hh1 && ms >= 10) { etat="Valide";}
+		else if(!hh2 && ms >= 10) {
+			etat="Valide par Compensation";
+		}else {
+			etat="Non Valide";}
+		
+			
+	return etat;
+	}
 	
 	public boolean is_etud_elt(String massarEtud , String elt) {
 		int id_elt = se.getIDElement(elt);
@@ -401,6 +487,62 @@ public class InscripPDAO {
 		
 		return b ;
 				
+	}
+	public boolean is_etud_sem(String massarEtud ,String semestre) {
+		List<Element> elt =getElementDANSSemestre(semestre);
+		List<Element> e = new ArrayList<Element>();
+		boolean b = true ;
+		for (int i = 0; i < elt.size(); i++) {
+			e.add(new Element(se.getElement(elt.get(i).getIDElement())));
+		}
+		for (int i = 0; i < e.size(); i++) {
+			b=is_etud_elt(massarEtud,e.get(i).getLabelleElement());
+			if(!b) break;
+		}
+		return b;
+		
+	}
+	public List<Module> moduleDANSsemestre(String semestre){
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		List<Module> m = new ArrayList<Module>();
+		try {
+			ps=conn.prepareStatement("select m.* from module m , semestre s where m.fid_semestre =s.id_semestre and s.libelle_semestre=?");
+			ps.setString(1, semestre);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				m.add(new Module(rs.getInt("id_module"),rs.getString("libelle_module"), rs.getInt("fid_semestre"),rs.getInt("coefficient"), rs.getInt("note_valid"), rs.getInt("nbr_elt")));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return m;
+	}
+
+	public List<ETUD_NOTE> Releve_Note(String massarEtudiant) {
+		Connection conn = SingletonConnection.getConnection();
+		PreparedStatement ps;
+		List<ETUD_NOTE> e =new ArrayList<ETUD_NOTE>();
+		try {
+			ps=conn.prepareStatement("select e.massarEtud ,e.NomFr , e.PrenomFr,et.libelle_elt,ne.NOTE,ne.Etat from etudiant e , element et , note_elt ne  where e.massarEtud=ne.id_etudiantt and ne.id_eltt=et.id_elt and e.massarEtud=?");
+			ps.setString(1, massarEtudiant);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				ETUD_NOTE en = new ETUD_NOTE();
+				en.setCNE(rs.getString("massarEtud"));
+				en.setNom(rs.getString("NomFr"));
+				en.setPrenom(rs.getString("PrenomFr"));
+				en.setElement(rs.getString("libelle_elt"));
+				en.setNOTE(rs.getDouble("NOTE"));
+				en.setEtat(rs.getString("Etat"));
+				e.add(en);
+			}
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}
+		return e ;
 	}
 
 	

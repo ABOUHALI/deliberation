@@ -73,8 +73,7 @@ public class Element {
 
 	@Override
 	public String toString() {
-		return "Element [IDElement=" + IDElement + ", LabelleElement=" + LabelleElement + ", IDModule=" + IDModule
-				+ ", coeff=" + coeff + ", note_validation=" + note_validation + "]";
+		return  LabelleElement ;
 	}
 
 }
