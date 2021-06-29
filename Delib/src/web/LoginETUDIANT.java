@@ -45,7 +45,10 @@ public class LoginETUDIANT extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String username = request.getParameter("username");
+		System.out.println("USERNAME ---"+username);
+		
 		String password = request.getParameter("password");
+		System.out.println("PASSWORD ---"+password);
 		User user = new User(0,username, password, null, 0, null);
 		if(ld.validation(user)) {
 			String role=ld.Role(user);

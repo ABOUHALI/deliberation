@@ -5,8 +5,25 @@ public class Semestre {
 	  private  String LabelleSemestre;
 	  private int IDEtape;
 	  private int noteValidation;
-	  
-	  public Semestre(int iDSemestre, String labelleSemestre, int iDEtape, int noteValidation) {
+	  private int ordre ;
+	  public Semestre(int iDSemestre, String labelleSemestre, int iDEtape, int noteValidation, int ordre) {
+		super();
+		IDSemestre = iDSemestre;
+		LabelleSemestre = labelleSemestre;
+		IDEtape = iDEtape;
+		this.noteValidation = noteValidation;
+		this.ordre = ordre;
+	}
+
+	public int getOrdre() {
+		return ordre;
+	}
+
+	public void setOrdre(int ordre) {
+		this.ordre = ordre;
+	}
+
+	public Semestre(int iDSemestre, String labelleSemestre, int iDEtape, int noteValidation) {
 		super();
 		IDSemestre = iDSemestre;
 		LabelleSemestre = labelleSemestre;

@@ -194,6 +194,7 @@ public class controller extends HttpServlet {
 
 		else if (path.equals("/Ajout-Etape")) {
 			listEtape = se.listEtape();
+			listFil = se.listFiliere();
 			request.setAttribute("etape", listEtape);
 			request.setAttribute("filieres", listFil);
 			System.out.println("ajout etape");
@@ -278,7 +279,8 @@ public class controller extends HttpServlet {
 			String etape = request.getParameter("etape");
 			int  note=Integer.parseInt(request.getParameter("note"));
 			int id_etape = se.getIDEtape(etape);
-			Semestre seme = new Semestre(id, semestre, id_etape,note);
+			int ordre = Integer.parseInt(request.getParameter("ordre"));
+			Semestre seme = new Semestre(id, semestre, id_etape,note,ordre);
 			se.addSemestre(seme);
 			this.getServletContext().getRequestDispatcher("/ajouter-Semestre").forward(request, response);}
 		else if (path.equals("/ajouter-element")) {

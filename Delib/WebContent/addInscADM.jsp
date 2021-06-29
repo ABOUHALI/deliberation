@@ -14,7 +14,7 @@
 						<div class="col-md-6">
 							<div class="position-relative form-group">
 								<label for="Nom Etudiant" class="">Nom Etudiant</label> <input
-									type="text" value="${e.getNomFr() } -- ${e.getPrenomFr() }"
+									type="text" value="${e.getNomFr()}--${e.getPrenomFr()}"
 									name="test" readonly="readonly" />
 
 							</div>

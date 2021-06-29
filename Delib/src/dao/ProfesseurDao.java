@@ -22,14 +22,15 @@ public void addProf(Professeur p) {
 	Connection conn = SingletonConnection.getConnection();
 	PreparedStatement ps ;
 	try {
-		ps=conn.prepareStatement("insert into professeur(email,nom_professeur, prenom_professeur,ROLE_PROF,grade,id_etab) values(?,?,?,?,?,?)");
+		ps=conn.prepareStatement("insert into professeur(email,nom_professeur, prenom_professeur,ROLE_PROF,grade,id_etab,id_fil) values(?,?,?,?,?,?,?)");
 		ps.setString(1, p.getEmail());
 		ps.setString(2, p.getNom());
 		ps.setString(3, p.getPrenom());
 		ps.setString(4, p.getRole());
 		ps.setString(5, p.getGrade());
-
+		
 		ps.setInt(6, p.getEtablissement());
+		ps.setInt(7, 19);
 		ps.executeUpdate();
 		ps.close();
 		conn.close();

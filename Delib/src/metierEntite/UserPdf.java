@@ -103,7 +103,7 @@ public class UserPdf {
 		PdfWriter.getInstance(document, response.getOutputStream());
 		document.open();
 		
-		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logo.png");
+		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logggo.png");
 		document.add(img);
 		
 		Font font=FontFactory.getFont(FontFactory.HELVETICA_BOLD);
@@ -135,7 +135,7 @@ public class UserPdf {
 		PdfWriter.getInstance(document, response.getOutputStream());
 		document.open();
 		
-		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logo.png");
+		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logggo.png");
 		document.add(img);
 		
 		Font font=FontFactory.getFont(FontFactory.HELVETICA_BOLD);
@@ -249,7 +249,7 @@ public class UserPdf {
 		PdfWriter.getInstance(document, response.getOutputStream());
 		document.open();
 		
-		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logo.png");
+		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logggo.png");
 		document.add(img);
 		
 		Font font=FontFactory.getFont(FontFactory.HELVETICA_BOLD);
@@ -281,7 +281,7 @@ public class UserPdf {
 		PdfWriter.getInstance(document, response.getOutputStream());
 		document.open();
 		Etudiant e =insc.getET3(MASSAR);
-		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logo.png");
+		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logggo.png");
 		document.add(img);
 		
 		Font font=FontFactory.getFont(FontFactory.HELVETICA_BOLD);
@@ -353,7 +353,7 @@ public class UserPdf {
 		PdfWriter.getInstance(document, response.getOutputStream());
 		document.open();
 		
-		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logo.png");
+		Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logggo.png");
 		document.add(img);
 		
 		Font font=FontFactory.getFont(FontFactory.HELVETICA_BOLD);

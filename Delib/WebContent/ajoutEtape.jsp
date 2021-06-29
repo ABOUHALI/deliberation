@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+<title>D E L I B E R A T I O N </title>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
@@ -317,7 +317,7 @@ table.table .avatar {
 				<div class="row">
 					<div class="col-sm-6">
 						<h2>
-							Annee <b>universitaire</b>
+							 <b>ETAPE</b>
 						</h2>
 					</div>
 					<div class="col-sm-6">

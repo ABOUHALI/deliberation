@@ -346,7 +346,7 @@ table.table .avatar {
 								<td><c:out value="${s.getIDSemestre()}" /></td>
 								<td><c:out value="${ s.getLabelleSemestre()}" /></td>
 								<td><a href="get-etap?id=<c:out  value='${s.getIDEtape()}'/>"><c:out value="${ s.getIDEtape()}" /></a></td>
-								<td><c:out value="${ s.getNoteValidation()}" /></td>
+								<td><c:out value="${s.getNoteValidation()}" /></td>
 								<td><a href="modifier-semestre.do?id=<c:out value='${s.getIDSemestre()}'/>" class="edit"
 									data-toggle="modal"><i class="material-icons"
 										data-toggle="tooltip" title="Edit">&#xE254;</i></a> 
@@ -384,7 +384,10 @@ table.table .avatar {
 								class="form-control" name="semestre" required>
 						</div>
 
-
+						<div class="form-group">
+							<label>Ordre Semestre </label> <input type="text"
+								class="form-control" name="ordre" required>
+						</div>
 						<div class="form-group-inner">
 							<div class="row">
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">

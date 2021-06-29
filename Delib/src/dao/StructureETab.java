@@ -243,9 +243,11 @@ public class StructureETab  {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps = conn.prepareStatement("insert into semestre(libelle_semestre,fid_etap) values(?,?)");
+			ps = conn.prepareStatement("insert into semestre(libelle_semestre,fid_etap,note_validation,ordre) values(?,?,?,?)");
 			ps.setString(1, p.getLabelleSemestre());
 			ps.setInt(2, p.getIDEtape());
+			ps.setInt(3, p.getNoteValidation());
+			ps.setInt(4, p.getOrdre());
 			ps.executeUpdate();
 			ps.close();
 			conn.close();
