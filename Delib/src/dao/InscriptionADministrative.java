@@ -146,6 +146,7 @@ public class InscriptionADministrative {
 	}
 	
 	
+	
 	public List<EtudFil> jointureEtIA() {
 		List<EtudFil> etud = new ArrayList<EtudFil>();
 		Connection conn = SingletonConnection.getConnection();

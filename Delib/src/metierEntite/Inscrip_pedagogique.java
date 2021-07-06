@@ -1,22 +1,24 @@
 package metierEntite;
 
-import java.sql.Date;
 
 public class Inscrip_pedagogique {
 	private String idetud ;
 	private int elt ;
-	private Date anneacad;
-	public Date getAnneacad() {
-		return anneacad;
-	}
-	public void setAnneacad(Date anneacad) {
-		this.anneacad = anneacad;
-	}
-	public Inscrip_pedagogique(String idetud, int elt, Date anneacad) {
+	private int id_anneacad;
+	
+	
+	
+	public Inscrip_pedagogique(String idetud, int elt, int id_anneacad) {
 		super();
 		this.idetud = idetud;
 		this.elt = elt;
-		this.anneacad = anneacad;
+		this.id_anneacad = id_anneacad;
+	}
+	public int getId_anneacad() {
+		return id_anneacad;
+	}
+	public void setId_anneacad(int id_anneacad) {
+		this.id_anneacad = id_anneacad;
 	}
 	public String getIdetud() {
 		return idetud;

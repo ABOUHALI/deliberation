@@ -17,21 +17,27 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="product-status-wrap drp-lst">
 							<h4>LISTE</h4>
-							<nav aria-label="navigation">
-								
-							</nav>
-							
+							<nav aria-label="navigation"></nav>
+
 							<div class="asset-inner">
 
 
-								
-								<div class="form-group">
-									<label>ELEMENT</label><br> <input type="text"
-										name="element" class="form-control" value="${element}"
-										readonly="readonly">
-								</div>
+								<form method="post" action="etudiant-element.do">
+									<div class="form-group">
+										<label>ELEMENT</label><br> <input type="text"
+											name="element" class="form-control" value="${element}"
+											readonly="readonly">
+									</div>
+									<select class="form-select"
+										aria-label="Disabled select example" name="anns">
 
+										<c:forEach items="${anns}" var="a">
 
+											<option value="${a.getId_anneAcad()}">${a}</option>
+										</c:forEach>
+									</select>
+									<input type="submit" value="afficher">
+								</form>
 							</div>
 							<div class="body">
 
@@ -41,18 +47,18 @@
 											<th>CNE</th>
 											<th>NOM</th>
 											<th>PRENOM</th>
-											
+
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<c:forEach items="${etudiants}" var="e">
 												<tr>
-													
+
 													<td><c:out value="${e.getMassarEtud()}" /></td>
 													<td><c:out value="${e.getNomFr()}" /></td>
 													<td><c:out value="${e.getPrenomFr()}" /></td>
-												
+
 												</tr>
 											</c:forEach>
 										</tr>
@@ -60,8 +66,9 @@
 
 								</table>
 								<div>
-									<a href="excel-elt.do?elt=<c:out value="${element}" />">
-										<button type="submit" class="btn btn-primary btn-lg">IMPORTER EN EXCEL</button>
+									<a href="excel-elt.do?elt=<c:out value="${element}"/>">
+										<button type="submit" class="btn btn-primary btn-lg">IMPORTER
+											EN EXCEL</button>
 									</a>
 								</div>
 							</div>

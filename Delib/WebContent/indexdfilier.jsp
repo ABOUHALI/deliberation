@@ -479,8 +479,8 @@
 
 						<li class="app-sidebar__heading">Dashboards RESP-FILIERE</li>
 						<li> <a
-							href="etudiant_semestre"> MES ETUDIANTS </a> <a
-							href="recuperer-Liste-semestre.do"> DELIBERER SEMESTRE </a> 
+							href="etudiant_semestre.do"> MES ETUDIANTS </a> <a
+							href="Liste-semestre.do"> DELIBERER SEMESTRE </a> 
 						<li></li>
 						
 						<li class="app-sidebar__heading">Session</li>

@@ -19,15 +19,24 @@
 							<h4>LISTE</h4>
 							<nav aria-label="navigation"></nav>
 							<div>
+							<form method="post" action="etudiant_semestre">
 								<div class="asset-inner">
 									<div class="form-group">
 										<label>Filiere</label><br> <input type="text"
 											name="element" class="form-control" value="${filiere}"
 											readonly="readonly">
 									</div>
+									<select class="form-select"
+										aria-label="Disabled select example" name="anns">
 
+										<c:forEach items="${anns}" var="a">
 
+											<option value="${a.getId_anneAcad()}">${a}</option>
+										</c:forEach>
+									</select>
+								<input type="submit" value="afficher"> 
 								</div>
+								</form>
 								<div class="body">
 
 									<table id="mainTable" class="table table-striped">
@@ -36,7 +45,7 @@
 												<th>CNE</th>
 												<th>NOM</th>
 												<th>PRENOM</th>
-												
+
 											</tr>
 										</thead>
 										<tbody>
@@ -47,7 +56,7 @@
 														<td><c:out value="${e.getMassarEtud()}" /></td>
 														<td><c:out value="${e.getNomFr()}" /></td>
 														<td><c:out value="${e.getPrenomFr()}" /></td>
-														
+
 													</tr>
 												</c:forEach>
 											</tr>
@@ -57,7 +66,7 @@
 
 								</div>
 							</div>
-							
+
 
 						</div>
 					</div>

@@ -373,11 +373,7 @@ table.table .avatar {
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>Id</label> <input type="text" class="form-control"
-								required>
-						</div>
+					
 						<div class="form-group">
 							<label>Nom Etablissement</label> <input type="text"
 								class="form-control" name="etablissement" required>

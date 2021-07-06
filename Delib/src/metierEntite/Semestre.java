@@ -37,7 +37,7 @@ public class Semestre {
 	
 	   @Override
 	public String toString() {
-		return "Semestre [LabelleSemestre=" + LabelleSemestre + "]";
+		return  LabelleSemestre ;
 	}
 	public Semestre(String labelleSemestre) {
 		super();

@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.math3.analysis.function.Sin;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -130,6 +131,46 @@ public class InscripEnLigne implements IInscriptionEnligne {
 		return email;
 		
 	}
+	
+	public String certificat(String massar) {
+		Connection conn= SingletonConnection.getConnection();
+		PreparedStatement ps;
+		String etab =null;
+		try {
+			ps=conn.prepareStatement("select distinct e.massarEtud ,etab.nom_etab from etudiant e,element el , module m , etablissement etab ,semestre s , etape et , filiere f , inscrip_pedago ip where e.massarEtud=ip.fid_etdt and e.massarEtud=? and ip.fid_elt=el.id_elt and el.fid_module=m.id_module and m.fid_semestre=s.id_semestre and s.fid_etap=et.id_Etape and et.fid_fil=f.id_filiere and f.fid_etab=etab.id_etab ;");
+			ps.setString(1, massar);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				etab=rs.getString("nom_etab");
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return etab;
+	}
+	public int anneAcad(String massar) {
+		Connection conn= SingletonConnection.getConnection();
+		PreparedStatement ps;
+		int d =0;
+		try {
+			ps=conn.prepareStatement("select distinct a.anneacad   from  anneacad a , inscrip_pedago ip where ip.fid_ac = a.id_anneAcad and ip.fid_etdt=?;");
+			ps.setString(1, massar);
+			ResultSet rs =ps.executeQuery();
+			while(rs.next()) {
+				d=rs.getInt("anneacad");
+			}
+			ps.close();
+			conn.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return d;
+	}
+	
 	public List<Etudiant> listEt() {
 		List<Etudiant> list = new ArrayList<Etudiant>();
 		Connection conn = SingletonConnection.getConnection();

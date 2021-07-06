@@ -30,38 +30,45 @@
 
 
 									<div class="form-group">
-												<label>Etape</label><br> <input type="text" name="etape"
-													class="form-control"
-													value="${etape}"
-													readonly="readonly">
-											</div>
-											<div class="form-group">
-												<label>Semestre</label><br> <input type="text" name="semestre"
-													class="form-control"
-													value="${semestre}"
-													readonly="readonly">
-											</div>
-											<div class="form-group">
-												<label>Modules</label><br> <input type="text" name="module"
-													class="form-control"
-													value="${module}"
-													readonly="readonly">
-											</div>
-											<div class="form-group">
-													<label>ELEMENT</label><br> <select name="element"
-														class="form-control">
-														
-														<c:forEach items="${element}" var="e" varStatus="loop">
-															<option>${e.getLabelleElement()}</option>
-														</c:forEach>
-													
-														
-												</select>
-											</div>
-										<input type="submit" class="btn btn-lg btn-primary"
-												value="Afficher"></form>
-	
-																</div>
+										<label>Etape</label><br> <input type="text" name="etape"
+											class="form-control" value="${etape}" readonly="readonly">
+									</div>
+									<div class="form-group">
+										<label>Semestre</label><br> <input type="text"
+											name="semestre" class="form-control" value="${semestre}"
+											readonly="readonly">
+									</div>
+									<div class="form-group">
+										<label>Modules</label><br> <input type="text"
+											name="module" class="form-control" value="${module}"
+											readonly="readonly">
+									</div>
+									<div class="form-group">
+										<label>ELEMENT</label><br> <select name="element"
+											class="form-control">
+
+											<c:forEach items="${element}" var="e" varStatus="loop">
+												<option>${e.getLabelleElement()}</option>
+											</c:forEach>
+
+
+										</select>
+									</div>
+									<div class="form-group">
+										<select class="form-select"
+											aria-label="Disabled select example" name="anns">
+
+											<c:forEach items="${anns}" var="a">
+
+												<option value="${a.getId_anneAcad()}">${a}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<input type="submit" class="btn btn-lg btn-primary"
+										value="Afficher">
+								</form>
+
+							</div>
 						</div>
 					</div>
 				</div>

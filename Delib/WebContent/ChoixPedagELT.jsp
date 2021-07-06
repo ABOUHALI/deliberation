@@ -312,6 +312,13 @@ table.table .avatar {
 						
 					</c:forEach>
 				</select>
+				<select class="form-select" aria-label="Disabled select example" name="anns" >
+					
+					<c:forEach items="${anns}" var="a">
+						
+						<option value="${a.getId_anneAcad()}">${a}</option>
+					</c:forEach>
+				</select>
 				<input type="submit" value="afficher">
 			</div>
 			<div class="main-content">

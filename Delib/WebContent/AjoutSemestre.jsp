@@ -7,8 +7,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bootstrap CRUD Data Table for Database with Modal Form</title>
-<link rel="stylesheet"
+<title>D E L I B E R A T I O N</title>
+<link rel="stylesheet"                                                                                         
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -375,10 +375,7 @@ table.table .avatar {
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
-						<div class="form-group">
-							<label>Id</label> <input type="text" class="form-control"name="id-semestre"
-								required>
-						</div>
+						
 						<div class="form-group">
 							<label>Nom </label> <input type="text"
 								class="form-control" name="semestre" required>

@@ -25,7 +25,7 @@
 					<div class="form-row">
 						<div class="col-md-6">
 							<div class="position-relative form-group">
-								<label for="Nom Etudiant" class="">CNE</label> <input
+								<label for="Nom Etudiant" class="">Massar</label> <input
 									type="text" value="${massar}" readonly="readonly" name="cne" />
 							</div>
 						</div>
@@ -62,8 +62,19 @@
 <div class="form-row">
 						<div class="col-md-6">
 					<div class="position-relative form-group">
-						<label for="hh" class="">Bourse</label> <input type="text"
-							name="bourse" id="hh" />
+						<label for="hh" class="">Bourse</label>
+						 <div class="form-check">
+  <input class="form-check-input" type="radio" name="bourse" id="flexRadioDefault1" value="oui">
+  <label class="form-check-label" for="flexRadioDefault1">
+    OUI
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="bourse" id="flexRadioDefault2" value="non" checked>
+  <label class="form-check-label" for="flexRadioDefault2">
+   NON
+  </label>
+</div>
 
 					</div>
 

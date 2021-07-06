@@ -30,7 +30,7 @@ public void addProf(Professeur p) {
 		ps.setString(5, p.getGrade());
 		
 		ps.setInt(6, p.getEtablissement());
-		ps.setInt(7, 19);
+		ps.setInt(7, p.getFiliere());
 		ps.executeUpdate();
 		ps.close();
 		conn.close();
@@ -344,4 +344,5 @@ public String etabFROMprof(int id_prof) {
 	}
 	return etab.getEtablissement();
 }
+
 }

@@ -7,6 +7,13 @@ public class Module {
 	private int coeff ;
 	private int note_valid ;
 	private int nbr_elt ;
+	private int ne;
+	public int getNe() {
+		return ne;
+	}
+	public void setNe(int ne) {
+		this.ne = ne;
+	}
 	@Override
 	public String toString() {
 		return "Module [IDModule=" + IDModule + ", LabelleMod=" + LabelleMod + ", IDSemestre=" + IDSemestre + ", coeff="

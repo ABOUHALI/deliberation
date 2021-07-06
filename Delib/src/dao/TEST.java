@@ -165,7 +165,7 @@ public class TEST {
 		HashSet<Etudiant> hs = ip.getListeEtudiantXXXX(totals);
 		System.out.println(hs);*/
 		
-		System.out.println(ip.getEtatSEM("B999999", "semestre 1 INFO"));
+		System.out.println(se.getIDElement("POO c++"));
 		/*System.out.println(se.NotedsModule("java","H444444"));
 		///////////////EXCEL LISTE/////////////
 		/*controller c = new  controller();

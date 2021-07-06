@@ -58,6 +58,16 @@
 														
 												</select>
 											</div>
+											<div class="form-group">
+										<select class="form-select"
+											aria-label="Disabled select example" name="anns">
+
+											<c:forEach items="${anns}" var="a">
+
+												<option value="${a.getId_anneAcad()}">${a}</option>
+											</c:forEach>
+										</select>
+									</div>
 										<input type="submit" class="btn btn-lg btn-primary"
 												value="Afficher"></form>
 	

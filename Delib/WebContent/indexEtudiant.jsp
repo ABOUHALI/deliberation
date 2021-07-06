@@ -479,7 +479,7 @@
 
 						<li class="app-sidebar__heading">Dashboards ETUDIANT</li>
 						<li><a href="releve_note.do"> RELEVE DE NOTE </a> <a
-							href="etudiant_module"> CERTIFICAT DE SCOLARITE </a> 
+							href="certificat de scolarite"> CERTIFICAT DE SCOLARITE </a> 
 
 						<li class="app-sidebar__heading">Session</li>
 

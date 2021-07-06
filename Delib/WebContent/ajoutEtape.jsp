@@ -377,10 +377,7 @@ table.table .avatar {
 					</div>
 					<div class="modal-body">
 					
-						<div class="form-group">
-							<label>Id Etape</label> <input type="text" name="id_etape"
-								class="form-control" required>
-						</div>
+						
 						
 						<div class="form-group">
 							<label>Libele Etape</label> <input type="text" name="libelle"

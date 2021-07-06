@@ -46,7 +46,61 @@
 
 	<%@include file="static.jsp"%>
 	<section class="content">
+		<div class="product-status mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-status-wrap drp-lst">
+							<h4>NOTE</h4>
 
+							<div class="add-product">
+								<a href="note-element-excel">Ajouter une note depuis Liste
+									excel</a>
+							</div>
+							<div class="asset-inner">
+
+
+									<h2>Choisir Liste</h2>
+
+
+									<div class="form-group">
+												<label>Etape</label><br> <input type="text" name="etape"
+													class="form-control"
+													value="${etape}"
+													readonly="readonly">
+											</div>
+											<div class="form-group">
+												<label>Semestre</label><br> <input type="text" name="semestre"
+													class="form-control"
+													value="${semestre}"
+													readonly="readonly">
+											</div>
+											<div class="form-group">
+												<label>Modules</label><br> <input type="text" name="module"
+													class="form-control"
+													value="${module}"
+													readonly="readonly">
+											</div>
+											<div class="form-group">
+													<label>ELEMENT</label><br> <input type="text" name="element"
+													class="form-control"
+													value="${element}"
+													readonly="readonly">
+											</div>
+											  <div class="form-group">
+													<label>Anne Academique</label><br> <input type="text" name="anns"
+													class="form-control"
+													value="${aa}"
+													readonly="readonly">
+											</div>
+										
+	
+																</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		<div class="container-fluid">
 

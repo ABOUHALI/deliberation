@@ -8,14 +8,12 @@
 <title>Inscription</title>
 </head>
 <body>
+<div>
 	<%@include file="static.jsp"%>
 	<div class="edit" style="margin-left: 300px; margin-bottom: 300px;">
 
 		<div class="product-status mg-b-15">
-			<ul class="pager">
-									<li><a href="Liste-A-Deliberer-Element" title="Précédent">Précédent</a></li>
-									
-								</ul>
+			
 			<div>
 				<a href="http://localhost:8080/Delib/choix-listp-note.do" class="btn btn-primary btn-lg " 
 					role="button" >CHOISIR A NOUVEAU ...</a>
@@ -76,6 +74,6 @@
 			</div>
 		</div>
 	</div>
-
+</div>
 </body>
 </html>

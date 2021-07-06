@@ -130,7 +130,7 @@ public class UserPdf {
 		
 	}
 
-	public void exporterModule(HttpServletResponse response,String module) throws DocumentException,IOException{
+	public void exporterModule(HttpServletResponse response,String module,int id_anne) throws DocumentException,IOException{
 		Document document=new Document(PageSize.A4);
 		PdfWriter.getInstance(document, response.getOutputStream());
 		document.open();
@@ -152,7 +152,7 @@ public class UserPdf {
 		table.setWidths(new float[] {3.0f ,3.5f,3.0f,3.0f,3.0f,3.0f});
 		
 		writeTableHeaderModule(table,module);
-		writeTableDataModule(table,module);
+		writeTableDataModule(table,module,id_anne);
 		
 		document.add(table);
 		
@@ -162,7 +162,7 @@ public class UserPdf {
 	}
 	
 	
-	public void writeTableDataModule(PdfPTable table,String module) {
+	public void writeTableDataModule(PdfPTable table,String module,int id_anne) {
 		int id_module =se.getIDModule(module);
 		List<Element> elts = se.getElementByMODULE(id_module);
 		for(ETUD_NOTE en:e) {
@@ -170,19 +170,19 @@ public class UserPdf {
 			table.addCell(en.getNom());
 			table.addCell(en.getPrenom());
 			for (int i = 0; i < elts.size(); i++) {
-				table.addCell(se.getNoteElement(en.getCNE(),elts.get(i).getLabelleElement())+"");
+				table.addCell(se.getNoteElement(en.getCNE(),elts.get(i).getLabelleElement(),id_anne)+"");
 			}
 			
 
-			if(se.NotedsModule(module, en.getCNE())>=10) {
+			if(se.NotedsModule(module, en.getCNE(),id_anne)>=10) {
 				PdfPCell c = new PdfPCell();
-				c.addElement(new Paragraph(se.NotedsModule(module, en.getCNE())+""));
+				c.addElement(new Paragraph(se.NotedsModule(module, en.getCNE(),id_anne)+""));
 				c.setBackgroundColor(BaseColor.GREEN);
 				table.addCell(c);
 				
-			}else if(se.NotedsModule(module, en.getCNE())<10){
+			}else if(se.NotedsModule(module, en.getCNE(),id_anne)<10){
 				PdfPCell c = new PdfPCell();
-				c.addElement(new Paragraph(se.NotedsModule(module, en.getCNE())+""));
+				c.addElement(new Paragraph(se.NotedsModule(module, en.getCNE(),id_anne)+""));
 				c.setBackgroundColor(BaseColor.RED);
 				table.addCell(c);
 			}
@@ -348,7 +348,7 @@ public class UserPdf {
 		cell.setPhrase(new Phrase(" ETAT ",font));
 		table.addCell(cell);
 	}
-	public void exporterSemestre(HttpServletResponse response,String semestre) throws DocumentException,IOException{
+	public void exporterSemestre(HttpServletResponse response,String semestre,int id_anne) throws DocumentException,IOException{
 		Document document=new Document(PageSize.A4);
 		PdfWriter.getInstance(document, response.getOutputStream());
 		document.open();
@@ -370,7 +370,7 @@ public class UserPdf {
 		table.setWidths(new float[] {3.0f ,3.5f,3.0f,3.0f,3.0f,3.0f});
 		
 		writeTableHeaderSEM(table);
-		writeTableDataSEM(table,semestre);
+		writeTableDataSEM(table,semestre,id_anne);
 		
 		document.add(table);
 		
@@ -407,35 +407,59 @@ public void writeTableHeaderSEM(PdfPTable table) {
 		table.addCell(cell);
 	}
 
-private void writeTableDataSEM(PdfPTable table,String semestre) {
+private void writeTableDataSEM(PdfPTable table,String semestre,int id_anne) {
 	for(ETUD_NOTE en:e) {
 		table.addCell(en.getCNE());
 		table.addCell(en.getNom());
 		table.addCell(en.getPrenom());
 		table.addCell(semestre);
-		table.addCell(ip.calculerSEM(en.getCNE(), semestre)+"");
+		table.addCell(ip.calculerSEM(en.getCNE(), semestre,id_anne)+"");
 		
 		
 		
-		if(ip.getEtatSEM(en.getCNE(), semestre).equals("Valide")) {
+		if(ip.getEtatSEM(en.getCNE(), semestre,id_anne).equals("Valide")) {
 			PdfPCell c = new PdfPCell();
-			c.addElement(new Paragraph(ip.getEtatSEM(en.getCNE(), semestre)));
+			c.addElement(new Paragraph(ip.getEtatSEM(en.getCNE(), semestre,id_anne)));
 			c.setBackgroundColor(BaseColor.GREEN);
 			table.addCell(c);
 			
-		}else if(ip.getEtatSEM(en.getCNE(), semestre).equals("Non Valide")){
+		}else if(ip.getEtatSEM(en.getCNE(), semestre,id_anne).equals("Non Valide")){
 			PdfPCell c = new PdfPCell();
-			c.addElement(new Paragraph(ip.getEtatSEM(en.getCNE(), semestre)));
+			c.addElement(new Paragraph(ip.getEtatSEM(en.getCNE(), semestre,id_anne)));
 			c.setBackgroundColor(BaseColor.RED);
 			table.addCell(c);
-		}else if(ip.getEtatSEM(en.getCNE(), semestre).equals("Valide par Compensation")) {
+		}else if(ip.getEtatSEM(en.getCNE(), semestre,id_anne).equals("Valide par Compensation")) {
 			PdfPCell c = new PdfPCell();
-			c.addElement(new Paragraph(ip.getEtatSEM(en.getCNE(), semestre)));
+			c.addElement(new Paragraph(ip.getEtatSEM(en.getCNE(), semestre,id_anne)));
 			c.setBackgroundColor(BaseColor.ORANGE);
 			table.addCell(c);
 		}
 		
 	}
+}
+public UserPdf() {
+	super();
+}
+public void exportCertiScola(HttpServletResponse response,String massar) throws DocumentException,IOException{
+	Document doc=new  Document(PageSize.A4);
+	PdfWriter.getInstance(doc, response.getOutputStream());
+	doc.open();
+	Image img=Image.getInstance("C:\\Users\\pc\\Desktop\\logggo.png");
+	doc.add(img);
+	String etab =insc.certificat(massar);
+	Etudiant e = insc.getET3(massar);
+	Etudiant e2 =insc.getEt(massar);
+	int d = insc.anneAcad(massar);
+	doc.addTitle("CERTIFICAT DE SCOLARITE");
+	
+	Paragraph para=new Paragraph("CNE :"+massar+"\n          NOM :   "+e.getNomFr() +"             PRENOM :"+e.getPrenomFr(),FontFactory.getFont(FontFactory.TIMES_ITALIC,18,Font.BOLDITALIC,BaseColor.BLACK));
+	Paragraph para2=new Paragraph("Né(e) le "+e2.getDateN() +"à "+e2.getVilleNaissance()+"\n",FontFactory.getFont(FontFactory.HELVETICA,16,Font.BOLDITALIC,BaseColor.BLACK));
+	Paragraph para3=new Paragraph("est regulierement inscrit(e) pour la presente année "+d,FontFactory.getFont(FontFactory.COURIER_OBLIQUE,14,Font.BOLDITALIC,BaseColor.BLACK));
+	doc.add(para);
+	doc.add(para2);
+	doc.add(para3);
+
+	doc.close();
 }
 
 }

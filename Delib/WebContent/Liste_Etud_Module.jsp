@@ -24,13 +24,22 @@
 							<div class="asset-inner">
 
 
-								
+								<form method="post" action="etudiant_module.do">
 								<div class="form-group">
 									<label>Module</label><br> <input type="text"
 										name="element" class="form-control" value="${module}"
 										readonly="readonly">
 								</div>
+								<select class="form-select"
+										aria-label="Disabled select example" name="anns">
 
+										<c:forEach items="${anns}" var="a">
+
+											<option value="${a.getId_anneAcad()}">${a}</option>
+										</c:forEach>
+									</select>
+									<input type="submit" value="afficher">
+								</form>
 
 							</div>
 							<div class="body">

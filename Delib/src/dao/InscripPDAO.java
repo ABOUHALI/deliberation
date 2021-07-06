@@ -33,10 +33,10 @@ public class InscripPDAO {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps = conn.prepareStatement("insert into inscrip_pedago(fid_etdt,fid_elt,anneAcad) values(?,?,?)");
+			ps = conn.prepareStatement("insert into inscrip_pedago(fid_etdt,fid_elt,fid_ac) values(?,?,?)");
 			ps.setString(1, ip.getIdetud());
 			ps.setInt(2, ip.getElt());
-			ps.setDate(3, ip.getAnneacad());
+			ps.setInt(3, ip.getId_anneacad());
 			ps.executeUpdate();
 			ps.close();
 			conn.close();
@@ -51,11 +51,11 @@ public class InscripPDAO {
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps = conn.prepareStatement("select anneAcad, fid_etdt,fid_elt from inscrip-pedago");
+			ps = conn.prepareStatement("select fid_ac, fid_etdt,fid_elt from inscrip-pedago");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Inscrip_pedagogique ip = new Inscrip_pedagogique(rs.getString("fid_etdt"), rs.getInt("fid_elt"),
-						rs.getDate("anneAcad"));
+						rs.getInt("fid_ac"));
 				ipd.add(ip);
 			}
 		} catch (Exception e) {
@@ -84,26 +84,29 @@ public class InscripPDAO {
 		return elts;
 	}
 
-	public HashSet<Etudiant> getListeEtudiantXXXX(List<Element> elts) {
+	public HashSet<Etudiant> getListeEtudiantXXXX(List<Element> elts,int id_aa) {
 		List<Etudiant> et = null;
 		HashSet<Etudiant> etudiants = new HashSet<Etudiant>();
 		/* recupere les ids a partir des elements */
 		for (int i = 0; i < elts.size(); i++) {
-			et = getEtudiantParElement(elts.get(i).getIDElement());
+			et = getEtudiantParElement(elts.get(i).getIDElement(),id_aa);
 
 			etudiants.addAll(et);
 		}
 		/* test */
 		return etudiants;
 	}
-
-	public List<Etudiant> getEtudiantParElement(int id) {
+	
+	
+	
+	public List<Etudiant> getEtudiantParElement(int id,int id_aa) {
 		List<Etudiant> etdts = new ArrayList<Etudiant>();
 		Connection conn = SingletonConnection.getConnection();
 		PreparedStatement ps;
 		try {
-			ps = conn.prepareStatement("select fid_etdt from inscrip_pedago where fid_elt=? ");
+			ps = conn.prepareStatement("select fid_etdt from inscrip_pedago where fid_elt=? and fid_ac=?  ");
 			ps.setInt(1, id);
+			ps.setInt(2, id_aa);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				String massar = rs.getString("fid_etdt");
@@ -304,7 +307,7 @@ public class InscripPDAO {
 		return !b;
 	}
 
-	public List<ETUD_NOTE> recupererLISTE_Note(InputStream file,String elt) {
+	public List<ETUD_NOTE> recupererLISTE_Note(InputStream file,String elt,int id_anne) {
 		ArrayList<ETUD_NOTE> etudiants = new ArrayList<ETUD_NOTE>();
 		ArrayList<String> values = new ArrayList<String>();
 		try {
@@ -337,8 +340,8 @@ public class InscripPDAO {
 				double tp = Double.parseDouble(values.get(3));
 				double cc = Double.parseDouble(values.get(4));
 				double o =Double.parseDouble(values.get(5));
-				se.saveNOTE_ELT(values.get(0), elt, tp, o, cc);
-				e.setNOTE(se.recuperer_note(values.get(0), elt));
+				se.saveNOTE_ELT(values.get(0), elt, tp, o, cc,id_anne);
+				e.setNOTE(se.recuperer_note(values.get(0), elt,id_anne));
 				etudiants.add(e);
 			}
 		} catch (Exception e) {
@@ -348,7 +351,7 @@ public class InscripPDAO {
 		return etudiants;
 	}	
 
-	public List<ETUD_NOTE> recupererLISTE_Ratt(InputStream file,String elt) {
+	public List<ETUD_NOTE> recupererLISTE_Ratt(InputStream file,String elt,int id_anne) {
 		List<ETUD_NOTE> en = new ArrayList<ETUD_NOTE>();
 		ArrayList<String> values = new ArrayList<String>();
 		try {
@@ -379,8 +382,8 @@ public class InscripPDAO {
 				e.setNom(values.get(1));
 				e.setPrenom(values.get(2));
 				double nr = Double.parseDouble(values.get(3));
-				se.calcule_Ratt(values.get(0), elt,nr);
-				e.setNOTE(se.recuperer_note(values.get(0), elt));
+				se.calcule_Ratt(values.get(0), elt,nr,id_anne);
+				e.setNOTE(se.recuperer_note(values.get(0), elt,id_anne));
 				e.setEtat(se.getETAT_NOTE(values.get(0), elt));
 				en.add(e);
 			}
@@ -416,17 +419,16 @@ public class InscripPDAO {
 			e.printStackTrace();
 		}
 		return en ;
-		
-		
 	}
+		
 	
-	public double calculerSEM(String massarEtud,String semestre) {
+	public double calculerSEM(String massarEtud,String semestre,int id_anne) {
 		List<Element> elt = getElementDANSSemestre(semestre);
 		double d =0,res=0;
 		if(is_etud_sem(massarEtud, semestre)) {
 		for (int i = 0; i < elt.size(); i++) {
 			String element =se.getElement(elt.get(i).getIDElement());
-				double e = se.recuperer_note(massarEtud, element);
+				double e = se.recuperer_note(massarEtud, element,id_anne);
 				d+=e;
 				
 		}}
@@ -434,14 +436,14 @@ public class InscripPDAO {
 		return res;
 	}
 	
-	public String getEtatSEM(String massarEtud ,String semestre) {
+	public String getEtatSEM(String massarEtud ,String semestre,int id_anne) {
 		String etat="";
-		double ms =calculerSEM(massarEtud, semestre);
+		double ms =calculerSEM(massarEtud, semestre,id_anne);
 		List<Module> m = moduleDANSsemestre(semestre);
 		boolean hh1=true;
 		boolean hh2 =true;
 		for (int i = 0; i < m.size(); i++) {
-			double nm=se.NotedsModule(m.get(i).getLabelleMod(), massarEtud);
+			double nm=se.NotedsModule(m.get(i).getLabelleMod(), massarEtud,id_anne);
 			hh1 = hh1 && nm >= 10;
 			hh2 = hh2 && nm <= 10 && nm>=5;
 			

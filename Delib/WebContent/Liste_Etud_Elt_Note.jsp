@@ -38,7 +38,9 @@
 											<th>CNE</th>
 											<th>NOM</th>
 											<th>PRENOM</th>
-											<th>NOTE</th>
+											<th>NOTE TP</th>
+											<th>NOTE CC</th>
+											<th>NOTE Exam</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -49,7 +51,9 @@
 													<td><c:out value="${e.getCNE()}" /></td>
 													<td><c:out value="${e.getNom()}" /></td>
 													<td><c:out value="${e.getPrenom()}" /></td>
-													<td><c:out value="${e.getNOTE()}" /></td>
+													<td><c:out value="${e.getTp()}" /></td>
+													<td><c:out value="${e.getCc()}" /></td>
+													<td><c:out value="${e.getEo()}" /></td>
 												</tr>
 											</c:forEach>
 										</tr>
@@ -58,7 +62,9 @@
 								</table>
 								
 							</div>
-
+								<a href="lnote-element.do"><button>
+									D E L I B E R E R
+								</button></a>
 							
 						</div>
 					</div>
